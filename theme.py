@@ -65,6 +65,8 @@ class Skin:
     ghosts: Tuple[Tuple[QColor, float, float, int], ...]
     accents: Dict[str, Tuple[QColor, QColor]]
     dark: bool = False
+    dot_size: float = 1.4      # cỡ chấm halftone — nới ra thì mặt giấy nhám hơn
+    dot_step: int = 5
 
     def accent(self, kind):
         """Cặp (màu viền, màu nền) cho một loại nhãn."""
@@ -153,8 +155,28 @@ FORGE = Skin(
     dark=True,
 )
 
+# Bão cát: bộ da sáng duy nhất. Bốn bộ kia đều tối dần đi khi mở ra, còn bộ
+# này thì loà lên — màn phủ là một trận cát trắng xoá chứ không phải bóng đêm.
+# Mặt giấy cũng nhám hơn hẳn: chấm halftone to và dày, sờ vào là ra hạt.
+DUST = Skin(
+    name="dust",
+    paper=QColor("#C6BBA0"), paper_hi=QColor("#D6CCB4"),
+    ink=QColor("#241D14"), ink_soft=QColor("#6B5F4B"),
+    red=QColor("#A63D14"), blue=QColor("#2E3A52"), yellow=QColor("#8A6B18"),
+    dot=QColor(62, 50, 33, 34),
+    frame=QColor("#463628"),
+    scrim=QColor(198, 186, 160, 232),
+    grid=QColor(92, 76, 52, 30),
+    ghosts=((QColor("#2E3A52"), -7, -7, 58), (QColor("#A63D14"), 7, 7, 84)),
+    accents={"edge": (QColor("#2E3A52"), QColor("#BFC6D2")),
+             "new": (QColor("#A63D14"), QColor("#E2C7B4")),
+             "fix": (QColor("#8A6B18"), QColor("#E0D3A8"))},
+    dot_size=2.0,
+    dot_step=4,
+)
+
 # Tra theo tên để hồ sơ chỉ cần ghi `skin="sky"`.
-SKINS = {skin.name: skin for skin in (PULP, VOID, SKY, MESH, FORGE)}
+SKINS = {skin.name: skin for skin in (PULP, VOID, SKY, MESH, FORGE, DUST)}
 
 
 def pick_font(candidates, fallback="DejaVu Sans"):

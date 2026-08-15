@@ -45,7 +45,8 @@ def skin_of(profile):
 
 def _paper_tile(skin):
     if skin.name not in _tiles:
-        _tiles[skin.name] = halftone_tile(dot=1.4, step=5, color=skin.dot)
+        _tiles[skin.name] = halftone_tile(dot=skin.dot_size, step=skin.dot_step,
+                                          color=skin.dot)
     return _tiles[skin.name]
 
 
@@ -1542,7 +1543,7 @@ class CharacterStage(QWidget):
         song chém chéo qua mặt giấy, đúng dấu móng của một con chim săn mồi.
         `dissolve` thì không có đường nào cả: giấy bị ăn dần từ mép vào.
         """
-        if self._fx_style == "dissolve":
+        if self._fx_style in ("dissolve", "erode"):
             return []
         if self._fx_style == "crush":
             return self._make_folds(box)
@@ -1613,6 +1614,8 @@ class CharacterStage(QWidget):
 
     def _make_shards(self, box):
         """Chia tờ giấy thành các mảnh sắp rời ra, theo kiểu của dạng sắp tới."""
+        if self._fx_style == "erode":
+            return self._make_dunes(box)
         if self._fx_style == "dissolve":
             return self._make_cells(box)
         if self._fx_style == "crush":
@@ -1620,6 +1623,23 @@ class CharacterStage(QWidget):
         if self._fx_style == "shred":
             return self._make_strips(box)
         return self._make_grid_shards(box)
+
+    def _make_dunes(self, box):
+        """Hồ sơ độ mòn của từng cột giấy, và độ cao đụn cát khi bồi trở lại.
+
+        Cát không bẻ giấy thành mảnh — nó mài. Nên thứ cần nhớ không phải các
+        mảnh vỡ mà là một đường biên răng cưa: mỗi cột mòn nhanh chậm một
+        khác, để mép giấy còn lại trông đúng như đá bị gió tạc.
+        """
+        roll = self._rolls(int(box.width()) * 3 + 77)
+        cols = 40
+        raw = [roll(0.5, 1.6) for _ in range(cols + 1)]
+        # làm mượt hai lượt: gió tạc ra vết lượn sóng, không ra răng lược
+        for _ in range(2):
+            raw = [(raw[max(0, i - 1)] + raw[i] * 2 + raw[min(cols, i + 1)]) / 4
+                   for i in range(cols + 1)]
+        crest = tuple(roll(0.0, 1.0) for _ in range(cols + 1))
+        return (cols, tuple(raw), crest)
 
     def _make_slabs(self, box):
         """Sáu tấm lớn bị bẻ rời, không phải trăm mảnh vụn.
@@ -1785,6 +1805,9 @@ class CharacterStage(QWidget):
         t = self._fx
         if self._fx_style == "dissolve":
             self._paint_dissolve(p, box, t)
+            return
+        if self._fx_style == "erode":
+            self._paint_erode(p, box, t)
             return
         shred = self._fx_style == "shred"
         crush = self._fx_style == "crush"
@@ -1994,6 +2017,83 @@ class CharacterStage(QWidget):
         if build > 0:
             self._paint_motes(p, box, min(1.0, build))
 
+    def _paint_erode(self, p, box, t):
+        """Tờ giấy bị thổi mòn, rồi tờ mới được cát bồi lên từ đáy.
+
+        Không có mảnh nào rời ra cả — chỉ có một đường biên răng cưa tiến dần
+        và một đám bụi mù ở ngay chỗ nó đang ăn. Lúc dựng lại cũng vậy: cát
+        đùn lên thành đụn rồi lắng xuống thành trang giấy.
+        """
+        cols, bite, crest = self._shards
+        ignite = 0.26
+        gone = 0.62                     # lúc tờ cũ mòn hết
+        w = box.width() / cols
+
+        if t < gone:
+            # phần giấy còn lại: một mảng liền, mép trên bị gió tạc lởm chởm
+            k = max(0.0, (t - ignite) / (gone - ignite))
+            left = QPainterPath()
+            left.moveTo(box.x(), box.bottom())
+            for i in range(cols + 1):
+                x = box.x() + i * w
+                eaten = min(1.0, k * bite[i] * (0.45 + 0.9 * (i / cols)))
+                left.lineTo(x, box.y() + box.height() * eaten)
+            left.lineTo(box.right(), box.bottom())
+            left.closeSubpath()
+            p.save()
+            p.setClipPath(left)
+            paint_sheet(p, box, skin=self._from)
+            if t < ignite:              # trước khi mòn: chỉ mới bị mài xước
+                self._paint_abrade(p, box, t / ignite)
+            p.restore()
+
+            if k > 0:
+                edge = QColor(self._to.red)
+                edge.setAlpha(150)
+                p.setBrush(Qt.BrushStyle.NoBrush)
+                p.setPen(QPen(edge, 1.0))
+                p.drawPath(left)
+
+        self._paint_grit(p, box, t)
+
+        build = (t - 0.50) / 0.50
+        if build > 0:
+            self._paint_rebuild(p, box, min(1.0, build))
+
+    def _paint_abrade(self, p, box, k):
+        """Vệt mài: những rãnh nông chạy chéo, mờ nhưng mỗi lúc một rõ."""
+        roll = self._rolls(313)
+        p.setBrush(Qt.BrushStyle.NoBrush)
+        for _ in range(26):
+            x = roll(box.x() - 60, box.right())
+            y = roll(box.y(), box.bottom())
+            length = roll(30, 110)
+            tone = QColor(self._to.red if roll(0, 1) > 0.5 else self._from.frame)
+            tone.setAlpha(int(roll(20, 70) * k))
+            p.setPen(QPen(tone, roll(0.4, 1.3)))
+            p.drawLine(QPointF(x, y),
+                       QPointF(x + length * 0.94, y + length * 0.34))
+
+    def _paint_grit(self, p, box, t):
+        """Bụi bay ngang khung: dày nhất đúng lúc tờ giấy đang tan."""
+        storm = math.sin(math.pi * min(1.0, max(0.0, t))) ** 0.6
+        if storm <= 0.02:
+            return
+        roll = self._rolls(9001)
+        span = box.width() + 300
+        p.setPen(Qt.PenStyle.NoPen)
+        for i in range(230):
+            speed = roll(0.7, 2.4)
+            lane = roll(box.y() - 60, box.bottom() + 60)
+            drift = (roll(0, 1) + t * speed) % 1.0
+            x = box.x() - 150 + drift * span
+            y = lane + drift * 46
+            size = roll(1.2, 5.0)
+            tone = QColor(self._to.red if i % 9 == 0 else self._to.ink)
+            tone.setAlpha(int(roll(60, 200) * storm))
+            p.setBrush(tone)
+            p.drawRect(QRectF(x, y, size * 3.0, size * 0.7))
+
     def _paint_front(self, p, box, k):
         """Mặt trận chuyển hoá: lưới ô sáng lên dần, bò từ mép giấy vào giữa.
 
@@ -2125,8 +2225,13 @@ class CharacterStage(QWidget):
         across = style == "shred"
         inward = style == "dissolve"
         doors = style == "crush"
+        piling = style == "erode"
         hole = None
-        if doors:
+        if piling:
+            # cát bồi từ đáy lên, mặt đụn nhấp nhô chứ không phẳng
+            band = QRectF(box.x(), box.bottom() - box.height() * ease,
+                          box.width(), box.height() * ease + 30)
+        elif doors:
             # hai cánh cửa thép trượt vào nhau ở giữa
             half = box.width() / 2 * ease
             band = QRectF(box.center().x() - half, box.y() - 30,
@@ -2144,7 +2249,18 @@ class CharacterStage(QWidget):
             band = QRectF(box.x() - 30, box.center().y() - h / 2,
                           box.width() + 60, h)
         p.save()
-        if inward:
+        if piling:
+            cols, _, crest = self._shards
+            w = box.width() / cols
+            dune = QPainterPath()
+            dune.moveTo(box.x(), box.bottom() + 30)
+            for i in range(cols + 1):
+                ripple = (1 - ease) * (5 + 9 * crest[i])
+                dune.lineTo(box.x() + i * w, band.y() + ripple)
+            dune.lineTo(box.right(), box.bottom() + 30)
+            dune.closeSubpath()
+            p.setClipPath(dune)
+        elif inward:
             # vùng vẽ là cả tờ giấy trừ đi cái lỗ đang khép lại ở giữa
             ring = QPainterPath()
             ring.setFillRule(Qt.FillRule.OddEvenFill)
@@ -2203,7 +2319,10 @@ class CharacterStage(QWidget):
             edge.setAlpha(int(230 * (1 - b)))
             p.setPen(QPen(edge, 1.8))
             p.setBrush(Qt.BrushStyle.NoBrush)
-            if inward:
+            if piling:
+                p.drawLine(QPointF(box.x(), band.y()),
+                           QPointF(box.right(), band.y()))
+            elif inward:
                 p.drawRect(hole)
             elif doors:
                 p.drawLine(band.topLeft(), band.bottomLeft())

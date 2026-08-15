@@ -15,6 +15,7 @@ from theme import INK, PAPER_HI
 
 from .art import design, marks, misprint, ribbon
 from .profile import Profile
+from .sandman_absolute import ABSOLUTE
 
 SEED = 4      # đổi số này là đổi thế rắc của cát
 
@@ -160,6 +161,10 @@ PROFILE = Profile(
 
     blurb="Rất ít cái tên trong danh sách này từng thử làm người tử tế. "
           "Sandman thử thật, và trong một quãng dài, hắn làm được.",
+
+    # Bấm nút tiến hoá để mở dạng Absolute — cát không còn có lõi.
+    evolution=ABSOLUTE,
+    evolve_label="Evolve",
 
     art=draw_sandman,
     caption="Chân dung dựng lại bằng code",
