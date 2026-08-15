@@ -13,6 +13,7 @@ from theme import INK, INK_SOFT, PAPER_HI, YELLOW
 
 from .art import design, marks, misprint
 from .profile import Profile
+from .tinkerer_absolute import ABSOLUTE
 
 
 # ═══════════════════════════════════════════════════ chân dung vẽ bằng code
@@ -252,6 +253,10 @@ PROFILE = Profile(
 
     art=draw_tinkerer,
     caption="Chân dung dựng lại bằng code",
+
+    # Bấm nút tiến hoá để mở dạng Absolute — cái tên đã sang tay.
+    evolution=ABSOLUTE,
+    evolve_label="Evolve",
 
     links=(
         ("Wikipedia", "https://en.wikipedia.org/wiki/Tinkerer_(Marvel_Comics)"),

@@ -117,8 +117,26 @@ SKY = Skin(
     dark=True,
 )
 
+# Vật chất lập trình: graphite lạnh, mực đỏ tía và xanh axit. Dành cho những
+# kẻ Absolute mà thân thể lẫn chiến trường đều là thứ có thể lập trình được.
+MESH = Skin(
+    name="mesh",
+    paper=QColor("#06100D"), paper_hi=QColor("#0B1714"),
+    ink=QColor("#E9F3ED"), ink_soft=QColor("#7B9289"),
+    red=QColor("#FF2FB2"), blue=QColor("#6BFF2E"), yellow=QColor("#E8FF4A"),
+    dot=QColor(120, 255, 190, 15),
+    frame=QColor("#3A5349"),
+    scrim=QColor(3, 9, 7, 226),
+    grid=QColor(110, 255, 180, 22),
+    ghosts=((QColor("#6BFF2E"), -7, -7, 62), (QColor("#FF2FB2"), 7, 7, 92)),
+    accents={"edge": (QColor("#6BFF2E"), QColor("#0A2011")),
+             "new": (QColor("#FF2FB2"), QColor("#26091C")),
+             "fix": (QColor("#E8FF4A"), QColor("#1F2409"))},
+    dark=True,
+)
+
 # Tra theo tên để hồ sơ chỉ cần ghi `skin="sky"`.
-SKINS = {skin.name: skin for skin in (PULP, VOID, SKY)}
+SKINS = {skin.name: skin for skin in (PULP, VOID, SKY, MESH)}
 
 
 def pick_font(candidates, fallback="DejaVu Sans"):

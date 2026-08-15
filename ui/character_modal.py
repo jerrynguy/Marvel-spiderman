@@ -1540,7 +1540,10 @@ class CharacterStage(QWidget):
 
         `shatter` nứt toả từ giữa như kính vỡ. `shred` là bốn vệt vuốt song
         song chém chéo qua mặt giấy, đúng dấu móng của một con chim săn mồi.
+        `dissolve` thì không có đường nào cả: giấy bị ăn dần từ mép vào.
         """
+        if self._fx_style == "dissolve":
+            return []
         if self._fx_style == "shred":
             return self._make_rakes(box)
         roll = self._rolls(int(box.width()) * 31 + 17)
@@ -1580,9 +1583,36 @@ class CharacterStage(QWidget):
 
     def _make_shards(self, box):
         """Chia tờ giấy thành các mảnh sắp rời ra, theo kiểu của dạng sắp tới."""
+        if self._fx_style == "dissolve":
+            return self._make_cells(box)
         if self._fx_style == "shred":
             return self._make_strips(box)
         return self._make_grid_shards(box)
+
+    def _make_cells(self, box):
+        """Băm tờ giấy thành lưới ô vuông nhỏ, kèm toạ độ cực của từng ô.
+
+        Ô không bay theo đường thẳng như mảnh nổ: nó xoắn vào tâm. Nên thứ
+        cần nhớ là góc và bán kính so với tâm, chứ không phải hướng.
+
+        Ô giữ nguyên trục chứ không xoay: vừa đúng chất voxel của vật chất
+        lập trình, vừa bỏ được phép biến hình cho từng ô — với hơn năm trăm ô
+        mỗi khung hình thì đó là khác biệt giữa 88 ms và vài ms.
+        """
+        roll = self._rolls(int(box.width()) * 5 + 61)
+        cols, rows = 24, 17
+        cw, ch = box.width() / cols, box.height() / rows
+        ctr = box.center()
+        cells = []
+        for i in range(cols):
+            for j in range(rows):
+                cx = box.x() + (i + 0.5) * cw
+                cy = box.y() + (j + 0.5) * ch
+                vx, vy = cx - ctr.x(), cy - ctr.y()
+                cells.append((cx, cy, cw, ch, math.atan2(vy, vx),
+                              math.hypot(vx, vy), roll(0.0, 0.34),
+                              roll(0.7, 1.45)))
+        return cells
 
     def _make_strips(self, box):
         """Xẻ tờ giấy thành dải chéo mảnh — giấy bị vuốt xé, không phải nổ.
@@ -1692,6 +1722,9 @@ class CharacterStage(QWidget):
 
     def _paint_boom(self, p, box):
         t = self._fx
+        if self._fx_style == "dissolve":
+            self._paint_dissolve(p, box, t)
+            return
         shred = self._fx_style == "shred"
         ctr = box.center()
         span = math.hypot(box.width(), box.height()) / 2
@@ -1817,6 +1850,103 @@ class CharacterStage(QWidget):
             p.drawRect(self.rect())
             p.fillRect(self.rect(), QColor(255, 248, 240, int(80 * flash)))
 
+    def _paint_dissolve(self, p, box, t):
+        """Tờ giấy không vỡ cũng không bị xé: nó bị ăn, rồi bị lắp lại.
+
+        Mặt trận nano bò vào từ bốn mép, biến giấy thành lưới ô. Ô rời ra và
+        xoắn về tâm thành một cơn lốc, đổi màu dần từ màu giấy sang màu vật
+        chất lập trình. Tấm mới thì đóng từ ngoài vào — ngược hẳn với kiểu nổ
+        (mở từ giữa) lẫn kiểu xé (quét ngang).
+        """
+        ignite = 0.30
+        ctr = box.center()
+
+        if t < ignite:
+            k = t / ignite
+            paint_sheet(p, box, skin=self._from)
+            p.save()
+            p.setClipRect(box)
+            self._paint_front(p, box, k)
+            p.restore()
+            return
+
+        prog = (t - ignite) / (1 - ignite)
+        build = (t - 0.46) / 0.54
+        if build > 0:
+            self._paint_rebuild(p, box, min(1.0, build))
+
+        # Gom ô theo màu rồi vẽ từng nhóm một. Đổi cọ năm trăm lần mỗi khung
+        # đắt hơn hẳn việc vẽ năm trăm hình chữ nhật, nên lượng tử hoá màu
+        # thành vài chục bậc là đủ mắt không nhận ra mà nhanh hơn nhiều lần.
+        p.setPen(Qt.PenStyle.NoPen)
+        batches = {}
+        for cx, cy, cw, ch, ang, rad, lag, speed in self._shards:
+            s = (prog - lag) / max(0.05, 1.0 - lag)
+            s = min(1.0, max(0.0, s))
+            alpha = 1.0 - s * 1.35
+            if alpha <= 0:
+                continue
+            curl = s ** 0.8
+            swirl = ang + s * 2.6 * speed
+            grip = 1.0 - curl * 0.55
+            shrink = 1.0 - 0.45 * s
+            w, h = cw * shrink, ch * shrink
+            key = (min(7, int(s * 2.2 * 7)), min(9, int(alpha * 9)))
+            batches.setdefault(key, []).append(
+                QRectF(ctr.x() + math.cos(swirl) * rad * grip - w / 2,
+                       ctr.y() + math.sin(swirl) * rad * 0.82 * grip - h / 2,
+                       w, h))
+
+        paper, matter = self._from.paper_hi, self._to.blue
+        for (tint, fade), rects in batches.items():
+            # giấy hoá dần thành vật chất lập trình ngay trên đường bay
+            p.setBrush(_fade(blend(paper, matter, tint / 7), (fade + 0.5) / 9))
+            p.drawRects(rects)
+
+        if build > 0:
+            self._paint_motes(p, box, min(1.0, build))
+
+    def _paint_front(self, p, box, k):
+        """Mặt trận chuyển hoá: lưới ô sáng lên dần, bò từ mép giấy vào giữa.
+
+        Cũng gom theo bậc sáng như lúc lốc: cả nghìn ô mà đổi bút từng cái
+        thì riêng pha nạp đã ngốn hơn hai mươi mili giây.
+        """
+        step = 26.0
+        depth = k * max(box.width(), box.height()) * 0.62
+        if depth <= 0:
+            return
+        edges, fills = {}, []
+        i = 0
+        y = box.y()
+        while y < box.bottom():
+            j = 0
+            x = box.x()
+            while x < box.right():
+                edge = min(x - box.x(), box.right() - x - step,
+                           y - box.y(), box.bottom() - y - step)
+                if edge < depth:
+                    heat = 1.0 - max(0.0, edge) / depth
+                    cell = QRectF(x + 1, y + 1, step - 2, step - 2)
+                    edges.setdefault(min(5, int(heat * 6)), []).append(cell)
+                    # nhiễu cố định theo ô, khỏi phải bốc số mỗi khung hình
+                    if ((i * 73 + j * 151) % 97) / 97.0 < heat * 0.35:
+                        fills.append(cell)
+                x += step
+                j += 1
+            y += step
+            i += 1
+
+        p.setPen(Qt.PenStyle.NoPen)
+        p.setBrush(_fade(self._to.red, 0.26 * k))
+        p.drawRects(fills)
+        p.setBrush(Qt.BrushStyle.NoBrush)
+        for bucket, cells in edges.items():
+            tone = QColor(self._to.blue)
+            tone.setAlpha(int(150 * ((bucket + 0.5) / 6) * k))
+            p.setPen(QPen(tone, 0.9))
+            p.drawRects(cells)
+
     def _paint_gust(self, p, box, strength):
         """Luồng gió chéo thổi qua khung — vệt mảnh, dài, cùng một hướng."""
         if strength <= 0:
@@ -1873,11 +2003,20 @@ class CharacterStage(QWidget):
         """Tờ giấy mới hiện ra như đang được quét, rồi tự dựng lấy bố cục.
 
         Nhát quét đi theo kiểu của dạng đang tới: `shatter` mở từ giữa ra hai
-        phía, `shred` quét ngang một lượt như cánh chim lướt qua mặt giấy.
+        phía, `shred` quét ngang một lượt như cánh chim lướt qua mặt giấy,
+        `dissolve` thì đóng dần từ ngoài mép vào tâm.
         """
         ease = 1 - (1 - b) ** 3
-        across = self._fx_style == "shred"
-        if across:
+        style = self._fx_style
+        across = style == "shred"
+        inward = style == "dissolve"
+        hole = None
+        if inward:
+            hole = QRectF(0, 0, box.width() * (1 - ease),
+                          box.height() * (1 - ease))
+            hole.moveCenter(box.center())
+            band = QRectF(box)
+        elif across:
             band = QRectF(box.x(), box.y() - 30,
                           box.width() * ease, box.height() + 60)
         else:
@@ -1885,7 +2024,15 @@ class CharacterStage(QWidget):
             band = QRectF(box.x() - 30, box.center().y() - h / 2,
                           box.width() + 60, h)
         p.save()
-        p.setClipRect(band)
+        if inward:
+            # vùng vẽ là cả tờ giấy trừ đi cái lỗ đang khép lại ở giữa
+            ring = QPainterPath()
+            ring.setFillRule(Qt.FillRule.OddEvenFill)
+            ring.addRect(band.adjusted(-30, -30, 30, 30))
+            ring.addRect(hole)
+            p.setClipPath(ring)
+        else:
+            p.setClipRect(band)
         paint_sheet(p, box, alpha=0.35 + 0.65 * ease, skin=self._to)
 
         # khung xương hiện dần theo từng đợt, rồi mờ đi khi tấm thật sắp tới
@@ -1935,7 +2082,10 @@ class CharacterStage(QWidget):
             edge = QColor(self._to.blue)
             edge.setAlpha(int(230 * (1 - b)))
             p.setPen(QPen(edge, 1.8))
-            if across:
+            p.setBrush(Qt.BrushStyle.NoBrush)
+            if inward:
+                p.drawRect(hole)
+            elif across:
                 p.drawLine(band.topRight(), band.bottomRight())
             else:
                 p.drawLine(band.topLeft(), band.topRight())

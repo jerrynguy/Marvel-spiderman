@@ -9,15 +9,15 @@ Nhân vật chưa có hồ sơ thì vẫn mở trang web như trước.
 
 Hồ sơ nào có dạng tiến hoá thì mọc thêm nút **EVOLVE** ở chân trang: bấm vào,
 tờ giấy cũ vỡ ra và dạng mới hiện lên ở một tai hồ sơ riêng, với chân dung tự
-chạy theo thời gian. Hiện có hai dạng, và chúng cố tình không giống nhau chỗ
+chạy theo thời gian. Hiện có ba dạng, và chúng cố tình không giống nhau chỗ
 nào:
 
-| | **Absolute Chameleon** | **Absolute Vulture** |
-|---|---|---|
-| Bảng màu | `void` — tím than, đỏ và lam | `sky` — thép lạnh và đèn natri |
-| Phá tờ giấy | `shatter` — nứt từ giữa rồi nổ tung | `shred` — bốn vệt vuốt xé, gió cuốn đi |
-| Dựng tấm mới | mở từ giữa ra hai phía | quét ngang một lượt |
-| Chân dung | mặt nạ vỡ thành dải trượt, nhiễu tín hiệu | ngược sáng mặt trời mọc, chân trời nghiêng theo cú lượn |
+| | **Absolute Chameleon** | **Absolute Vulture** | **Absolute Tinkerer** |
+|---|---|---|---|
+| Bảng màu | `void` — tím than, đỏ và lam | `sky` — thép lạnh và đèn natri | `mesh` — graphite, đỏ tía và xanh axit |
+| Phá tờ giấy | `shatter` — nứt từ giữa rồi nổ tung | `shred` — bốn vệt vuốt xé, gió cuốn đi | `dissolve` — bị ăn dần từ mép rồi xoắn thành lốc ô |
+| Dựng tấm mới | mở từ giữa ra hai phía | quét ngang một lượt | khép dần từ ngoài vào tâm |
+| Chân dung | mặt nạ vỡ thành dải trượt, nhiễu tín hiệu | ngược sáng mặt trời mọc, chân trời nghiêng theo cú lượn | đứng trên lưới phối cảnh của chính mình, nửa dưới rã thành ô |
 
 ## Chạy
 
@@ -30,7 +30,7 @@ python3 spiderman.py
 
 ```
 spiderman.py            khung app: danh sách, bộ lọc, tìm kiếm, dòng thời gian
-theme.py                bảng màu, mặt chữ, lưới halftone, hai bộ da PULP/VOID
+theme.py                bảng màu, mặt chữ, lưới halftone, các bộ da của tấm hồ sơ
 ui/character_modal.py   tấm hồ sơ + toàn bộ hiệu ứng chuyển cảnh và tiến hoá
 characters/
     profile.py          khuôn dữ liệu Profile, Section, Tier
@@ -41,6 +41,7 @@ characters/
     vulture.py          ASM #2 — dang cánh
     vulture_absolute.py    dạng tiến hoá của Vulture, ngược sáng mặt trời
     tinkerer.py         ASM #2 — ngọn đèn xưởng
+    tinkerer_absolute.py   dạng tiến hoá của Tinkerer, rã thành vật chất lập trình
     doctor_octopus.py   ASM #3 — bốn càng máy
     sandman.py          ASM #4 — nửa người rã thành cát
     lizard.py           ASM #6 — áo blouse rách trên mình bò sát
@@ -127,16 +128,16 @@ khác chữ. Ba chỗ để tạo khác biệt, khai ngay trong `Profile` của 
 ```python
 ABSOLUTE = Profile(
     ...
-    skin="sky",              # pulp | void | sky — thêm bộ da mới ở theme.py
-    evolve_fx="shred",       # shatter (nứt rồi nổ) | shred (vuốt xé, gió cuốn)
+    skin="sky",              # pulp | void | sky | mesh — thêm bộ da ở theme.py
+    evolve_fx="shred",       # shatter | shred | dissolve
     art=draw_absolute_vulture,   # nhận (p, rect, t) để chân dung tự chạy
 )
 ```
 
 `skin` đổi màu toàn bộ tấm hồ sơ — tên nhân vật, dải mép trên, thang bậc, nút
 bấm, tai hồ sơ đều đi theo. `evolve_fx` đổi cả cách phá tờ giấy cũ lẫn chiều
-quét dựng tấm mới. Còn `art` là chỗ để nhân vật có ngôn ngữ chuyển động của
-riêng nó. Ngoài `summary`/`powers` quen thuộc, hồ sơ dài còn có:
+quét dựng tấm mới (mở từ giữa · quét ngang · khép từ ngoài vào). Còn `art`
+là chỗ để nhân vật có ngôn ngữ chuyển động của riêng nó. Ngoài `summary`/`powers` quen thuộc, hồ sơ dài còn có:
 
 | Trường | Việc |
 |---|---|
