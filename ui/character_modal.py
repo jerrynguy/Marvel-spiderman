@@ -1544,6 +1544,8 @@ class CharacterStage(QWidget):
         """
         if self._fx_style == "dissolve":
             return []
+        if self._fx_style == "crush":
+            return self._make_folds(box)
         if self._fx_style == "shred":
             return self._make_rakes(box)
         roll = self._rolls(int(box.width()) * 31 + 17)
@@ -1561,6 +1563,34 @@ class CharacterStage(QWidget):
                 pts.append(QPointF(x, y))
             cracks.append(pts)
         return cracks
+
+    def _make_folds(self, box):
+        """Bốn chỗ càng máy bấu vào, và những nếp gấp chạy ra từ đó.
+
+        Giấy bị bóp thì không nứt toả từ giữa như kính: nó oằn theo nếp, và
+        nếp bắt đầu từ đúng chỗ có lực bấu.
+        """
+        roll = self._rolls(int(box.height()) * 23 + 9)
+        grips = [QPointF(box.x() + box.width() * fx,
+                         box.y() + box.height() * fy)
+                 for fx, fy in ((0.18, 0.16), (0.84, 0.24),
+                                (0.22, 0.82), (0.78, 0.74))]
+        folds = []
+        for grip in grips:
+            for _ in range(3):
+                a = math.atan2(box.center().y() - grip.y(),
+                               box.center().x() - grip.x()) + roll(-1.1, 1.1)
+                x, y = grip.x(), grip.y()
+                pts = [QPointF(x, y)]
+                for _ in range(4):
+                    a += roll(-0.30, 0.30)
+                    step = max(box.width(), box.height()) * roll(0.10, 0.20)
+                    x += math.cos(a) * step
+                    y += math.sin(a) * step
+                    pts.append(QPointF(x, y))
+                folds.append(pts)
+        self._grips = grips
+        return folds
 
     def _make_rakes(self, box):
         """Bốn vệt vuốt song song, chém từ trên phải xuống dưới trái."""
@@ -1585,9 +1615,40 @@ class CharacterStage(QWidget):
         """Chia tờ giấy thành các mảnh sắp rời ra, theo kiểu của dạng sắp tới."""
         if self._fx_style == "dissolve":
             return self._make_cells(box)
+        if self._fx_style == "crush":
+            return self._make_slabs(box)
         if self._fx_style == "shred":
             return self._make_strips(box)
         return self._make_grid_shards(box)
+
+    def _make_slabs(self, box):
+        """Sáu tấm lớn bị bẻ rời, không phải trăm mảnh vụn.
+
+        Máy móc bóp giấy thì giấy gãy thành từng tảng nặng, đi chậm và xoay
+        ít — khác hẳn cú nổ vốn hất ra hàng chục mảnh nhỏ bay tán loạn.
+        """
+        roll = self._rolls(int(box.width()) * 17 + 41)
+        ctr = box.center()
+        cuts = ((0.00, 0.00, 0.46, 0.52), (0.46, 0.00, 0.54, 0.34),
+                (0.46, 0.34, 0.54, 0.30), (0.00, 0.52, 0.38, 0.48),
+                (0.38, 0.64, 0.32, 0.36), (0.70, 0.64, 0.30, 0.36))
+        slabs = []
+        for fx, fy, fw, fh in cuts:
+            x = box.x() + box.width() * fx
+            y = box.y() + box.height() * fy
+            w, h = box.width() * fw, box.height() * fh
+            jx, jy = w * 0.05, h * 0.05
+            poly = QPolygonF([
+                QPointF(x + roll(-jx, jx), y + roll(-jy, jy)),
+                QPointF(x + w + roll(-jx, jx), y + roll(-jy, jy)),
+                QPointF(x + w + roll(-jx, jx), y + h + roll(-jy, jy)),
+                QPointF(x + roll(-jx, jx), y + h + roll(-jy, jy))])
+            hub = poly.boundingRect().center()
+            vx, vy = hub.x() - ctr.x(), hub.y() - ctr.y()
+            d = math.hypot(vx, vy) or 1.0
+            slabs.append((poly, vx / d, vy / d, roll(-28, 28),
+                          roll(0.0, 0.20), roll(0.5, 0.85)))
+        return slabs
 
     def _make_cells(self, box):
         """Băm tờ giấy thành lưới ô vuông nhỏ, kèm toạ độ cực của từng ô.
@@ -1726,6 +1787,7 @@ class CharacterStage(QWidget):
             self._paint_dissolve(p, box, t)
             return
         shred = self._fx_style == "shred"
+        crush = self._fx_style == "crush"
         ctr = box.center()
         span = math.hypot(box.width(), box.height()) / 2
         ignite = 0.30
@@ -1739,6 +1801,11 @@ class CharacterStage(QWidget):
                 p.rotate(-2.6 * k * k)
                 p.translate(-ctr)
                 p.translate(4.0 * k * k, -2.0 * k * k)
+            elif crush:
+                # bị bấu và nén lại, không rung cũng không nghiêng
+                p.translate(ctr)
+                p.scale(1.0 - 0.03 * k * k, 1.0 - 0.016 * k * k)
+                p.translate(-ctr.x(), -ctr.y())
             else:
                 amp = 6.0 * k * k
                 p.translate((self._noise[0] - 0.5) * amp,
@@ -1748,6 +1815,8 @@ class CharacterStage(QWidget):
             self._paint_cracks(p, k)
             if shred:
                 self._paint_gust(p, box, k * 0.7)
+            elif crush:
+                self._paint_grips(p, k)
             else:
                 # lò lửa nhen dưới lớp giấy, hắt ra từ chính chỗ nứt
                 heat = QRadialGradient(ctr, span * (0.4 + 0.8 * k))
@@ -1776,7 +1845,8 @@ class CharacterStage(QWidget):
             paint_sheet(p, box, alpha=ghost, skin=self._from)
 
         # mảnh giấy cũ văng ra ngoài rồi tan; mảnh chưa tới lượt thì còn nguyên
-        reach = span * 2.0
+        # Tảng bị bẻ thì nặng, đi gần thôi; mảnh nổ mới bay xa.
+        reach = span * (1.15 if crush else 2.0)
         for poly, dx, dy, spin, lag, speed in self._shards:
             s = (prog - lag) / max(0.05, 1.0 - lag)
             s = min(1.0, max(0.0, s))
@@ -1786,7 +1856,7 @@ class CharacterStage(QWidget):
             ease = s ** 0.55          # bung rất nhanh rồi trôi chậm lại
             hub = poly.boundingRect().center()
             # mảnh nổ thì nặng và rơi xuống; dải bị gió cuốn thì không rơi
-            fall = 0.0 if shred else 26 * ease * ease
+            fall = 0.0 if shred else (46 if crush else 26) * ease * ease
             p.save()
             p.translate(dx * reach * speed * ease,
                         dy * reach * speed * ease + fall)
@@ -1805,6 +1875,24 @@ class CharacterStage(QWidget):
                                 alpha * (0.2 + 0.6 * lift)), 1.0))
             p.drawPolygon(poly)
             p.restore()
+
+        if crush:
+            # không nổ, không gió: chỉ tia lửa bắn ra ở chỗ kim loại bấu vào
+            spark = max(0.0, 1.0 - prog / 0.30)
+            if spark > 0:
+                p.setPen(Qt.PenStyle.NoPen)
+                for i, grip in enumerate(getattr(self, "_grips", ())):
+                    for k in range(7):
+                        a = self._noise[(i * 7 + k) % 24] * math.tau
+                        far = 26 * (1 - spark) * (0.4 + self._noise[k % 24])
+                        tone = QColor(self._to.blue if k % 2 else self._to.red)
+                        tone.setAlpha(int(220 * spark))
+                        p.setBrush(tone)
+                        p.drawEllipse(
+                            QPointF(grip.x() + math.cos(a) * far,
+                                    grip.y() + math.sin(a) * far + far * 0.4),
+                            1.1 * spark + 0.3, 1.1 * spark + 0.3)
+            return
 
         if shred:
             # gió cuốn: không có sóng xung kích, chỉ luồng khí kéo dài
@@ -1947,6 +2035,32 @@ class CharacterStage(QWidget):
             p.setPen(QPen(tone, 0.9))
             p.drawRects(cells)
 
+    def _paint_grips(self, p, k):
+        """Bốn chỗ càng máy bấu xuống: vết lõm tối, ba vuốt cào, và nhiệt."""
+        for i, grip in enumerate(getattr(self, "_grips", ())):
+            dent = QRadialGradient(grip, 46 * (0.4 + 0.6 * k))
+            dent.setColorAt(0.0, _fade(self._from.frame, 0.55 * k))
+            dent.setColorAt(0.55, _fade(self._from.frame, 0.16 * k))
+            dent.setColorAt(1.0, _fade(self._from.frame, 0.0))
+            p.setPen(Qt.PenStyle.NoPen)
+            p.setBrush(dent)
+            p.drawRect(QRectF(grip.x() - 50, grip.y() - 50, 100, 100))
+
+            p.setBrush(Qt.BrushStyle.NoBrush)
+            p.setPen(QPen(_fade(self._to.red, 0.85 * k), 1.4 * k + 0.3))
+            for j in range(3):
+                a = math.radians(-46 + j * 46 + i * 23)
+                p.drawLine(QPointF(grip.x() + math.cos(a) * 5,
+                                   grip.y() + math.sin(a) * 5),
+                           QPointF(grip.x() + math.cos(a) * (7 + 16 * k),
+                                   grip.y() + math.sin(a) * (7 + 16 * k)))
+            hot = QRadialGradient(grip, 13 * k + 2)
+            hot.setColorAt(0.0, _fade(self._to.red, 0.75 * k * k))
+            hot.setColorAt(1.0, _fade(self._to.red, 0.0))
+            p.setPen(Qt.PenStyle.NoPen)
+            p.setBrush(hot)
+            p.drawRect(QRectF(grip.x() - 16, grip.y() - 16, 32, 32))
+
     def _paint_gust(self, p, box, strength):
         """Luồng gió chéo thổi qua khung — vệt mảnh, dài, cùng một hướng."""
         if strength <= 0:
@@ -2010,8 +2124,14 @@ class CharacterStage(QWidget):
         style = self._fx_style
         across = style == "shred"
         inward = style == "dissolve"
+        doors = style == "crush"
         hole = None
-        if inward:
+        if doors:
+            # hai cánh cửa thép trượt vào nhau ở giữa
+            half = box.width() / 2 * ease
+            band = QRectF(box.center().x() - half, box.y() - 30,
+                          half * 2, box.height() + 60)
+        elif inward:
             hole = QRectF(0, 0, box.width() * (1 - ease),
                           box.height() * (1 - ease))
             hole.moveCenter(box.center())
@@ -2085,6 +2205,9 @@ class CharacterStage(QWidget):
             p.setBrush(Qt.BrushStyle.NoBrush)
             if inward:
                 p.drawRect(hole)
+            elif doors:
+                p.drawLine(band.topLeft(), band.bottomLeft())
+                p.drawLine(band.topRight(), band.bottomRight())
             elif across:
                 p.drawLine(band.topRight(), band.bottomRight())
             else:

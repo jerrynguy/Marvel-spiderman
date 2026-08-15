@@ -14,6 +14,7 @@ from PySide6.QtGui import QColor, QLinearGradient, QPainterPath, QPen
 from theme import INK, INK_SOFT, PAPER_HI, YELLOW
 
 from .art import curve_at, curve_normal, design, feather, marks, misprint, ribbon
+from .doctor_octopus_absolute import ABSOLUTE
 from .profile import Profile
 
 # Bốn càng máy: (gốc, điểm uốn, ngọn). Hai càng trái, hai càng phải đối xứng.
@@ -224,6 +225,10 @@ PROFILE = Profile(
 
     blurb="Green Goblin cướp đi người Peter Parker yêu. Doctor Octopus cướp "
           "đi chính Peter Parker.",
+
+    # Bấm nút tiến hoá để mở dạng Absolute — bốn càng thành tám.
+    evolution=ABSOLUTE,
+    evolve_label="Evolve",
 
     art=draw_octopus,
     caption="Chân dung dựng lại bằng code",

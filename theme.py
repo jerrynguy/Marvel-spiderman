@@ -135,8 +135,26 @@ MESH = Skin(
     dark=True,
 )
 
+# Lò rèn: sắt ám khói, gang chảy và đồng thau. Đây là bộ da ấm duy nhất —
+# ba bộ kia đều lấy nền lạnh, nên chỉ cần liếc là biết đang xem hồ sơ nào.
+FORGE = Skin(
+    name="forge",
+    paper=QColor("#0E0908"), paper_hi=QColor("#171010"),
+    ink=QColor("#F3EADF"), ink_soft=QColor("#9C8579"),
+    red=QColor("#FF5A1F"), blue=QColor("#FFC94A"), yellow=QColor("#BFE3FF"),
+    dot=QColor(255, 180, 120, 14),
+    frame=QColor("#4A342A"),
+    scrim=QColor(10, 5, 3, 224),
+    grid=QColor(255, 170, 110, 22),
+    ghosts=((QColor("#FFC94A"), -7, -7, 62), (QColor("#FF5A1F"), 7, 7, 96)),
+    accents={"edge": (QColor("#FFC94A"), QColor("#241704")),
+             "new": (QColor("#FF5A1F"), QColor("#2A1108")),
+             "fix": (QColor("#BFE3FF"), QColor("#0E1B24"))},
+    dark=True,
+)
+
 # Tra theo tên để hồ sơ chỉ cần ghi `skin="sky"`.
-SKINS = {skin.name: skin for skin in (PULP, VOID, SKY, MESH)}
+SKINS = {skin.name: skin for skin in (PULP, VOID, SKY, MESH, FORGE)}
 
 
 def pick_font(candidates, fallback="DejaVu Sans"):
