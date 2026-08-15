@@ -175,8 +175,28 @@ DUST = Skin(
     dot_step=4,
 )
 
+# Đầm lầy: bộ da duy nhất có nền là một *màu* chứ không phải sắc trung tính.
+# Năm bộ kia đều gần đen hoặc gần trắng; bộ này xanh rêu đậm, mực vàng lưu
+# huỳnh và tím nọc — cặp màu không xuất hiện ở bất kỳ bộ nào khác.
+SWAMP = Skin(
+    name="swamp",
+    paper=QColor("#0E2A1C"), paper_hi=QColor("#143824"),
+    ink=QColor("#EAF3E2"), ink_soft=QColor("#82A38B"),
+    red=QColor("#D4E33A"), blue=QColor("#B072FF"), yellow=QColor("#6FE3B4"),
+    dot=QColor(190, 255, 200, 16),
+    frame=QColor("#3E6B4C"),
+    scrim=QColor(6, 18, 12, 226),
+    grid=QColor(150, 255, 190, 24),
+    ghosts=((QColor("#B072FF"), -7, -7, 70), (QColor("#D4E33A"), 7, 7, 84)),
+    accents={"edge": (QColor("#B072FF"), QColor("#231539")),
+             "new": (QColor("#D4E33A"), QColor("#2A2E08")),
+             "fix": (QColor("#6FE3B4"), QColor("#0D2A22"))},
+    dark=True,
+)
+
 # Tra theo tên để hồ sơ chỉ cần ghi `skin="sky"`.
-SKINS = {skin.name: skin for skin in (PULP, VOID, SKY, MESH, FORGE, DUST)}
+SKINS = {skin.name: skin
+         for skin in (PULP, VOID, SKY, MESH, FORGE, DUST, SWAMP)}
 
 
 def pick_font(candidates, fallback="DejaVu Sans"):

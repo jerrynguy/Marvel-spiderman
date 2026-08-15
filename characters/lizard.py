@@ -12,6 +12,7 @@ from PySide6.QtGui import QColor, QPainterPath, QPen
 from theme import INK, INK_SOFT, PAPER_HI
 
 from .art import design, fan, marks, misprint, ribbon
+from .lizard_absolute import ABSOLUTE
 from .profile import Profile
 
 
@@ -202,6 +203,10 @@ PROFILE = Profile(
 
     blurb="Cả danh sách này toàn những kẻ chọn làm ác nhân. Connors không "
           "chọn gì cả — ông ta chỉ muốn có lại cánh tay của mình.",
+
+    # Bấm nút tiến hoá để mở dạng Absolute — Connors không còn trong đó nữa.
+    evolution=ABSOLUTE,
+    evolve_label="Evolve",
 
     art=draw_lizard,
     caption="Chân dung dựng lại bằng code",

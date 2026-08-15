@@ -1541,14 +1541,18 @@ class CharacterStage(QWidget):
 
         `shatter` nứt toả từ giữa như kính vỡ. `shred` là bốn vệt vuốt song
         song chém chéo qua mặt giấy, đúng dấu móng của một con chim săn mồi.
-        `dissolve` thì không có đường nào cả: giấy bị ăn dần từ mép vào.
+        `bloom` là rễ bò vào từ mép, `crush` là nếp gấp quanh chỗ càng bấu.
+        `dissolve` và `erode` thì không có đường nào cả.
         """
         if self._fx_style in ("dissolve", "erode"):
             return []
-        if self._fx_style == "crush":
-            return self._make_folds(box)
-        if self._fx_style == "shred":
-            return self._make_rakes(box)
+        return {"bloom": self._make_tendrils,
+                "crush": self._make_folds,
+                "shred": self._make_rakes}.get(
+                    self._fx_style, self._make_web)(box)
+
+    def _make_web(self, box):
+        """Mạng nứt toả từ giữa tờ giấy — dáng của kính vỡ, dùng cho shatter."""
         roll = self._rolls(int(box.width()) * 31 + 17)
         c = box.center()
         step = max(box.width(), box.height()) * 0.5 / 6
@@ -1564,6 +1568,32 @@ class CharacterStage(QWidget):
                 pts.append(QPointF(x, y))
             cracks.append(pts)
         return cracks
+
+    def _make_tendrils(self, box):
+        """Những sợi rễ bò vào từ mép giấy, mỗi sợi một nhánh cong riêng."""
+        roll = self._rolls(int(box.width()) * 29 + 13)
+        vines = []
+        for i in range(10):
+            side = i % 4
+            if side == 0:
+                start, a = QPointF(box.x() + roll(0, box.width()), box.y()), 90
+            elif side == 1:
+                start, a = QPointF(box.right(), box.y() + roll(0, box.height())), 180
+            elif side == 2:
+                start, a = QPointF(box.x() + roll(0, box.width()), box.bottom()), -90
+            else:
+                start, a = QPointF(box.x(), box.y() + roll(0, box.height())), 0
+            a = math.radians(a + roll(-38, 38))
+            pts = [start]
+            x, y = start.x(), start.y()
+            step = max(box.width(), box.height()) * 0.09
+            for _ in range(7):
+                a += math.radians(roll(-32, 32))
+                x += math.cos(a) * step * roll(0.7, 1.4)
+                y += math.sin(a) * step * roll(0.7, 1.4)
+                pts.append(QPointF(x, y))
+            vines.append(pts)
+        return vines
 
     def _make_folds(self, box):
         """Bốn chỗ càng máy bấu vào, và những nếp gấp chạy ra từ đó.
@@ -1613,16 +1643,33 @@ class CharacterStage(QWidget):
         return rakes
 
     def _make_shards(self, box):
-        """Chia tờ giấy thành các mảnh sắp rời ra, theo kiểu của dạng sắp tới."""
-        if self._fx_style == "erode":
-            return self._make_dunes(box)
-        if self._fx_style == "dissolve":
-            return self._make_cells(box)
-        if self._fx_style == "crush":
-            return self._make_slabs(box)
-        if self._fx_style == "shred":
-            return self._make_strips(box)
-        return self._make_grid_shards(box)
+        """Chia tờ giấy thành các mảnh sắp rời ra, theo kiểu của dạng sắp tới.
+
+        Tra bảng chứ không xếp một dãy `if` nối đuôi: dãy `if` có cái đuôi
+        `return` mặc định, mà cái đuôi ấy đã hai lần bị một hàm mới chen vào
+        giữa, biến nó thành code chết và làm kiểu `shatter` nhận về None.
+        """
+        return {"bloom": self._make_colonies,
+                "erode": self._make_dunes,
+                "dissolve": self._make_cells,
+                "crush": self._make_slabs,
+                "shred": self._make_strips}.get(
+                    self._fx_style, self._make_grid_shards)(box)
+
+    def _make_colonies(self, box):
+        """Các ổ bào tử: chỗ đáp, cỡ tối đa, và lúc nào thì bắt đầu phình ra."""
+        roll = self._rolls(int(box.height()) * 31 + 19)
+        far = math.hypot(box.width(), box.height()) / 2
+        ctr = box.center()
+        spots = []
+        for _ in range(42):
+            c = QPointF(box.x() + roll(-0.05, 1.05) * box.width(),
+                        box.y() + roll(-0.05, 1.05) * box.height())
+            # ổ ở rìa mọc trước, ổ giữa mọc sau — bệnh lan từ ngoài vào
+            edge = math.hypot(c.x() - ctr.x(), c.y() - ctr.y()) / far
+            spots.append((c, roll(0.18, 0.42) * far, roll(0.0, 0.34)
+                          * (1.15 - edge), roll(0, 6.28)))
+        return spots
 
     def _make_dunes(self, box):
         """Hồ sơ độ mòn của từng cột giấy, và độ cao đụn cát khi bồi trở lại.
@@ -1808,6 +1855,9 @@ class CharacterStage(QWidget):
             return
         if self._fx_style == "erode":
             self._paint_erode(p, box, t)
+            return
+        if self._fx_style == "bloom":
+            self._paint_bloom(p, box, t)
             return
         shred = self._fx_style == "shred"
         crush = self._fx_style == "crush"
@@ -2060,6 +2110,53 @@ class CharacterStage(QWidget):
         if build > 0:
             self._paint_rebuild(p, box, min(1.0, build))
 
+    def _paint_bloom(self, p, box, t):
+        """Tờ giấy không bị phá — nó bị *chiếm*.
+
+        Rễ bò vào từ mép, bào tử đáp xuống rồi phình thành từng ổ, các ổ loang
+        ra nhập vào nhau cho tới khi phủ kín mặt giấy. Xong xuôi, tấm mới nở
+        ra từ một hạt ở giữa theo hình tròn — hướng dựng thứ sáu.
+        """
+        p.save()
+        p.setClipRect(box)
+        paint_sheet(p, box, skin=self._from)
+
+        # rễ bò vào trước, dọn đường cho bào tử
+        creep = min(1.0, t / 0.34)
+        p.setBrush(Qt.BrushStyle.NoBrush)
+        for pts in self._cracks:
+            n = max(2, int(len(pts) * creep))
+            path = QPainterPath(pts[0])
+            for q in pts[1:n]:
+                path.lineTo(q)
+            for color, w, a in ((self._to.blue, 2.6, 90),
+                                (self._to.red, 1.1, 190)):
+                tone = QColor(color)
+                tone.setAlpha(int(a * creep))
+                p.setPen(QPen(tone, w))
+                p.drawPath(path)
+
+        # các ổ bào tử phình ra, mép sẫm và lõi sáng như nấm mốc
+        p.setPen(Qt.PenStyle.NoPen)
+        for c, full, lag, phase in self._shards:
+            grow = (t - lag) / 0.62
+            if grow <= 0:
+                continue
+            r = full * min(1.0, grow) ** 0.7
+            wob = 1.0 + 0.07 * math.sin(t * 3 + phase)
+            p.setBrush(_fade(self._to.blue, 0.30))
+            p.drawEllipse(c, r * 1.12 * wob, r * 1.04 * wob)
+            p.setBrush(_fade(self._to.paper_hi, 0.92))
+            p.drawEllipse(c, r * wob, r * 0.94 * wob)
+            p.setBrush(_fade(self._to.red, 0.16))
+            p.drawEllipse(c, r * 0.55 * wob, r * 0.5 * wob)
+        p.restore()
+
+        build = (t - 0.52) / 0.48
+        if build > 0:
+            self._paint_rebuild(p, box, min(1.0, build))
+            self._paint_motes(p, box, min(1.0, build))
+
     def _paint_abrade(self, p, box, k):
         """Vệt mài: những rãnh nông chạy chéo, mờ nhưng mỗi lúc một rõ."""
         roll = self._rolls(313)
@@ -2226,8 +2323,15 @@ class CharacterStage(QWidget):
         inward = style == "dissolve"
         doors = style == "crush"
         piling = style == "erode"
+        seeding = style == "bloom"
         hole = None
-        if piling:
+        if seeding:
+            # hạt nảy ở giữa rồi loang tròn ra, mép hơi méo như vòng nấm
+            far = math.hypot(box.width(), box.height()) / 2 * 1.05
+            band = QRectF(box)
+            hole = QRectF(0, 0, far * 2 * ease, far * 2 * ease)
+            hole.moveCenter(box.center())
+        elif piling:
             # cát bồi từ đáy lên, mặt đụn nhấp nhô chứ không phẳng
             band = QRectF(box.x(), box.bottom() - box.height() * ease,
                           box.width(), box.height() * ease + 30)
@@ -2249,7 +2353,11 @@ class CharacterStage(QWidget):
             band = QRectF(box.x() - 30, box.center().y() - h / 2,
                           box.width() + 60, h)
         p.save()
-        if piling:
+        if seeding:
+            disc = QPainterPath()
+            disc.addEllipse(hole)
+            p.setClipPath(disc)
+        elif piling:
             cols, _, crest = self._shards
             w = box.width() / cols
             dune = QPainterPath()
@@ -2319,7 +2427,9 @@ class CharacterStage(QWidget):
             edge.setAlpha(int(230 * (1 - b)))
             p.setPen(QPen(edge, 1.8))
             p.setBrush(Qt.BrushStyle.NoBrush)
-            if piling:
+            if seeding:
+                p.drawEllipse(hole)
+            elif piling:
                 p.drawLine(QPointF(box.x(), band.y()),
                            QPointF(box.right(), band.y()))
             elif inward:

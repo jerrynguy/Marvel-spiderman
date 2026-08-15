@@ -9,8 +9,8 @@ Nhân vật chưa có hồ sơ thì vẫn mở trang web như trước.
 
 Hồ sơ nào có dạng tiến hoá thì mọc thêm nút **EVOLVE** ở chân trang: bấm vào,
 tờ giấy cũ vỡ ra và dạng mới hiện lên ở một tai hồ sơ riêng, với chân dung tự
-chạy theo thời gian. Hiện có năm dạng, và chúng cố tình không giống nhau chỗ
-nào:
+chạy theo thời gian. Cả sáu nhân vật đã có hồ sơ đều có dạng tiến hoá, và
+chúng cố tình không giống nhau chỗ nào:
 
 | | Bảng màu | Phá tờ giấy | Dựng tấm mới | Chân dung |
 |---|---|---|---|---|
@@ -19,13 +19,16 @@ nào:
 | **Tinkerer** | `mesh` — graphite, đỏ tía và xanh axit | `dissolve` — ăn từ mép, xoắn thành lốc ô | khép từ ngoài vào tâm | đứng trên lưới của chính mình, nửa dưới rã thành ô |
 | **Doctor Octopus** | `forge` — sắt ám khói, gang chảy và đồng thau | `crush` — bốn càng bấu, nén oằn, bẻ thành tảng | hai cánh cửa thép trượt vào nhau | tám càng tự uốn theo sóng, từng đốt một |
 | **Sandman** | `dust` — cát bệch, sắt gỉ và obsidian | `erode` — mài mòn sau một đường biên răng cưa | cát bồi lên từ đáy thành đụn | bóng người dựng lại từ nhiễu, mép luôn đang lở |
+| **Lizard** | `swamp` — xanh rêu, lưu huỳnh và tím nọc | `bloom` — rễ bò vào, bào tử phình thành ổ phủ kín | nở tròn ra từ một hạt ở giữa | dáng bò rình nằm ngang, sóng chạy dọc đuôi |
 
 Mức độ "sống" của chân dung cũng tăng dần: ba dạng đầu có bóng người đứng yên
-và chỉ chi tiết nhỏ động đậy; Otto thì chính nhân vật cử động; còn Marko thì
-đến cái hình cũng không cố định — mỗi khung hình một đường viền khác.
+và chỉ chi tiết nhỏ động đậy; Otto và Marko thì chính nhân vật cử động — Otto
+uốn tám càng, Marko thì đến cái hình cũng không cố định, mỗi khung hình một
+đường viền khác.
 
-`dust` là bộ da sáng duy nhất. Bốn bộ kia mở ra là tối sầm lại, riêng nó thì
-loà lên: màn phủ là một trận cát trắng xoá chứ không phải bóng đêm.
+Hai bộ da đi ra khỏi khuôn: `dust` là bộ **sáng** duy nhất — mở ra không tối
+sầm mà loà lên, màn phủ là một trận cát trắng xoá; còn `swamp` là bộ duy nhất
+lấy nền là một **màu** thay vì sắc trung tính.
 
 ## Chạy
 
@@ -55,6 +58,7 @@ characters/
     sandman.py          ASM #4 — nửa người rã thành cát
     sandman_absolute.py    dạng tiến hoá của Sandman, bão sa mạc hoá
     lizard.py           ASM #6 — áo blouse rách trên mình bò sát
+    lizard_absolute.py     dạng tiến hoá của Lizard, đầm lầy đồng hoá
 assets/characters/      nơi thả ảnh nhân vật
 ```
 
@@ -138,8 +142,8 @@ khác chữ. Ba chỗ để tạo khác biệt, khai ngay trong `Profile` của 
 ```python
 ABSOLUTE = Profile(
     ...
-    skin="sky",              # pulp | void | sky | mesh | forge | dust
-    evolve_fx="shred",       # shatter | shred | dissolve | crush | erode
+    skin="sky",              # pulp | void | sky | mesh | forge | dust | swamp
+    evolve_fx="shred",       # shatter | shred | dissolve | crush | erode | bloom
     art=draw_absolute_vulture,   # nhận (p, rect, t) để chân dung tự chạy
 )
 ```
@@ -147,8 +151,8 @@ ABSOLUTE = Profile(
 `skin` đổi màu toàn bộ tấm hồ sơ — tên nhân vật, dải mép trên, thang bậc, nút
 bấm, tai hồ sơ đều đi theo. `evolve_fx` đổi cả cách phá tờ giấy cũ lẫn chiều
 quét dựng tấm mới (mở từ giữa · quét ngang · khép từ ngoài vào · cửa thép
-trượt lại · cát bồi từ đáy). Còn `art` là chỗ để nhân vật có ngôn ngữ chuyển
-động của riêng nó. Ngoài `summary`/`powers` quen thuộc, hồ sơ dài còn có:
+trượt lại · cát bồi từ đáy · nở tròn từ một hạt). Còn `art` là chỗ để nhân
+vật có ngôn ngữ chuyển động của riêng nó. Ngoài `summary`/`powers` quen thuộc, hồ sơ dài còn có:
 
 | Trường | Việc |
 |---|---|
