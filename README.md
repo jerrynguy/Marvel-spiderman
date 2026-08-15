@@ -8,9 +8,16 @@ mô tả, năng lực, lý lịch — với hiệu ứng chuyển cảnh mượt
 Nhân vật chưa có hồ sơ thì vẫn mở trang web như trước.
 
 Hồ sơ nào có dạng tiến hoá thì mọc thêm nút **EVOLVE** ở chân trang: bấm vào,
-tờ giấy nứt ra rồi nổ tung, và dạng mới được quét lại trên nền đen ở một tai
-hồ sơ riêng. Chameleon là nhân vật đầu tiên có dạng đó — **Absolute
-Chameleon**, mối đe doạ cấp quốc gia, với chân dung tự chạy theo thời gian.
+tờ giấy cũ vỡ ra và dạng mới hiện lên ở một tai hồ sơ riêng, với chân dung tự
+chạy theo thời gian. Hiện có hai dạng, và chúng cố tình không giống nhau chỗ
+nào:
+
+| | **Absolute Chameleon** | **Absolute Vulture** |
+|---|---|---|
+| Bảng màu | `void` — tím than, đỏ và lam | `sky` — thép lạnh và đèn natri |
+| Phá tờ giấy | `shatter` — nứt từ giữa rồi nổ tung | `shred` — bốn vệt vuốt xé, gió cuốn đi |
+| Dựng tấm mới | mở từ giữa ra hai phía | quét ngang một lượt |
+| Chân dung | mặt nạ vỡ thành dải trượt, nhiễu tín hiệu | ngược sáng mặt trời mọc, chân trời nghiêng theo cú lượn |
 
 ## Chạy
 
@@ -32,6 +39,7 @@ characters/
     chameleon.py        ASM #1 — mặt nạ trắng trơn
     chameleon_absolute.py  dạng tiến hoá của Chameleon, chân dung tự chạy
     vulture.py          ASM #2 — dang cánh
+    vulture_absolute.py    dạng tiến hoá của Vulture, ngược sáng mặt trời
     tinkerer.py         ASM #2 — ngọn đèn xưởng
     doctor_octopus.py   ASM #3 — bốn càng máy
     sandman.py          ASM #4 — nửa người rã thành cát
@@ -113,20 +121,33 @@ PROFILE = Profile(
 )
 ```
 
-Dạng mới khai `dark=True` thì cả tấm hồ sơ đổi da: nền đen, mực huỳnh quang,
-mực lệch trục kiểu tín hiệu số hỏng thay cho bản in chồng màu sai. Ngoài
-`summary`/`powers` quen thuộc, hồ sơ dài còn có:
+**Nguyên tắc: mỗi dạng Absolute phải khác hẳn những dạng còn lại**, không chỉ
+khác chữ. Ba chỗ để tạo khác biệt, khai ngay trong `Profile` của dạng mới:
+
+```python
+ABSOLUTE = Profile(
+    ...
+    skin="sky",              # pulp | void | sky — thêm bộ da mới ở theme.py
+    evolve_fx="shred",       # shatter (nứt rồi nổ) | shred (vuốt xé, gió cuốn)
+    art=draw_absolute_vulture,   # nhận (p, rect, t) để chân dung tự chạy
+)
+```
+
+`skin` đổi màu toàn bộ tấm hồ sơ — tên nhân vật, dải mép trên, thang bậc, nút
+bấm, tai hồ sơ đều đi theo. `evolve_fx` đổi cả cách phá tờ giấy cũ lẫn chiều
+quét dựng tấm mới. Còn `art` là chỗ để nhân vật có ngôn ngữ chuyển động của
+riêng nó. Ngoài `summary`/`powers` quen thuộc, hồ sơ dài còn có:
 
 | Trường | Việc |
 |---|---|
 | `sections=(Section(...),)` | Mục dài: tiêu đề, đoạn dẫn, rồi các gạch đầu dòng `(tên đòn, mô tả)` |
-| `tiers=(Tier(...),)` | Thang bậc tàn phá, vẽ thành nấc — càng lên cao mực càng đỏ |
+| `tiers=(Tier(...),)` | Thang bậc tàn phá, vẽ thành nấc — càng lên cao mực càng đỏ. Nhãn đánh số (`Tier 1`) hay đặt tên (`Tier Alpha`) đều được, cột trái tự nới theo chữ dài nhất |
 | `kicker` `stamp` `note` `tab` | Chữ ở góc trên, dòng đóng dấu, nhãn nhỏ, tên trên tai hồ sơ |
 
-Bấm nút lần đầu: tờ giấy rung lên, nứt từ giữa ra, nổ thành mảnh, rồi tấm mới
-được quét lại và tự dựng lấy bố cục. Xong xuôi, hai dạng nằm ở hai tai hồ sơ
-nhô trên mép giấy — bấm tai hoặc gõ mũi tên trái/phải để đổi qua lại, lần này
-chỉ một nhát quét chứ không nổ nữa.
+Bấm nút lần đầu: tờ giấy cũ vỡ theo kiểu của dạng sắp tới, rồi tấm mới được
+quét lại và tự dựng lấy bố cục. Xong xuôi, các dạng nằm ở những tai hồ sơ nhô
+trên mép giấy — bấm tai hoặc gõ mũi tên trái/phải để đổi qua lại, lần này chỉ
+một nhát quét chứ không phá lại.
 
 ## Hiệu ứng mở hồ sơ
 

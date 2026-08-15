@@ -16,6 +16,7 @@ from theme import INK, INK_SOFT, PAPER_HI
 
 from .art import design, fan, marks, mirrored, misprint
 from .profile import Profile
+from .vulture_absolute import ABSOLUTE
 
 WING_ROOT = QPointF(42, 66)
 # (góc, dài, nửa bề ngang) — cánh trái dang ngang rồi vuốt cong lên
@@ -204,6 +205,10 @@ PROFILE = Profile(
 
     art=draw_vulture,
     caption="Chân dung dựng lại bằng code",
+
+    # Bấm nút tiến hoá để mở dạng Absolute — bộ da và cú chuyển cảnh riêng.
+    evolution=ABSOLUTE,
+    evolve_label="Evolve",
 
     links=(
         ("Wikipedia", "https://en.wikipedia.org/wiki/Vulture_(Marvel_Comics)"),

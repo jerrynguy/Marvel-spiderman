@@ -30,7 +30,7 @@ from PySide6.QtGui import (QBrush, QColor, QFontMetrics, QLinearGradient,
 from PySide6.QtWidgets import (QGraphicsOpacityEffect, QHBoxLayout, QLabel,
                                QScrollArea, QSizePolicy, QVBoxLayout, QWidget)
 
-from theme import PULP, VOID, Type, blend, halftone_tile
+from theme import PULP, SKINS, Type, blend, halftone_tile
 
 SHADOW = 12      # chỗ chừa cho bóng đổ quanh tờ giấy
 BAND = 7         # dải màu ở mép trên tờ giấy
@@ -39,8 +39,8 @@ _grids = {}
 
 
 def skin_of(profile):
-    """Da của một hồ sơ: giấy pulp, hoặc nền void cho các dạng Absolute."""
-    return VOID if getattr(profile, "dark", False) else PULP
+    """Bộ da của một hồ sơ — mặc định là giấy pulp nếu không khai gì khác."""
+    return SKINS.get(getattr(profile, "skin", "") or "pulp", PULP)
 
 
 def _paper_tile(skin):
@@ -633,30 +633,60 @@ class FactTable(QWidget):
 
 
 class TierLadder(QWidget):
-    """Thang bậc tàn phá: mỗi bậc một nấc, càng lên cao mực càng đỏ."""
+    """Thang bậc tàn phá: mỗi bậc một nấc, càng lên cao mực càng đỏ.
 
-    NUM_W = 58
+    Nhãn bậc tách làm hai phần: chữ đầu in nhỏ ở trên ("TIER"), phần còn lại
+    in to bên dưới. Nhờ vậy thang đánh số ("Tier 1") và thang đặt tên
+    ("Tier Alpha") đều vừa khung — cột trái tự nới theo chữ dài nhất.
+    """
+
     GAP = 14
+    GUTTER_MAX = 98
 
     def __init__(self, tiers, skin=PULP, parent=None):
         super().__init__(parent)
         self.tiers = tiers
         self.s = skin
         self.f_word = Type.text(7, bold=True, letter=1.5, caps=True)
-        self.f_num = Type.head(26, letter=0.5)
         self.f_title = Type.text(10, bold=True)
         self.f_text = Type.text(9)
         self.f_speed = Type.text(7, bold=True, letter=1.1, caps=True)
         self._rows = []
+        self._plan()
         self.setSizePolicy(QSizePolicy.Policy.Preferred,
                            QSizePolicy.Policy.Fixed)
         self._measure(420)
+
+    def _plan(self):
+        """Tách nhãn, chọn cỡ chữ lớn nhất mà vẫn vừa, rồi định bề ngang cột."""
+        tokens = []
+        for i, tier in enumerate(self.tiers):
+            parts = tier.label.split(None, 1)
+            head = (parts[0] if parts else "Tier").upper()
+            tail = (parts[1] if len(parts) > 1 else str(i + 1)).upper()
+            tokens.append((head, tail))
+
+        size = 26
+        while size > 11:
+            f = Type.head(size, letter=0.5)
+            fm = QFontMetrics(f)
+            if max(fm.horizontalAdvance(t) for _, t in tokens) <= 76:
+                break
+            size -= 1
+        self.f_num = Type.head(size, letter=0.5)
+
+        fm_n, fm_w = QFontMetrics(self.f_num), QFontMetrics(self.f_word)
+        widest = max(max(fm_n.horizontalAdvance(t) for _, t in tokens),
+                     max(fm_w.horizontalAdvance(h) for h, _ in tokens))
+        self._gutter = min(self.GUTTER_MAX, widest + 6)
+        self.num_w = self._gutter + 22
+        self._tokens = tokens
 
     def _measure(self, w):
         fm_t = QFontMetrics(self.f_title)
         fm_b = QFontMetrics(self.f_text)
         fm_s = QFontMetrics(self.f_speed)
-        room = max(80, w - self.NUM_W - 12)
+        room = max(80, w - self.num_w - 12)
         rows, y = [], 0
         for i, tier in enumerate(self.tiers):
             th = fm_t.height()
@@ -681,10 +711,10 @@ class TierLadder(QWidget):
     def paintEvent(self, _):
         p = QPainter(self)
         p.setRenderHint(QPainter.RenderHint.Antialiasing)
-        room = max(80, self.width() - self.NUM_W - 12)
+        room = max(80, self.width() - self.num_w - 12)
         spine = QColor(self.s.ink_soft)
         spine.setAlpha(70)
-        x_spine = self.NUM_W - 14
+        x_spine = self.num_w - 14
 
         if self._rows:
             p.setPen(QPen(spine, 1.2))
@@ -693,8 +723,7 @@ class TierLadder(QWidget):
 
         for tier, i, y, th, bh, sh, h in self._rows:
             hue = self._hue(i)
-            digits = "".join(c for c in tier.label if c.isdigit()) or str(i + 1)
-            word = tier.label.rstrip("0123456789 ").upper() or "TIER"
+            word, big = self._tokens[i]
 
             # nấc trên cột sống: ô đặc, càng cao càng đỏ
             p.setPen(Qt.PenStyle.NoPen)
@@ -703,21 +732,21 @@ class TierLadder(QWidget):
 
             p.setFont(self.f_word)
             p.setPen(self.s.ink_soft)
-            p.drawText(QRectF(0, y - 1, self.NUM_W - 22, 14),
+            p.drawText(QRectF(0, y - 1, self._gutter, 14),
                        int(Qt.AlignmentFlag.AlignRight
                            | Qt.AlignmentFlag.AlignVCenter), word)
             p.setFont(self.f_num)
             ghost = QColor(hue)
             ghost.setAlpha(150)
-            num_box = QRectF(0, y + 8, self.NUM_W - 22, 30)
+            num_box = QRectF(0, y + 8, self._gutter, 30)
             flags = int(Qt.AlignmentFlag.AlignRight
                         | Qt.AlignmentFlag.AlignVCenter)
             p.setPen(ghost)
-            p.drawText(num_box.translated(2.2, 1.8), flags, digits)
+            p.drawText(num_box.translated(2.2, 1.8), flags, big)
             p.setPen(self.s.ink)
-            p.drawText(num_box, flags, digits)
+            p.drawText(num_box, flags, big)
 
-            x = self.NUM_W
+            x = self.num_w
             p.setFont(self.f_title)
             p.setPen(hue if self.s.dark else self.s.ink)
             p.drawText(QRectF(x, y, room, th),
@@ -1224,6 +1253,7 @@ class CharacterStage(QWidget):
         # trạng thái của màn tiến hoá
         self._fx = 0.0
         self._fx_boom = False
+        self._fx_style = "shatter"
         self._busy = False
         self._pending = 0
         self._from = self._to = self.skin
@@ -1403,6 +1433,10 @@ class CharacterStage(QWidget):
         self._pending = index
         self._from = self.skin
         self._to = skin_of(self.forms[index])
+        # Mỗi dạng tự chọn cách phá tờ giấy cũ; đi tới thì theo kiểu của dạng
+        # sắp tới, lùi lại thì theo kiểu của dạng vừa rời đi.
+        loud = self.forms[max(index, self.index)]
+        self._fx_style = getattr(loud, "evolve_fx", "shatter")
 
         box = sheet_box(QRectF(self.final))
         self._cracks = self._make_cracks(box) if boom else []
@@ -1502,7 +1536,13 @@ class CharacterStage(QWidget):
         return roll
 
     def _make_cracks(self, box):
-        """Những đường nứt bò ra từ giữa tờ giấy trước khi nó vỡ."""
+        """Đường phá tờ giấy trước khi nó rời ra — mỗi kiểu một dáng.
+
+        `shatter` nứt toả từ giữa như kính vỡ. `shred` là bốn vệt vuốt song
+        song chém chéo qua mặt giấy, đúng dấu móng của một con chim săn mồi.
+        """
+        if self._fx_style == "shred":
+            return self._make_rakes(box)
         roll = self._rolls(int(box.width()) * 31 + 17)
         c = box.center()
         step = max(box.width(), box.height()) * 0.5 / 6
@@ -1519,7 +1559,63 @@ class CharacterStage(QWidget):
             cracks.append(pts)
         return cracks
 
+    def _make_rakes(self, box):
+        """Bốn vệt vuốt song song, chém từ trên phải xuống dưới trái."""
+        roll = self._rolls(int(box.width()) * 7 + 3)
+        reach = box.width() + box.height()
+        rakes = []
+        for i in range(4):
+            # điểm vào nằm rải trên mép trên và mép phải
+            start = QPointF(box.x() + box.width() * (0.42 + i * 0.26),
+                            box.y() - 12)
+            a = math.radians(118 + roll(-5, 5))
+            pts = [start]
+            x, y = start.x(), start.y()
+            for _ in range(5):
+                x += math.cos(a) * reach / 5
+                y += math.sin(a) * reach / 5
+                pts.append(QPointF(x + roll(-4, 4), y + roll(-3, 3)))
+            rakes.append(pts)
+        return rakes
+
     def _make_shards(self, box):
+        """Chia tờ giấy thành các mảnh sắp rời ra, theo kiểu của dạng sắp tới."""
+        if self._fx_style == "shred":
+            return self._make_strips(box)
+        return self._make_grid_shards(box)
+
+    def _make_strips(self, box):
+        """Xẻ tờ giấy thành dải chéo mảnh — giấy bị vuốt xé, không phải nổ.
+
+        Mọi dải cùng bay về một hướng như lông vũ bị cuốn trong luồng gió,
+        dải nằm phía cuối vệt vuốt đi trước.
+        """
+        roll = self._rolls(int(box.width()) * 11 + 29)
+        n = 26
+        lean = box.height() * 0.55          # độ nghiêng của nhát xẻ
+        step = (box.width() + lean) / n
+        strips = []
+        for i in range(n):
+            x0 = box.x() - lean + i * step
+            wobble = roll(-step * 0.22, step * 0.22)
+            poly = QPolygonF([
+                QPointF(max(box.x(), min(box.right(), x0)), box.y()),
+                QPointF(max(box.x(), min(box.right(), x0 + step + wobble)),
+                        box.y()),
+                QPointF(max(box.x(), min(box.right(),
+                                         x0 + lean + step + wobble)),
+                        box.bottom()),
+                QPointF(max(box.x(), min(box.right(), x0 + lean)),
+                        box.bottom())])
+            if poly.boundingRect().width() < 1:
+                continue
+            # tất cả cuốn lên trên bên phải, lệch nhau chút cho khỏi đều tăm tắp
+            a = math.radians(-32 + roll(-9, 9))
+            strips.append((poly, math.cos(a), math.sin(a), roll(-40, 40),
+                           0.30 * (1 - i / n), roll(0.85, 1.5)))
+        return strips
+
+    def _make_grid_shards(self, box):
         """Xé tờ giấy thành lưới mảnh méo, mỗi mảnh một hướng và một tốc độ.
 
         Mảnh gần tâm bay trước, mảnh ngoài rìa đi sau — vụ nổ lan ra chứ
@@ -1596,28 +1692,39 @@ class CharacterStage(QWidget):
 
     def _paint_boom(self, p, box):
         t = self._fx
+        shred = self._fx_style == "shred"
         ctr = box.center()
         span = math.hypot(box.width(), box.height()) / 2
         ignite = 0.30
 
-        if t < ignite:                       # ── nạp: rung lên rồi nứt ra
+        if t < ignite:                       # ── nạp: giấy sắp rời ra
             k = t / ignite
             p.save()
-            amp = 6.0 * k * k
-            p.translate((self._noise[0] - 0.5) * amp,
-                        (self._noise[1] - 0.5) * amp)
+            if shred:
+                # không rung: luồng gió bốc tờ giấy nghiêng dần lên
+                p.translate(ctr)
+                p.rotate(-2.6 * k * k)
+                p.translate(-ctr)
+                p.translate(4.0 * k * k, -2.0 * k * k)
+            else:
+                amp = 6.0 * k * k
+                p.translate((self._noise[0] - 0.5) * amp,
+                            (self._noise[1] - 0.5) * amp)
             paint_sheet(p, box, skin=self._from)
             p.setClipRect(box)
             self._paint_cracks(p, k)
-            # lò lửa nhen dưới lớp giấy, hắt ra từ chính chỗ nứt
-            heat = QRadialGradient(ctr, span * (0.4 + 0.8 * k))
-            for stop, weight in ((0.0, 0.62), (0.4, 0.20), (1.0, 0.0)):
-                tone = QColor(self._to.red)
-                tone.setAlpha(int(255 * weight * k * k))
-                heat.setColorAt(stop, tone)
-            p.setPen(Qt.PenStyle.NoPen)
-            p.setBrush(heat)
-            p.drawRect(box)
+            if shred:
+                self._paint_gust(p, box, k * 0.7)
+            else:
+                # lò lửa nhen dưới lớp giấy, hắt ra từ chính chỗ nứt
+                heat = QRadialGradient(ctr, span * (0.4 + 0.8 * k))
+                for stop, weight in ((0.0, 0.62), (0.4, 0.20), (1.0, 0.0)):
+                    tone = QColor(self._to.red)
+                    tone.setAlpha(int(255 * weight * k * k))
+                    heat.setColorAt(stop, tone)
+                p.setPen(Qt.PenStyle.NoPen)
+                p.setBrush(heat)
+                p.drawRect(box)
             p.restore()
             return
 
@@ -1645,9 +1752,11 @@ class CharacterStage(QWidget):
                 continue
             ease = s ** 0.55          # bung rất nhanh rồi trôi chậm lại
             hub = poly.boundingRect().center()
+            # mảnh nổ thì nặng và rơi xuống; dải bị gió cuốn thì không rơi
+            fall = 0.0 if shred else 26 * ease * ease
             p.save()
             p.translate(dx * reach * speed * ease,
-                        dy * reach * speed * ease + 26 * ease * ease)
+                        dy * reach * speed * ease + fall)
             p.translate(hub)
             p.rotate(spin * ease)
             p.translate(-hub)
@@ -1663,6 +1772,25 @@ class CharacterStage(QWidget):
                                 alpha * (0.2 + 0.6 * lift)), 1.0))
             p.drawPolygon(poly)
             p.restore()
+
+        if shred:
+            # gió cuốn: không có sóng xung kích, chỉ luồng khí kéo dài
+            self._paint_gust(p, box, min(1.0, 1.6 - prog * 1.4))
+            # bốn vệt vuốt loé lên đúng một nhịp, rồi tắt
+            slash = max(0.0, 1.0 - prog / 0.13)
+            if slash > 0:
+                p.setBrush(Qt.BrushStyle.NoBrush)
+                for pts in self._cracks:
+                    path = QPainterPath(pts[0])
+                    for q in pts[1:]:
+                        path.lineTo(q)
+                    for color, w in ((self._to.red, 7.0),
+                                     (QColor("#FFF6EC"), 2.0)):
+                        tone = QColor(color)
+                        tone.setAlpha(int(220 * slash))
+                        p.setPen(QPen(tone, w * slash + 0.5))
+                        p.drawPath(path)
+            return
 
         # sóng xung kích: hai vòng dày, tắt nhanh
         p.setBrush(Qt.BrushStyle.NoBrush)
@@ -1688,6 +1816,26 @@ class CharacterStage(QWidget):
             p.setBrush(burst)
             p.drawRect(self.rect())
             p.fillRect(self.rect(), QColor(255, 248, 240, int(80 * flash)))
+
+    def _paint_gust(self, p, box, strength):
+        """Luồng gió chéo thổi qua khung — vệt mảnh, dài, cùng một hướng."""
+        if strength <= 0:
+            return
+        roll = self._rolls(97)
+        span = box.width() + box.height()
+        p.setBrush(Qt.BrushStyle.NoBrush)
+        for i in range(22):
+            x = box.x() - box.height() * 0.6 + roll(0, span)
+            y = box.y() + roll(-20, box.height() + 20)
+            length = roll(0.18, 0.5) * box.width()
+            drift = (self._noise[i % 24] - 0.5) * 40 * strength
+            tone = QColor(self._to.blue if i % 3 else self._to.red)
+            tone.setAlpha(int(roll(40, 130) * min(1.0, strength)))
+            p.setPen(QPen(tone, roll(0.6, 1.8)))
+            a = math.radians(-32)
+            p.drawLine(QPointF(x + drift, y),
+                       QPointF(x + drift + math.cos(a) * length,
+                               y + math.sin(a) * length))
 
     def _paint_cracks(self, p, k):
         """Vết nứt: rãnh mực đen, trong lòng rãnh có ánh sáng rò lên."""
@@ -1722,11 +1870,20 @@ class CharacterStage(QWidget):
              (0.850, 0.912, 0.120, 0.048)))
 
     def _paint_rebuild(self, p, box, b):
-        """Tờ giấy mới hiện ra như đang được quét, rồi tự dựng lấy bố cục."""
+        """Tờ giấy mới hiện ra như đang được quét, rồi tự dựng lấy bố cục.
+
+        Nhát quét đi theo kiểu của dạng đang tới: `shatter` mở từ giữa ra hai
+        phía, `shred` quét ngang một lượt như cánh chim lướt qua mặt giấy.
+        """
         ease = 1 - (1 - b) ** 3
-        h = box.height() * ease
-        band = QRectF(box.x() - 30, box.center().y() - h / 2,
-                      box.width() + 60, h)
+        across = self._fx_style == "shred"
+        if across:
+            band = QRectF(box.x(), box.y() - 30,
+                          box.width() * ease, box.height() + 60)
+        else:
+            h = box.height() * ease
+            band = QRectF(box.x() - 30, box.center().y() - h / 2,
+                          box.width() + 60, h)
         p.save()
         p.setClipRect(band)
         paint_sheet(p, box, alpha=0.35 + 0.65 * ease, skin=self._to)
@@ -1778,8 +1935,11 @@ class CharacterStage(QWidget):
             edge = QColor(self._to.blue)
             edge.setAlpha(int(230 * (1 - b)))
             p.setPen(QPen(edge, 1.8))
-            p.drawLine(band.topLeft(), band.topRight())
-            p.drawLine(band.bottomLeft(), band.bottomRight())
+            if across:
+                p.drawLine(band.topRight(), band.bottomRight())
+            else:
+                p.drawLine(band.topLeft(), band.topRight())
+                p.drawLine(band.bottomLeft(), band.bottomRight())
 
     def _paint_motes(self, p, box, b):
         roll = self._rolls(4242)

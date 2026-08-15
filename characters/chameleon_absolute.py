@@ -533,7 +533,8 @@ ABSOLUTE = Profile(
     note="ABSOLUTE",
     note_kind="new",
     tab="Absolute",
-    dark=True,
+    skin="void",
+    evolve_fx="shatter",     # kẻ giả dạng thì vỡ vụn ra rồi được quét lại
 
     tagline="Không phép thuật vũ trụ, không thao túng thực tại. Chỉ vật lý "
             "cường hoá, sinh học đột biến và công nghệ huỷ diệt — đủ để một "

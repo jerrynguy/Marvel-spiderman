@@ -99,6 +99,27 @@ VOID = Skin(
     dark=True,
 )
 
+# Tầng bình lưu lúc rạng đông: thép lạnh và đèn natri. Dành cho những kẻ
+# Absolute sống trên không, để chúng không đội chung một bộ da với Chameleon.
+SKY = Skin(
+    name="sky",
+    paper=QColor("#070A11"), paper_hi=QColor("#0D111B"),
+    ink=QColor("#EFEBE1"), ink_soft=QColor("#7C879C"),
+    red=QColor("#FF9A1F"), blue=QColor("#5FC8FF"), yellow=QColor("#E8C24A"),
+    dot=QColor(170, 210, 255, 14),
+    frame=QColor("#3E4A5E"),
+    scrim=QColor(3, 5, 11, 224),
+    grid=QColor(150, 200, 255, 22),
+    ghosts=((QColor("#5FC8FF"), -7, -7, 66), (QColor("#FF9A1F"), 7, 7, 88)),
+    accents={"edge": (QColor("#5FC8FF"), QColor("#0B1C2A")),
+             "new": (QColor("#FF9A1F"), QColor("#2A1A08")),
+             "fix": (QColor("#E8C24A"), QColor("#241D0A"))},
+    dark=True,
+)
+
+# Tra theo tên để hồ sơ chỉ cần ghi `skin="sky"`.
+SKINS = {skin.name: skin for skin in (PULP, VOID, SKY)}
+
 
 def pick_font(candidates, fallback="DejaVu Sans"):
     have = set(QFontDatabase.families())

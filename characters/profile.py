@@ -13,9 +13,13 @@ Mỗi nhân vật là một file riêng trong thư mục này, khai báo đúng 
 
 Dạng tiến hoá:
     Điền `evolution=` bằng một Profile khác thì tấm hồ sơ mọc thêm nút
-    tiến hoá; bấm vào, tờ giấy nổ tung và dạng mới hiện ra ở một tai hồ sơ
+    tiến hoá; bấm vào, tờ giấy vỡ ra và dạng mới hiện ra ở một tai hồ sơ
     riêng. Dạng mới lại có thể có `evolution` của nó — nối bao nhiêu tầng
     cũng được.
+
+    Mỗi dạng Absolute nên khác nhau cả ba tầng: `skin` chọn bảng màu riêng,
+    `evolve_fx` chọn kiểu phá tờ giấy cũ, và hàm `art` vẽ chân dung với ngôn
+    ngữ chuyển động riêng của nhân vật đó.
 """
 
 from dataclasses import dataclass, field
@@ -71,11 +75,12 @@ class Profile:
     note: str = ""               # nhãn nhỏ cạnh kicker
     note_kind: str = "new"       # màu nhãn: edge | new | fix
     tab: str = ""                # chữ trên tai hồ sơ, mặc định là `name`
-    dark: bool = False           # in trên nền void thay vì giấy pulp
+    skin: str = ""               # tên bộ da: pulp (mặc định) | void | sky
 
     # ---- dạng tiến hoá
     evolution: Optional["Profile"] = None   # dạng mở ra bằng nút tiến hoá
     evolve_label: str = ""       # chữ trên nút, mặc định "EVOLVE"
+    evolve_fx: str = "shatter"   # kiểu phá tờ giấy cũ: shatter | shred
 
     # ---- hình ảnh
     image: str = ""              # tên file trong assets/characters
