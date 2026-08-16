@@ -1,5 +1,6 @@
 """
-Absolute Lizard — Serpent Rex. Curt Connors không còn ở trong đó nữa.
+Absolute Lizard — Serpent Rex. Curt Connors vẫn còn ở trong đó, và đó mới
+là chỗ đáng sợ.
 
 Bản sắc riêng, khác cả năm dạng Absolute trước:
     · bộ da `swamp` — bộ duy nhất lấy nền là một *màu* chứ không phải sắc
@@ -421,172 +422,227 @@ ABSOLUTE = Profile(
     keys=("Lizard Absolute", "Serpent Rex"),
 
     kicker="Hồ sơ tuyệt đối",
-    stamp="PHÂN LOẠI  ·  MỐI ĐE DOẠ CẤP QUỐC GIA",
+    stamp="PHÂN LOẠI  ·  MỐI ĐE DOẠ CẤP HÀNH TINH",
     note="ABSOLUTE",
     note_kind="new",
     tab="Absolute",
     skin="swamp",
     evolve_fx="bloom",       # giấy không bị phá mà bị chiếm, rồi mọc lại
 
-    tagline="Không còn là con thằn lằn khổng lồ. Là một hệ sinh thái tự nhân "
-            "bản, có trí tuệ nhân tạo cầm lái, đồng hoá cả một quốc gia trong "
-            "một tuần.",
+    tagline="Không còn là con thằn lằn khổng lồ. Là một hệ sinh thái bò sát "
+            "tự nhân rộng — thứ không huỷ diệt nền văn minh mà thay thế nó "
+            "bằng một kỷ Bò sát mới.",
 
     summary=(
-        "Bản chất Curt Connors không còn tồn tại trong đó nữa. Thứ còn lại là "
-        "một thực thể bò sát thống nhất, tối ưu hoá tới giới hạn của sinh học "
-        "và vật lý — và điều đáng sợ nhất không nằm ở cơ bắp hay bộ vảy, mà ở "
-        "chỗ hắn không cần tự tay làm gì cả.",
+        "Lizard bắt đầu từ một huyết thanh tái tổ hợp bò sát mà Curt Connors "
+        "chế ra chỉ để mọc lại một cánh tay. Bản gốc mạnh, nhanh, leo tường, "
+        "quật đuôi, vảy chặn được đạn nhẹ và mô thì tự liền — nhưng bị chính "
+        "bản năng bò sát ghìm lại, máu lạnh nên trời rét là tê cứng, và tái "
+        "sinh cũng chỉ tới một mức. Hắn là mối đe doạ cấp quận, thường bị "
+        "Spider-Man cầm chân gọn trong một đêm.",
 
-        "Bào tử của hắn xâm nhập DNA của cây cối, côn trùng và thú vật, biến "
-        "chúng thành những dạng bò sát lai phục tùng ý chí hắn. Một lần phun "
-        "phủ 10 km²; bào tử tự nhân lên trong môi trường ẩm và sống 72 giờ. "
-        "Hắn không tiến quân — hắn để cả hệ sinh thái tiến quân thay.",
+        "Bản Absolute không đưa cho hắn một cỗ máy nào — Connors vốn là nhà di "
+        "truyền học chứ không phải kỹ sư, nên mọi nâng cấp đều là sinh học. "
+        "Thân thể được vá đúng ba chỗ hở: cơ khoá được mà không tốn ATP, "
+        "xương hút kim loại vi lượng thành composite, và cơ quan sinh nhiệt "
+        "xoá hẳn cái yếu điểm máu lạnh.",
+
+        "Nhưng bước nhảy thật nằm trong máu hắn. Một retrovirus thiết kế sẵn "
+        "cài được gen bò sát vào bất kỳ loài có vú, chim hay lưỡng cư nào; "
+        "sáu tới mười hai giờ sau, con vật ấy thành lính của hắn. Hắn không "
+        "tiến quân — hắn để cả sinh quyển tiến quân thay, và mỗi thứ bị "
+        "chuyển đổi lại là một chỗ phát tán mới.",
+
+        "Curt Connors vẫn còn ở trong đó. Không phải như một tia hy vọng — "
+        "mà như một thứ vũ khí: giọng ông ta trồi lên đúng lúc Peter cần ra "
+        "đòn dứt khoát nhất.",
     ),
 
     sections=(
         Section(
             title="Khuyếch đại năng lực vật lý & sinh học",
-            intro="Mọi chỉ số đều bị đẩy tới đỉnh của cái mà quy luật sinh học "
-                  "còn cho phép.",
+            intro="“Sinh lý Bò sát Tận thế” không chỉ đẩy các chỉ số lên cao. "
+                  "Nó gỡ bỏ đúng những thứ từng giữ bản gốc lại trong một đêm "
+                  "giao chiến: cái mệt, cái lạnh, và cái chết.",
             items=(
-                ("Cơ bắp và bộ xương",
-                 "Sợi cơ xoắn nano-sinh học cho tỉ lệ sức mạnh trên trọng "
-                 "lượng gấp 15 lần thú săn mồi: nâng 40–60 tấn, cú đấm 12.000 "
-                 "PSI xé được thép cường độ cao. Đuôi dài 4 mét quật ở 200 "
-                 "km/h, sóng xung kích phá bán kính 15 mét."),
-                ("Giáp vảy composite",
-                 "Keratin nano trộn canxi, sắt và graphene sinh học: chặn đạn "
-                 "12,7 mm, đạn pháo 20 mm, mảnh lựu đạn; chịu 1.200°C trong 5 "
-                 "phút. Lớp gel dưới vảy phân tán 85% động năng va đập nên nội "
-                 "tạng không việc gì."),
-                ("Tái tạo cực đoan",
-                 "Tế bào gốc bò sát đa năng mọc lại chi trong 4–6 giây, mọc "
-                 "lại cả mắt, tim, và một phần não nếu tổn thương dưới 30%. "
-                 "Đổi lại hắn cần sinh khối: enzyme tiết qua da phân huỷ vật "
-                 "chất hữu cơ quanh mình — cây, thú, người — làm nguyên liệu, "
-                 "và nuốt đủ thì phình to gấp rưỡi."),
-                ("Giác quan siêu việt",
-                 "Mắt kép nhìn hồng ngoại, tử ngoại và ánh sáng phân cực, quét "
-                 "360° không cần quay đầu. Lưỡi Jacobson đánh hơi adrenaline, "
-                 "tơ nhện và thuốc nổ từ 300 mét. Cơ quan cảm rung dưới da bắt "
-                 "bước chân, xe tăng, máy bay từ 1 km ở độ nhạy 0,001 Hz."),
-                ("Nọc thần kinh",
-                 "Phun tia xa 25 mét: tê liệt thần kinh vận động trong 0,5 "
-                 "giây, đông máu tức thời, phá huỷ khớp thần kinh khi vào máu. "
-                 "Một lít pha vào nguồn nước đủ giết 200.000 người."),
-                ("Bào tử đồng hoá sinh thái",
-                 "Phát tán qua da, hơi thở hoặc dịch phun; xâm nhập DNA của "
-                 "sinh vật rồi biến chúng thành bò sát lai phục tùng. Một lần "
-                 "phủ 10 km², tự nhân lên chỗ ẩm, sống 72 giờ. Cây cối nhiễm "
-                 "bào tử tiết enzyme ăn mòn bê tông và thép."),
+                ("Hệ cơ vân Archosaur cường hoá",
+                 "Sợi cơ được tái cấu trúc theo mô hình cơ khoá của cá sấu và "
+                 "chim săn mồi: nâng 80–100 tấn, lực cắn 20 tấn. Quan trọng "
+                 "hơn con số là cơ chế khoá cơ không tiêu hao ATP — ghì một "
+                 "chiếc xe tăng hay một chiếc trực thăng rồi giữ nguyên như "
+                 "thế, mà không mỏi. Bản gốc thua vì đuối sức; bản này không "
+                 "có khái niệm đuối sức."),
+                ("Khung xương composite sinh học",
+                 "Xương hút kim loại vi lượng ngay từ môi trường — sắt, titan, "
+                 "kẽm — rồi kết thành cấu trúc composite chịu được đạn pháo 30 "
+                 "mm. Cột sống xoay trọn 360°, còn cái đuôi thành một vũ khí "
+                 "cộng hưởng xung kích đủ sức phá nát tường bê tông."),
+                ("Tái sinh kiểu bào tử toàn năng",
+                 "Máu chứa tế bào gốc bò sát cảm ứng. Chỉ cần còn một mảnh mô "
+                 "và quanh đó có sinh khối, hắn dựng lại toàn bộ cơ thể trong "
+                 "3–5 phút. Chặt đầu không còn là một biện pháp, phá tim cũng "
+                 "vậy — cả hai chỉ là làm hắn chậm lại đúng vài phút."),
+                ("Hệ thần kinh phân tán",
+                 "Não thôi là trung tâm điều khiển duy nhất: dọc sống lưng mọc "
+                 "thêm các hạch thần kinh phụ, mỗi hạch là một cái não cục bộ. "
+                 "Phản xạ đi qua cung phản xạ tuỷ sống mất chưa tới 0,01 giây "
+                 "— nhanh hơn cả tốc độ mà giác quan nhện kịp báo, nghĩa là "
+                 "hắn phản ứng trước khi Peter được cảnh báo."),
+                ("Điều hoà thân nhiệt chủ động",
+                 "Cơ quan sinh nhiệt từ mỡ nâu cộng phản ứng hoá sinh kiểu cá "
+                 "ngừ vây xanh xoá hẳn điểm yếu máu lạnh: hắn chạy ổn định từ "
+                 "âm 40 tới 60 độ. Trời rét từng là cách cầm chân bản gốc; giờ "
+                 "chính cơ quan đó còn cho hắn chủ động hạ nhiệt xuống bằng "
+                 "môi trường để đi rình."),
             ),
         ),
         Section(
             title="Đột phá công nghệ & tự động hoá",
-            intro="Sinh học đột biến ghép thẳng vào khí tài quân sự, thành một "
-                  "mạng chiến tranh sinh học khép kín.",
+            intro="Connors là nhà di truyền học, không phải kỹ sư — nên chỗ "
+                  "đáng lẽ là máy móc ở đây là một hệ sinh học mở rộng. Không "
+                  "AI, không drone máy, không một mạch điện nào: quân đoàn của "
+                  "hắn được sinh ra chứ không được chế tạo.",
             items=(
-                ("AI “Ophidian”",
-                 "Cấy vào não bò sát qua giao diện thần kinh. Quan sát 30 giây "
-                 "là dự đoán quỹ đạo mục tiêu với độ chính xác 98%, và nó "
-                 "không có điểm mù: drone nano, vệ tinh mini, cảm biến địa "
-                 "chấn và camera sinh học từ bào tử cùng dựng một bản đồ 3D "
-                 "cập nhật liên tục."),
-                ("Bầy drone “Nanoserpent”",
-                 "Drone 2 cm nuôi từ chính bào tử biến đổi gen, gắn vi mạch "
-                 "sinh học. Một tổ hợp thả 5.000 con: tuần tra bán kính 10 km, "
-                 "mang nọc thần kinh, phun dung môi phá tơ, nhả khói gây ảo "
-                 "giác — tất cả đồng bộ dưới tay Ophidian."),
-                ("Bộ giáp “Crypsis Frame”",
-                 "Xương ngoài titan pha graphene sinh học gắn thẳng lên người, "
-                 "piston thuỷ lực sinh học nhân đôi sức nâng. Kèm gai phóng "
-                 "tầm 50 m xuyên giáp 10 cm, súng phun enzyme phá tơ, máy phát "
-                 "hạ âm 7 Hz, và lớp da tinh thể đổi màu che cả thân nhiệt "
-                 "trước cảm biến hồng ngoại."),
-                ("Mạng “Serpent Grid”",
-                 "Bào tử cảm biến bám lên mọi bề mặt trong vùng, bắt rung "
-                 "động, nhiệt độ, hoá chất, tơ nhện và sóng radio rồi gửi về "
-                 "AI. Trong 50 km², không một chuyển động nào lọt."),
+                ("Retrovirus “Lazarus Sauropsida”",
+                 "Máu hắn mang một virus thiết kế sẵn, cài được gen bò sát vào "
+                 "bất kỳ loài có vú, chim hay lưỡng cư nào. Sáu tới mười hai "
+                 "giờ sau, vật chủ thành một Saurian Drone — chữ “drone” ở đây "
+                 "theo nghĩa con thợ trong tổ ong, không phải máy bay: một "
+                 "sinh vật bò sát lai bằng xương bằng thịt, phục tùng qua tín "
+                 "hiệu pheromone. Đây là quân đoàn sinh học, và nó tự sinh sôi."),
+                ("Mạng thần kinh pheromone toàn cầu",
+                 "Hắn thả pheromone đặc hiệu vào khí quyển; mọi sinh vật đã bị "
+                 "chuyển đổi nối lại thành một cái não tổ ong hữu cơ, liên lạc "
+                 "bằng tín hiệu hoá học và hạ âm. Kênh truyền là gió và hải "
+                 "lưu — nghĩa là hắn chỉ huy ở quy mô lục địa mà không có một "
+                 "thiết bị điện tử nào để gây nhiễu hay đánh sập."),
+                ("Hệ cộng sinh “Địa y Bò sát”",
+                 "Bào tử nấm biến đổi gen tiết enzyme phân huỷ bê tông, nhựa "
+                 "đường, nhựa và kim loại thành sinh khối hữu cơ. Một mũi tên "
+                 "trúng hai đích: hạ tầng đô thị rã ra, và chính chỗ rã ấy "
+                 "thành thức ăn nuôi quân đoàn."),
+                ("Vảy quang hợp cộng sinh",
+                 "Tảo quang hợp cấy trên vảy hắn và trên vảy cả quân đoàn, thu "
+                 "năng lượng thẳng từ mặt trời. Không cần nguồn thức ăn lớn, "
+                 "không có tuyến hậu cần để cắt — đánh liên tục nhiều tuần "
+                 "liền mà không phải dừng lại kiếm ăn."),
             ),
         ),
         Section(
             title="Khắc chế phần cứng của Spider-Man",
-            intro="Từ giác quan báo nguy tới ý chí chiến đấu, mỗi thứ có một "
-                  "biện pháp riêng.",
+            intro="Không đòn nào ở đây là đồ dùng chung: tất cả đều mọc ra từ "
+                  "bản chất bò sát của hắn, và từ chỗ Curt Connors từng là "
+                  "thầy của Peter Parker — người có mẫu tơ nhện trong phòng "
+                  "thí nghiệm, và người biết cậu học trò ấy sợ mất cái gì.",
             items=(
-                ("Giao thức quá tải giác quan",
-                 "Ophidian đọc ra tần số hoạt động của giác quan nhện rồi bơm "
-                 "tín hiệu giả không ngừng: sóng âm ngẫu nhiên 10–20 kHz từ "
-                 "bầy drone, hologram 3D giả lập đòn đánh từ mọi hướng, rung "
-                 "địa chấn giả. Phản xạ của Peter chậm 60%, có khi co giật nhẹ "
-                 "— và pheromone gây ảo giác phun kèm khiến anh ta không còn "
-                 "phân biệt nổi đòn thật."),
-                ("Dung môi “Protease-9”",
-                 "Enzyme tiết từ tuyến nọc, hoạt hoá bằng nhiệt ở 80°C, bẻ gãy "
-                 "liên kết peptide của fibroin trong 0,3 giây. Phun tia 25 m, "
-                 "và drone nano còn bắn thẳng vào sợi tơ ngay khi nó vừa rời "
-                 "cổ tay."),
-                ("Vảy chống bám dính",
-                 "Cấu trúc nano siêu kỵ nước giảm 90% ma sát bề mặt: tơ không "
-                 "bám được vào người hắn, mà lớp nhờn tiết ra từ da cũng khiến "
-                 "Spider-Man không giữ nổi để tung đòn cận chiến."),
-                ("Tấn công không điểm mù",
-                 "5.000 drone cộng 200 bò sát lai đánh đồng loạt từ mọi góc và "
-                 "mọi độ cao: drone giăng lưới lửa chéo không chừa khoảng "
-                 "trống, bò sát lai quấy rối cận chiến, còn Lizard vào từ đúng "
-                 "điểm mù mà AI đã tính. Áp sát dưới 3 mét là gai phóng tự "
-                 "động khai hoả."),
-                ("Nọc ức chế thần kinh vận động",
-                 "Một vết vuốt hoặc một mũi tên nọc từ drone là cơ bắp mất khả "
-                 "năng co duỗi và mất luôn lực bám. Liều nhẹ thì chậm chạp, "
-                 "liều nặng thì ngã quỵ sau 5 giây — đủ để kết liễu."),
-                ("Pheromone khủng bố",
-                 "Ức chế dopamine, đẩy cortisol lên: hoảng loạn tột độ, mất "
-                 "tập trung, hiệu suất chiến đấu rơi một nửa và sai lầm chiến "
-                 "thuật bắt đầu xuất hiện."),
+                ("Enzyme Arachno-Polymerase",
+                 "Connors từng có mẫu tơ của Peter trên bàn thí nghiệm, và ông "
+                 "ta đã đọc nó kỹ. Tuyến nước bọt cùng da hắn nay tiết ra một "
+                 "enzyme thuỷ phân nhắm đúng fibroin: cắt liên kết beta-sheet "
+                 "cho sợi tơ mất bền rồi tan thành dịch. Vảy còn tiết dầu "
+                 "squalane nên tơ cũng chẳng bám nổi vào người hắn."),
+                ("Bão hoà giác quan nhện",
+                 "Hạ âm 7–9 Hz cộng hưởng với hệ thần kinh nhện, giữ nó kêu "
+                 "liên tục ở mức thấp; kèm theo là pheromone mô phỏng mùi của "
+                 "một kẻ săn mồi bò sát đang tới gần. Giác quan không tắt — nó "
+                 "báo suốt, nên Peter thôi phân biệt được đâu là đòn thật, né "
+                 "chậm hoặc né nhầm hướng."),
+                ("Bẫy lột da phản đòn",
+                 "Bị ôm, bị khoá, hay bị tơ trùm, hắn chủ động lột lớp da "
+                 "ngoài. Peter tưởng đã tóm được, nhưng trong tay chỉ còn một "
+                 "cái xác da rỗng — mà lớp da ấy là một cơ quan độc lập, co "
+                 "rút được và phóng ra bào tử gây tê liệt hô hấp. Còn hắn thì "
+                 "đã ở phía sau lưng."),
+                ("Giọng nói Connors",
+                 "Giữa trận, hắn cố ý để nhân cách Curt Connors trồi lên, van "
+                 "xin Peter dừng tay. Peter do dự — vì mặc cảm tội lỗi, vì đó "
+                 "từng là thầy mình — và đúng khoảnh khắc ấy, hắn chiếm lại "
+                 "quyền kiểm soát rồi ra đòn hiểm. Đây là điểm yếu tâm lý mà "
+                 "không phản diện nào khác khai thác được, vì không ai khác có "
+                 "sẵn một người tử tế bị nhốt bên trong."),
+                ("Độc tố phá cảm nhận vị trí",
+                 "Không phải chất độc để giết, mà là chất để vô hiệu hoá: nó "
+                 "đánh vào các hạch cảm ứng, gây rối loạn proprioception — "
+                 "cảm nhận vị trí thân thể trong không gian. Peter mất thăng "
+                 "bằng, bám tường không chắc, bắn tơ không còn trúng chỗ mình "
+                 "nhắm. Mọi thứ vẫn hoạt động, chỉ là không còn ở đúng chỗ."),
+                ("Phục kích máu lạnh",
+                 "Cùng cái cơ quan điều nhiệt cho hắn chịu được giá rét, hắn "
+                 "hạ thân nhiệt xuống gần bằng môi trường: giác quan nhện thôi "
+                 "đọc ra một sinh vật máu nóng đang rình. Ghép với lối bật dậy "
+                 "đột ngột của loài bò sát, hắn thành kẻ phục kích gần như "
+                 "hoàn hảo — điểm yếu máu lạnh cũ nay là công cụ."),
             ),
         ),
     ),
 
+    # Thang chữ cái Hy Lạp, đọc từ Zeta lên Omega. Bậc Epsilon là trần của
+    # bản gốc — và cũng là bậc đầu tiên hắn thôi tự tay đánh.
     tiers=(
-        Tier("Tier 1", "Đô thị",
-             "Đấm sập 5–7 toà nhà 20 tầng, quật đuôi phá cầu và cao tốc. Bào "
-             "tử biến 100–200 người dân thành bò sát lai hung hãn quay lại "
-             "đánh hạ tầng, còn bầy drone thì cắt điện và cắt liên lạc. Cứu "
-             "hoả và cảnh sát bị áp đảo hoàn toàn.",
-             "Trong 1 giờ"),
-        Tier("Tier 2", "Vùng / bang",
-             "Bào tử phủ 50.000 km²: rừng và đồng ruộng thành đầm lầy bò sát, "
-             "cây tiết enzyme ăn mòn đường sá và đường ống dẫn dầu. 80% giếng, "
-             "sông, hồ nhiễm nọc. Lưới điện bị bầy drone và quái vật cắn đứt. "
-             "Mất điện, mất nước, nông nghiệp sụp, dịch bệnh biến đổi gen bùng "
-             "phát.",
-             "Trong 24 giờ"),
-        Tier("Tier 3", "Quốc gia",
-             "Hàng triệu bò sát lai sinh ra từ động vật, côn trùng và cả con "
-             "người. Xe tăng bị xé nóc và phun nọc vào khe hở, trực thăng bị "
-             "đuôi và gai phóng bắn hạ, radar cùng kho vũ khí bị drone phá. "
-             "Cảng biển và sân bay bị cá sấu lai phong toả; quân đội mất 70% "
-             "khả năng chiến đấu trong 72 giờ.",
-             "Trong 1 tuần"),
+        Tier("Tier Zeta", "Một mình, bằng tay không",
+             "Chưa dùng tới retrovirus: chỉ sức mạnh vật lý, xé toạc xe bọc "
+             "thép và phá một khu phố. Bản gốc cũng làm được chừng này, nhưng "
+             "chóng mệt và bị cảnh sát cầm chân; bản này mạnh gấp mười và "
+             "không có khái niệm xuống sức.",
+             "1–2 giờ"),
+        Tier("Tier Epsilon", "Một quận, và đội quân đầu tiên",
+             "Phát tán retrovirus cục bộ: chuột, chim, chó hoang thành Saurian "
+             "Drone, rồi chính chúng cắt điện, cắt nước, chặn giao thông. Đây "
+             "là trần của bản gốc — nhưng bản gốc chỉ gây thiệt hại bằng chính "
+             "tay mình, còn Absolute thì tạo ra quân đội ngay tại chỗ.",
+             "6–12 giờ"),
+        Tier("Tier Delta", "Chiếm một thành phố",
+             "Lây nhiễm qua nguồn nước, hàng chục nghìn dân bị chuyển đổi, "
+             "quân đội địa phương mất kiểm soát và thành phố bị phong toả. Bản "
+             "gốc phải trực tiếp đánh nhau mới thành mối đe doạ cấp thành phố; "
+             "Absolute chiếm nó mà không cần ra tay.",
+             "24–48 giờ"),
+        Tier("Tier Gamma", "Nhiều tỉnh, một cuộc di tản",
+             "Dịch bò sát trôi theo sông và hải lưu sang các tỉnh khác: nông "
+             "nghiệp sụp, chuỗi thức ăn đảo lộn, hàng triệu người phải bỏ nhà "
+             "đi. Bản gốc chưa bao giờ ra khỏi nổi một thành phố.",
+             "5–7 ngày"),
+        Tier("Tier Beta", "Đổi hệ sinh thái một lục địa",
+             "Rừng và đồng bằng thành đầm lầy bò sát, các sinh vật khổng lồ "
+             "đánh bại quân đội tại chỗ, kinh tế khu vực sụp theo. Bản gốc bị "
+             "giới hạn bởi thể lực và thời gian; bản này đang vẽ lại bản đồ "
+             "sinh học của cả châu lục.",
+             "2–3 tuần"),
+        Tier("Tier Alpha", "Nhiều châu lục",
+             "Các nước buộc phải dùng tới vũ khí hạt nhân chiến thuật, và vô "
+             "ích: virus đã phân tán đi rồi, đánh vào đâu cũng chỉ trúng một "
+             "phần. Thương mại toàn cầu ngừng, chính phủ lần lượt sụp.",
+             "1 tháng"),
+        Tier("Tier Omega", "Kỷ Bò sát mới",
+             "Sinh quyển Trái Đất bị tái cấu trúc trọn vẹn và nền văn minh "
+             "nhân loại kết thúc — không phải vì hành tinh bị phá huỷ, mà vì "
+             "nó đã thuộc về một loài khác. Hắn thành sinh vật thống trị của "
+             "một kỷ địa chất mới. Bản gốc là mối đe doạ cấp quận, bị cầm chân "
+             "gọn trong một đêm; bậc này xoá sổ nền văn minh toàn cầu trong ba "
+             "tháng, và không có ai để đánh bại vì kẻ địch giờ là cả sinh "
+             "quyển.",
+             "60–90 ngày"),
     ),
 
+    # Nhãn giữ dưới 94 px, giá trị dưới 188 px — xem chú thích cùng chỗ trong
+    # `chameleon_absolute.py`. Bỏ dòng "Tên mã" vì `real_name` đã in ngay dưới
+    # masthead rồi.
     facts=(
-        ("Tên mã", "Serpent Rex"),
-        ("Cấp đe doạ", "Tier 3 — quốc gia"),
-        ("Sức nâng", "40 – 60 tấn  ·  cú đấm 12.000 PSI"),
-        ("Đuôi", "Dài 4 m, quật 200 km/h, xung kích 15 m"),
-        ("Tái tạo", "Mọc lại chi trong 4 – 6 giây"),
-        ("Bào tử", "10 km² mỗi lần phun  ·  sống 72 giờ"),
-        ("AI", "Ophidian  ·  dự đoán 98% sau 30 giây"),
-        ("Bầy drone", "5.000 Nanoserpent cỡ 2 cm"),
+        ("Cấp đe doạ", "Hành tinh · kỷ Bò sát mới"),
+        ("Nền tảng", "Di truyền học — không máy móc"),
+        ("Không dùng", "AI · drone máy · tự động hoá"),
+        ("Sức nâng", "80–100 tấn · cắn 20 tấn"),
+        ("Tái sinh", "Cả cơ thể trong 3–5 phút"),
+        ("Retrovirus", "Lazarus Sauropsida · 6–12 giờ"),
+        ("Dải nhiệt", "−40°C đến 60°C"),
+        ("Bậc Omega", "60–90 ngày"),
     ),
 
     blurb="Những hồ sơ khác đánh vào một thành phố, một lưới điện, một quân "
           "đội. Hồ sơ này đánh vào chính cái nền mà tất cả những thứ đó đứng "
-          "lên: đất, nước, cây và thú. Diệt được hắn cũng chẳng còn gì để cứu "
-          "— vì đến lúc ấy cả vùng đã là con của hắn.",
+          "lên: đất, nước, cây và thú. Hắn không cần huỷ diệt nền văn minh — "
+          "hắn chỉ thay thế nó, và đến lúc có ai đó tìm ra cách diệt hắn thì "
+          "cả vùng đã là con của hắn rồi.",
 
     art=draw_absolute_lizard,
     caption="Dựng lại từ camera sinh học  ·  khung hình trực tiếp",
