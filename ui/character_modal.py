@@ -970,6 +970,11 @@ class Card(QWidget):
 
         Cửa sổ thấp quá thì bảng lý lịch rời cột trái, xuống nằm cuối cột
         đọc — thà cuộn xuống còn hơn bị cắt mất.
+
+        Chân dung cao bao nhiêu là phần thừa lại sau khi bảng lấy chỗ, nên hai
+        nhánh phải gặp nhau đúng tại chỗ chuyển: ở ranh giới, cả hai đều cho ra
+        PLATE_MIN. Không có ràng buộc đó thì chỉ lệch một hai điểm ảnh của cửa
+        sổ là khung ảnh nhảy vọt lên PLATE_MAX, trông như tự dưng phóng to.
         """
         m = self.layout().contentsMargins()
         chrome = (m.top() + m.bottom() + self.header.sizeHint().height() + 2
@@ -982,7 +987,11 @@ class Card(QWidget):
         self.facts_col.setVisible(not self._deep)
         self.facts_deep.setVisible(self._deep)
         if self._deep:
-            room = free
+            # Bảng đi rồi thì cột trái rộng ra, nhưng đừng đổ hết chỗ đó cho
+            # chân dung: đã phải dồn bảng đi tức là đang chật, phóng to ảnh
+            # lúc này là ngược đời. Trần giữ ở PLATE_MIN, phần dư rơi vào
+            # addStretch cuối cột.
+            room = min(free, self.PLATE_MIN)
         self.plate.setFixedHeight(
             int(max(self.PLATE_FLOOR, min(self.PLATE_MAX, room))))
 
