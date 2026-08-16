@@ -142,8 +142,9 @@ def _space(p):
 def _ground(p, t):
     """Lưới phối cảnh chạy về điểm tụ, sóng sáng lan ngược về phía người xem.
 
-    Đây là mạng GPMC nhìn từ trên mặt đất: mọi vật chất trong tầm đều đã là
-    của cô, và sóng lan trên lưới chính là lệnh đang chạy.
+    Đây là vùng Swarm đã phủ kín, nhìn từ trên mặt đất: mọi vật chất trong
+    tầm đều đã là của cô, và sóng lan trên lưới chính là tín hiệu kích hoạt
+    đang chạy tới từng hạt.
     """
     p.setBrush(Qt.BrushStyle.NoBrush)
 
@@ -179,8 +180,13 @@ def _ground(p, t):
             p.setBrush(Qt.BrushStyle.NoBrush)
 
 
-def _foundry(p, t):
-    """Hai lò phản ứng vật chất đứng trên lưới, nhả drone lên trời."""
+def _node(p, t):
+    """Hai Node nhô lên khỏi lưới, đang nhả Swarm lên trời.
+
+    Chỗ này cố ý vẽ thưa: mỗi Node chỉ thả ba hạt thấy được. Cái đáng sợ
+    không phải số hạt trong hình mà là còn bốn mươi tám khối nữa nằm im dưới
+    đất, ngoài khung.
+    """
     for x, depth in ((16, 0.34), (84, 0.52)):
         y = VP.y() + 72 * (depth ** 2.3)
         w = 3.4 + 7 * depth
@@ -310,7 +316,11 @@ def _derez(p, t):
 
 
 def _swarm(p, t):
-    """Bụi nano lơ lửng phía trước, nhắc rằng không khí ở đây cũng là của cô."""
+    """Bụi Swarm lơ lửng phía trước, nhắc rằng không khí ở đây cũng là của cô.
+
+    Hạt trôi thẳng lên và không né nhau — chúng không nghĩ, chỉ làm đúng vài
+    phản ứng đã mã hoá sẵn trong cấu trúc tinh thể.
+    """
     r = Rolls(30112020)
     p.setPen(Qt.PenStyle.NoPen)
     for i in range(70):
@@ -380,7 +390,7 @@ def draw_absolute_tinkerer(p, rect, t=0.0):
     with design(p, rect):
         _space(p)
         _ground(p, t)
-        _foundry(p, t)
+        _node(p, t)
         p.drawImage(QRectF(-6, -6, still.width() / scale,
                            still.height() / scale), still)
         _derez(p, t)
@@ -399,15 +409,16 @@ ABSOLUTE = Profile(
     keys=("Tinkerer Absolute",),
 
     kicker="Hồ sơ tuyệt đối",
-    stamp="PHÂN LOẠI  ·  MỐI ĐE DOẠ CẤP QUỐC GIA",
+    stamp="PHÂN LOẠI  ·  MỐI ĐE DOẠ CẤP HÀNH TINH",
     note="ABSOLUTE",
     note_kind="new",
     tab="Absolute",
     skin="mesh",
     evolve_fx="dissolve",    # giấy bị ăn dần rồi lắp lại, không nổ không xé
 
-    tagline="Không phải một thiên tài chế đồ nữa. Là một hệ sinh thái công "
-            "nghệ sống, nuốt cả một quốc gia từ bên trong.",
+    tagline="Không phải một thiên tài chế đồ nữa. Là một hệ sinh thái vật "
+            "chất lập trình tự nhân bản, biến chính nền văn minh công nghệ "
+            "thành vũ khí chống lại loài người.",
 
     summary=(
         "Cái tên Tinkerer chưa bao giờ là tên một người — nó là tên một nghề. "
@@ -415,168 +426,207 @@ ABSOLUTE = Profile(
         "đến lượt mình, Phin Mason nhận lấy cái tên ấy ở một dòng thời gian "
         "khác, và không bán cho ai cả. Cô giữ toàn bộ cho riêng mình.",
 
-        "Ở phiên bản Absolute, cơ thể Phin được tái cấu trúc bằng vật chất "
-        "lập trình cấy ghép ở cấp tế bào: cô là thực thể lai giữa người và "
-        "máy, tự sửa chữa, tự cường hoá, tự nạp lại. Nhưng thứ đáng sợ không "
-        "nằm ở thân thể cô mà ở chỗ cô đã nâng cùng công nghệ đó từ quy mô cá "
-        "nhân lên quy mô lãnh thổ.",
+        "Bản gốc là một thiên tài công nghệ còn rất trẻ, đứng đầu nhóm "
+        "Underground, dùng vật chất lập trình và vũ khí năng lượng để trả thù "
+        "Roxxon. Sức mạnh của cô nằm ở trí tuệ kỹ thuật, ở mạng lưới đồng "
+        "minh, và ở chỗ cô hiểu công nghệ của Miles Morales từ bên trong. "
+        "Điểm yếu cũng nằm ở đó: cảm xúc bất ổn, mâu thuẫn chưa bao giờ gỡ "
+        "được với Miles, và một tầm nhìn bị thù hận bóp lại còn rất ngắn.",
 
-        "Mục tiêu của cô cũng không còn là Peter Parker. Người cô hiểu rõ hơn "
-        "bất kỳ ai — và cũng là người cô được thiết kế để săn — là Miles "
-        "Morales.",
+        "Phiên bản Absolute không cho cô thêm phép màu nào — nó chỉ khuếch "
+        "đại đúng cái cô vốn giỏi. Vật chất lập trình được cấy vào chính hệ "
+        "thần kinh và cơ xương của cô, rồi cùng công nghệ ấy được thả ra "
+        "ngoài thành một hệ sinh thái tự nhân bản, ăn kim loại mà lớn lên, "
+        "phủ dần lên hạ tầng của cả hành tinh.",
+
+        "Không có một AI có ý thức nào trong toàn bộ hệ thống đó. Từng hạt "
+        "chỉ mang vài phản ứng hoá–lý mã hoá sẵn trong cấu trúc tinh thể của "
+        "nó — không suy nghĩ, không tự quyết, không thương lượng được. Người "
+        "ra lệnh vẫn luôn là Phin, và mục tiêu của cô không phải Peter "
+        "Parker: là Miles Morales.",
     ),
 
     sections=(
         Section(
             title="Khuyếch đại năng lực vật lý & sinh học",
-            intro="Vật chất lập trình sinh học chạy trong từng tế bào, nên cơ "
-                  "thể cô là thứ có thể viết lại giữa trận đánh.",
+            intro="Bản gốc là người thường trong một bộ giáp: đánh trực diện "
+                  "là cô thua. Absolute xoá khoảng cách giữa người mặc giáp và "
+                  "bộ giáp — cô tự cấy một mạng sợi vật chất lập trình vào hệ "
+                  "thần kinh ngoại vi và cơ xương, và từ đó cơ thể cô là thứ "
+                  "có thể viết lại giữa trận đánh.",
             items=(
-                ("Tế bào tự lập trình",
-                 "Hạt nano trong mỗi tế bào tái cấu trúc cơ, xương và thần "
-                 "kinh theo thời gian thực: mật độ cơ tăng gấp 10 lần trong "
-                 "tích tắc, nâng được khoảng 5 tấn — xé cửa thép, ném ô tô. "
-                 "Hệ thần kinh thay bằng sợi quang-lượng tử cho phản xạ 10 "
-                 "mili giây."),
-                ("Tự phục hồi cấp độ mô",
-                 "Hạt nano tuần tra trong máu, phát hiện tổn thương và vá lại "
-                 "trong vài giây. Vết đạn hay vết cắt sâu đều kín gần như tức "
-                 "thì, miễn là năng lượng dự trữ chưa cạn."),
-                ("Da hấp thụ động năng",
-                 "Lớp Kinetic-Adaptive Skin nuốt tới 90% động năng của đòn "
-                 "đánh, chuyển thành điện nạp vào tụ siêu dẫn trong người. Số "
-                 "điện đó quay lại thành một cú đấm điện từ, hoặc thành đạn "
-                 "cho vũ khí."),
-                ("Miễn nhiễm độc tố & sinh học",
-                 "Hệ lọc nano trong máu vô hiệu hầu hết chất độc thần kinh, "
-                 "khí độc và vi khuẩn. Cô tự điều chỉnh thân nhiệt, áp suất, "
-                 "và sống sót một lúc trong chân không nhờ màng tế bào tự tạo."),
+                ("Sợi cơ vật chất lập trình",
+                 "Mạng sợi cấy vào cơ xương hoạt động như cơ bắp nhân tạo với "
+                 "mật độ năng lượng gấp 50 lần cơ người: nâng được hàng chục "
+                 "tấn, chạy 120 km/h, phản xạ dưới 10 mili giây. Chúng phản "
+                 "ứng thẳng với tín hiệu thần kinh của Phin và tái cấu trúc "
+                 "theo thời gian thực, tạo lực kéo cơ học mà không cần đến cơ "
+                 "bắp sinh học nữa."),
+                ("Áo giáp chất lỏng thông minh",
+                 "Lớp phủ trên da nuốt động năng của đạn và mảnh nổ bằng cách "
+                 "hoá nó thành nhiệt, rồi tản đi qua hàng triệu kênh dẫn siêu "
+                 "nhỏ. Không có mảng giáp nào để bắn vỡ, vì nó không phải "
+                 "mảng — nó chảy."),
+                ("Tái tạo bằng vật chất môi trường",
+                 "Mất một cánh tay không còn là mất vĩnh viễn: cô hút vật chất "
+                 "lập trình từ xung quanh và dựng lại chi đó trong vài giây. "
+                 "Càng đánh ở nơi có nhiều kim loại, cô càng khó bị làm cho "
+                 "yếu đi."),
+                ("Thở và tuần hoàn tự động hoá",
+                 "Vật chất lập trình nhận luôn việc bơm máu và trao đổi khí, "
+                 "nên phổi thôi là điểm chí mạng. Cô sống được trong chân "
+                 "không và dưới nước — hai môi trường mà đối thủ nào cũng "
+                 "tưởng là chỗ dồn cô vào đường cùng."),
                 ("Điểm yếu cố hữu",
-                 "Năng lượng dự trữ là hữu hạn. Đánh cường độ cao liên tục quá "
-                 "hai giờ thì hạt nano bắt đầu thoái hoá và tốc độ phục hồi "
-                 "tụt hẳn — cô buộc phải nạp từ lưới điện hoặc một nguồn công "
-                 "nghệ cao nào đó."),
+                 "Toàn bộ hệ này chạy bằng lò phản ứng mini trong giáp, và cả "
+                 "nó lẫn tốc độ tự nhân bản của Swarm đều có giới hạn. Đánh "
+                 "cường độ cao liên tục quá hai giờ thì mạng sợi bắt đầu thoái "
+                 "hoá, tái tạo chậm hẳn lại — cô buộc phải cắm vào lưới điện "
+                 "hoặc một nguồn công nghệ cao nào đó để nạp."),
             ),
         ),
         Section(
             title="Đột phá công nghệ & tự động hoá",
             intro="Không có trung tâm nào để đánh sập, vì cô đã bỏ hẳn khái "
-                  "niệm trung tâm.",
+                  "niệm trung tâm — và cũng không có AI nào để thuyết phục hay "
+                  "vô hiệu hoá, vì trong toàn hệ thống không có gì biết nghĩ.",
             items=(
-                ("Mạng vật chất lập trình toàn cầu (GPMC)",
-                 "Hàng triệu “hạt giống” nano phát tán vào khí quyển, nguồn "
-                 "nước và đất, tự nhân bản bằng cách ăn kim loại, silicon, "
-                 "carbon quanh chúng. Khi kích hoạt, chúng nối thành mạng thần "
-                 "kinh nhân tạo phủ hàng nghìn km² — mọi vật chất trong vùng "
-                 "trở thành thứ điều khiển được từ xa."),
-                ("Trí tuệ bầy đàn phân tán",
-                 "Không có AI trung tâm để vô hiệu hoá. Swarm Intelligence "
-                 "Core chạy hàng triệu agent nhỏ trên từng hạt nano, tự học và "
-                 "phối hợp theo thời gian thực: quét trọn không gian 3D trong "
-                 "bán kính 100 km với độ trễ dưới 5 mili giây, và dự đoán quỹ "
-                 "đạo đối phương từ dữ liệu lịch sử lẫn phong cách chiến đấu."),
-                ("Lò đúc chiến tranh di động",
-                 "Những “lò phản ứng vật chất” cỡ container, thả xuống đâu "
-                 "cũng chạy: hút đất đá, nước, kim loại phế thải rồi xuất "
-                 "xưởng drone, robot tự hành và vũ khí năng lượng. Một lò cỡ "
-                 "trung cho ra 10.000 drone cảm tử mỗi giờ."),
-                ("Kho vũ khí cá nhân",
-                 "Kiếm lượng tử bằng vật chất lập trình dao động tần số cao, "
-                 "cắt đứt liên kết phân tử của thép, bê tông, cả hợp kim "
-                 "titan. Pháo ray EMP bắn đạn đạt Mach 7 kèm xung phá huỷ mọi "
-                 "thiết bị điện tử trong 50 mét. Khiên năng lượng tự đọc bước "
-                 "sóng của đòn đánh rồi chỉnh tần số để chặn."),
-                ("Hạ tầng hoá thành vũ khí",
-                 "GPMC biến cầu, toà nhà, đường sá thành khí tài: một cây cầu "
-                 "gấp lại thành cỗ máy nghiền, một toà nhà phóng ra hàng nghìn "
-                 "mảnh kim loại nhọn như tên lửa."),
+                ("Hệ thống “Swarm”",
+                 "Hàng tỷ hạt vật chất lập trình cỡ micromet, tự nhân bản bằng "
+                 "cách ăn kim loại và vật liệu quanh chúng — một thứ vi khuẩn "
+                 "cơ khí. Chúng không có trí tuệ nhân tạo: mỗi hạt chỉ mang "
+                 "vài thuật toán hoá–lý đơn giản mã hoá sẵn trong cấu trúc "
+                 "tinh thể. Thả một đám mây Swarm vào nhà máy điện là chúng tự "
+                 "dò ra dây dẫn, bám vào và đoản mạch liên tục cho tới khi cả "
+                 "dây chuyền cháy nổ."),
+                ("Tái cấu trúc hạ tầng",
+                 "Ở quy mô lớn, Swarm dựng thành những cột vật chất lập trình "
+                 "cao hàng trăm mét, hoặc chui vào từng khe nứt của cầu đường "
+                 "rồi giãn nở đột ngột. Bê tông không bị nổ tung — nó bị tách "
+                 "ra từ bên trong, theo đúng những đường yếu mà người kỹ sư "
+                 "nào cũng biết là có."),
+                ("Pháo năng lượng “Titan Lance”",
+                 "Khẩu pháo cá nhân bắn chùm plasma 50.000°C, cắt xuyên bê "
+                 "tông cốt thép dày mười mét. Nguồn là một lò phản ứng hạt "
+                 "nhân mini tích hợp trong giáp, và chính vật chất lập trình "
+                 "làm nhiệm vụ kìm giữ phản ứng phân hạch — thanh điều khiển "
+                 "của lò là thứ cô nghĩ ra được, không phải thứ mua được."),
+                ("Mạng lưới Node toàn cầu",
+                 "Underground không còn là một nhóm nhỏ ở New York. Phin cho "
+                 "chôn các “Node” — khối cầu chứa hàng tấn hạt Swarm — dưới "
+                 "lòng đất ở 50 thành phố lớn. Mỗi Node kích hoạt được từ xa "
+                 "bằng một tín hiệu vô tuyến mã hoá, giải phóng Swarm đánh vào "
+                 "toàn bộ điện, nước và viễn thông của thành phố đó."),
+                ("Vì sao không có drone",
+                 "Đặt Node vào chỗ là việc của người Underground, ra lệnh kích "
+                 "hoạt là việc của Phin. Không máy bay không người lái, không "
+                 "robot tự hành, không hệ điều khiển tự trị nào ở giữa. Muốn "
+                 "chặn cô thì phải tìm ra người đã chôn Node, hoặc tìm ra "
+                 "chính cô — chứ không có máy chủ nào để đánh sập."),
             ),
         ),
         Section(
             title="Khắc chế phần cứng của Spider-Man",
-            intro="Phin hiểu Miles Morales hơn bất kỳ ai — và bộ biện pháp này "
-                  "được thiết kế riêng cho từng năng lực của cậu.",
+            intro="Không đòn nào ở đây là công cụ mua sẵn: tất cả đều dựng từ "
+                  "chính vật chất lập trình của cô, và từ chỗ cô biết rõ Miles "
+                  "Morales — cả cách cậu đánh lẫn cách cậu đau.",
             items=(
-                ("Spider-Sense Overload Protocol",
-                 "Giác quan nhện báo trước nguy hiểm, nên cô dựng hàng nghìn "
-                 "mối đe doạ giả cùng lúc: drone siêu nhỏ phát sóng điện từ "
-                 "trùng tần số tín hiệu thần kinh kích hoạt giác quan ấy, từ "
-                 "mọi hướng. Miles ngập trong nhiễu, phản xạ hỗn loạn — né "
-                 "nhầm, hoặc đứng yên đúng lúc đòn thật tới — và kiệt quệ chỉ "
-                 "sau vài phút."),
-                ("Dung môi nano phá tơ",
-                 "Chạm vào tơ nhện, dù hữu cơ hay nhân tạo, dung môi phá vỡ "
-                 "liên kết polymer tức thì. Phun dạng sương hoặc bắn dạng đạn "
-                 "nổ; mọi sợi tơ thành chất lỏng vô hại trong chưa đầy 0,1 "
-                 "giây. Không đu dây được, cũng không trói được ai."),
-                ("Trường phá tàng hình",
-                 "Miles bẻ cong ánh sáng để biến mất. Trường của Phin quét "
-                 "toàn phổ điện từ, bắt mọi biến dạng ánh sáng lẫn thân nhiệt, "
-                 "rồi bắn laser phát tán để “hiện hình” cậu và phủ lên người "
-                 "cậu một lớp bụi nano phát quang."),
-                ("Phản đòn Venom Strike",
-                 "Tụ điện trên giáp hút trọn luồng điện sinh học Miles phóng "
-                 "ra, chuyển thành điện nạp cho vũ khí của cô — rồi trả lại "
-                 "một luồng tương tự nhưng mạnh gấp ba. Cậu bị đánh gục bằng "
-                 "chính sức mạnh của mình."),
-                ("Thuật toán Spider-Bane",
-                 "Dựng từ dữ liệu hàng trăm trận cũ của Miles, mô hình dự đoán "
-                 "chuyển động đạt 99,3%: bắn đạn vào đúng chỗ cậu sẽ tiếp đất "
-                 "sau cú nhảy, đặt bẫy vật chất lập trình ở điểm mù, và tung "
-                 "đòn giả để ép cậu vào vị trí đã tính sẵn."),
-                ("Bio-Nano Suppressor",
-                 "Đám mây nano xuyên qua da, đánh vào hệ thần kinh: không giết "
-                 "ngay mà phá lớp lông siêu nhỏ khiến tay chân mất khả năng "
-                 "bám dính, làm tê các cơ quan cảm thụ, cướp luôn thăng bằng "
-                 "và khả năng phối hợp động tác."),
+                ("Nhiễu vật chất lập trình",
+                 "Giác quan nhện đọc các biến động năng lượng và chuyển động "
+                 "trong không gian, nên cô dựng một trường hạt bán kính 50 mét "
+                 "quanh mình, trong đó vật chất lập trình liên tục đổi vị trí "
+                 "và mật độ theo thuật toán ngẫu nhiên. Hàng nghìn biến động "
+                 "giả cùng lúc: Miles thấy nguy hiểm từ mọi hướng, và một cảnh "
+                 "báo đúng ở khắp nơi thì cũng vô dụng như không có."),
+                ("Bẫy “mạng nhện phản xạ”",
+                 "Những tấm vật chất lập trình hấp thụ động năng của tơ nhện, "
+                 "giữ lại dưới dạng năng lượng đàn hồi rồi bắn ngược lại theo "
+                 "đúng hướng tới, với lực gấp đôi. Cùng lúc, một từ trường cục "
+                 "bộ làm loạn hướng bám của tơ — cậu đu dây mà không còn tin "
+                 "được sợi tơ sẽ dính vào đâu."),
+                ("“Bóng ma ký ức”",
+                 "Máy chiếu vật chất lập trình dựng ra hình ảnh ba chiều có "
+                 "xúc giác: Rio Morales, Ganke, hoặc chính Phin của những ngày "
+                 "trước khi thành Tinkerer. Chúng chạm được vào Miles và nói "
+                 "được những câu làm cậu đau nhất. Đây không phải ảo giác thần "
+                 "kinh — nó là vật thể thật, dựng bằng photon và sóng âm chính "
+                 "xác tới từng nguyên tử, nên cậu không có cách nào tự nhủ "
+                 "rằng mình đang tưởng tượng."),
+                ("Bụi phát quang phá tàng hình",
+                 "Miles bẻ cong ánh sáng để biến mất, nên cô không đi tìm cậu "
+                 "— cô đánh dấu cậu. Bụi vật chất lập trình bám vào mọi bề mặt "
+                 "cậu chạm tới, hấp thụ ánh sáng xung quanh rồi phát lại ở "
+                 "bước sóng xanh lam nhạt. Mỗi hạt cỡ micromet và bám chặt vào "
+                 "vải lẫn da, nên phủi cũng không sạch: tàng hình xong vẫn "
+                 "phát sáng lờ mờ trong bóng tối."),
             ),
         ),
     ),
 
+    # Thang chữ cái Hy Lạp như hai dạng Absolute trước, đọc từ Zeta lên Omega.
+    # Ở đây bậc càng cao thì càng chậm, vì thứ quyết định không phải hoả lực
+    # mà là số Node đã chôn xong và chờ sẵn dưới đất.
     tiers=(
-        Tier("Pha 1", "Xâm nhập & vô hiệu hoá",
-             "GPMC phát tán vào lưới điện quốc gia, biến dây dẫn thành siêu "
-             "dẫn nhiệt độ phòng hoặc ngược lại cho tới khi toàn hệ truyền tải "
-             "sụp. Thành phố tối đen, viễn thông tê liệt. Hạt nano vào hệ cấp "
-             "nước, tạo khối polymer làm nghẽn ống hoặc biến nước thành dung "
-             "dịch ăn mòn kim loại.",
-             "0 – 6 giờ"),
-        Tier("Pha 2", "Đánh hạ tầng trọng yếu",
-             "Lò đúc di động xuất xưởng hàng triệu drone tự sát, đánh đồng "
-             "loạt sân bay, cảng biển, nhà máy lọc dầu, trạm phát sóng. Drone "
-             "tự học để né phòng không và tìm lỗ hổng radar. Cao tốc và cầu "
-             "cống bị tái cấu trúc thành bột mịn.",
-             "6 – 24 giờ"),
-        Tier("Pha 3", "Nghiền nát lực lượng quân sự",
-             "Quân đội điều xe tăng, tiêm kích, tên lửa — nhưng GPMC đã ở "
-             "trong hệ dẫn đường, tên lửa quay đầu bắn lại phe phòng thủ, xe "
-             "tăng bị khối vật chất hoá lỏng nuốt chửng rồi tấn công đồng "
-             "minh. Cô dựng được “bão nano”: cột xoáy hàng tỷ hạt cắt nhỏ mọi "
-             "thứ trong bán kính 1 km, một cơn lốc làm bằng dao cạo.",
-             "24 – 48 giờ"),
-        Tier("Pha 4", "Sụp đổ kinh tế & xã hội",
-             "Năng lượng, giao thông, viễn thông đã mất; ngân hàng và sàn "
-             "chứng khoán bị đánh từ bên trong máy tính. Đất nông nghiệp bị "
-             "biến cấu trúc thành chất vô cơ không trồng trọt được, kéo theo "
-             "nạn đói diện rộng.",
-             "48 – 72 giờ"),
+        Tier("Tier Zeta", "Vài mục tiêu cá nhân",
+             "Một nhúm Swarm và khẩu Titan Lance là đủ. Không cần Node, không "
+             "cần chuẩn bị: cô đến, và những người có tên trong danh sách thì "
+             "không còn.",
+             "1 phút"),
+        Tier("Tier Epsilon", "Một trung đội hoặc một đoàn xe",
+             "Swarm rải vào đội hình tự tìm tới kim loại: khoá nòng, chập "
+             "mạch điện xe, cắn đứt hệ dẫn động. Một trung đội quân hay một "
+             "đoàn xe cảnh sát tan trước khi kịp gọi chi viện.",
+             "10 phút"),
+        Tier("Tier Delta", "Một toà cao ốc hoặc một khu phố",
+             "Swarm chui vào từng khe nứt của kết cấu rồi giãn nở đồng loạt. "
+             "Toà nhà không nổ, nó tự tách ra theo các đường yếu — nhanh hơn "
+             "và gọn hơn bất kỳ khối thuốc nổ nào.",
+             "30 phút"),
+        Tier("Tier Gamma", "Một hạ tầng chiến lược",
+             "Sân bay quốc tế, nhà máy điện hạt nhân, hoặc một trung tâm tài "
+             "chính: thiệt hại hàng chục tỷ đô la trong hai giờ. Bản gốc phải "
+             "mất nhiều tuần lên kế hoạch cho một vụ phá hoại Roxxon nhỏ hơn "
+             "thế nhiều.",
+             "2 giờ"),
+        Tier("Tier Beta", "Một siêu đô thị tê liệt",
+             "Một Node dưới New York, Tokyo hay London mở ra là đủ: tàu điện "
+             "ngầm, cầu đường, hệ cấp thoát nước hỏng cùng lúc. Thành phố "
+             "không bị san phẳng — nó chỉ đơn giản là ngừng chạy được nữa.",
+             "6 giờ"),
+        Tier("Tier Alpha", "Hệ năng lượng của một quốc gia",
+             "Swarm đánh dọc đường ống dẫn khí, nhà máy lọc dầu và lưới truyền "
+             "tải của trọn một cường quốc. Không có mặt trận nào để phòng thủ, "
+             "vì thứ đang tấn công đã nằm sẵn trong chính hạ tầng ấy.",
+             "1 ngày"),
+        Tier("Tier Omega", "Sụp đổ nền văn minh công nghệ",
+             "Một tín hiệu vô tuyến mã hoá, năm mươi Node mở cùng lúc. Swarm "
+             "tràn vào nhà máy điện hạt nhân, trạm biến áp, trung tâm dữ liệu, "
+             "sân bay và cảng biển; lưới điện Bắc Mỹ, châu Âu và Đông Á sụp "
+             "trong 72 giờ. Hàng tỷ người mất điện, mất nước sạch, mất liên "
+             "lạc. Bản gốc cần nhiều tuần để phá vài toà nhà của Roxxon; "
+             "Absolute chỉ cần một lệnh kích hoạt và ba ngày — không phải đối "
+             "đầu trực diện với quân đội của bất kỳ ai.",
+             "3 ngày"),
     ),
 
+    # Nhãn giữ dưới 94 px — bề ngang cột nhãn của FactTable, quá thì bị cắt.
     facts=(
         ("Tên thật", "Phin Mason"),
         ("Dòng thời gian", "Earth-1048 — cái tên đã sang tay"),
-        ("Cấp đe doạ", "Quốc gia — National Threat Tier 3"),
-        ("Nền tảng", "Vật chất lập trình sinh học cấy ghép"),
-        ("Sức nâng", "≈ 5 tấn  ·  phản xạ 10 mili giây"),
-        ("Tầm phủ mạng", "Hàng nghìn km²  ·  quét 100 km, trễ 5 ms"),
-        ("Điểm yếu", "Năng lượng dự trữ cạn sau ~2 giờ cường độ cao"),
+        ("Cấp đe doạ", "Hành tinh — sụp đổ nền văn minh công nghệ"),
+        ("Nền tảng", "Vật chất lập trình tự nhân bản"),
+        ("Thể chất", "Nâng hàng chục tấn · 120 km/h · phản xạ 10 ms"),
+        ("Node", "50 thành phố  ·  kích hoạt bằng vô tuyến mã hoá"),
+        ("Không dùng", "AI có ý thức — chỉ phản ứng hoá–lý sẵn"),
+        ("Điểm yếu", "Năng lượng cạn sau ~2 giờ cường độ cao"),
         ("Mục tiêu", "Miles Morales"),
     ),
 
-    blurb="Không có tổng hành dinh để đánh sập, không có AI trung tâm để rút "
-          "điện, không có dây chuyền nào để ném bom. Muốn ngăn cô ta, phải "
-          "ngăn được chính mặt đất, nguồn nước và không khí của một quốc gia — "
-          "vì đến lúc ấy tất cả đều đã là cô ta.",
+    blurb="Không có tổng hành dinh để đánh sập, không có AI để rút điện, "
+          "không có dây chuyền nào để ném bom — chỉ có năm mươi khối cầu nằm "
+          "im dưới lòng năm mươi thành phố, và một người biết tần số đánh "
+          "thức chúng. Muốn ngăn cô ta thì phải tìm ra từng cái một, trước "
+          "khi cô bấm nút.",
 
     art=draw_absolute_tinkerer,
     caption="Dựng lại từ dữ liệu mạng lưới  ·  khung hình trực tiếp",
