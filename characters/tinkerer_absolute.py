@@ -609,16 +609,17 @@ ABSOLUTE = Profile(
              "3 ngày"),
     ),
 
-    # Nhãn giữ dưới 94 px — bề ngang cột nhãn của FactTable, quá thì bị cắt.
+    # Nhãn giữ dưới 94 px, giá trị dưới 188 px — xem chú thích cùng chỗ trong
+    # `chameleon_absolute.py`. Bỏ dòng "Tên thật" vì `real_name` đã in ngay
+    # dưới masthead rồi, bảng không cần nhắc lại.
     facts=(
-        ("Tên thật", "Phin Mason"),
-        ("Dòng thời gian", "Earth-1048 — cái tên đã sang tay"),
-        ("Cấp đe doạ", "Hành tinh — sụp đổ nền văn minh công nghệ"),
+        ("Dòng thời gian", "Earth-1048 — tên đã sang tay"),
+        ("Cấp đe doạ", "Hành tinh · văn minh công nghệ"),
         ("Nền tảng", "Vật chất lập trình tự nhân bản"),
-        ("Thể chất", "Nâng hàng chục tấn · 120 km/h · phản xạ 10 ms"),
-        ("Node", "50 thành phố  ·  kích hoạt bằng vô tuyến mã hoá"),
-        ("Không dùng", "AI có ý thức — chỉ phản ứng hoá–lý sẵn"),
-        ("Điểm yếu", "Năng lượng cạn sau ~2 giờ cường độ cao"),
+        ("Thể chất", "Chục tấn · 120 km/h · 10 ms"),
+        ("Node", "50 thành phố · vô tuyến mã hoá"),
+        ("Không dùng", "AI có ý thức · drone · robot"),
+        ("Điểm yếu", "Cạn sau ~2 giờ cường độ cao"),
         ("Mục tiêu", "Miles Morales"),
     ),
 

@@ -651,15 +651,17 @@ ABSOLUTE = Profile(
              "72–120 giờ"),
     ),
 
-    # Nhãn giữ dưới 94 px — bề ngang cột nhãn của FactTable, quá thì bị cắt.
+    # Nhãn giữ dưới 94 px, giá trị dưới 188 px — xem chú thích cùng chỗ trong
+    # `chameleon_absolute.py`: bảng lý lịch cao quá thì nó bị dồn xuống cuối
+    # cột đọc và khung chân dung phình ra chiếm chỗ trống.
     facts=(
-        ("Danh hiệu", "The Apex Predator  ·  The Sky Tyrant"),
-        ("Cấp đe doạ", "Hành tinh — làm sụp nền văn minh công nghiệp"),
-        ("Bộ giáp", "Aasvogel Mk.VII  ·  4.000 phiến lông vũ"),
-        ("Nhiên liệu", "Không mang theo — rút từ lưới điện và gió"),
-        ("Trần bay", "20.000–30.000 m, không cần dưỡng khí"),
-        ("Không dùng", "AI tự hành — chỉ phản xạ giữ thăng bằng"),
-        ("Cuộc săn", "72–120 giờ  ·  bậc Omega"),
+        ("Danh hiệu", "The Apex Predator · Sky Tyrant"),
+        ("Cấp đe doạ", "Hành tinh · hạ tầng công nghiệp"),
+        ("Bộ giáp", "Aasvogel Mk.VII · 4.000 phiến"),
+        ("Nhiên liệu", "Rút từ lưới điện và gió"),
+        ("Trần bay", "20.000–30.000 m"),
+        ("Không dùng", "Chỉ phản xạ giữ thăng bằng"),
+        ("Cuộc săn", "72–120 giờ  ·  Omega"),
     ),
 
     blurb="Absolute Vulture không phải kẻ huỷ diệt hành tinh theo nghĩa cho "

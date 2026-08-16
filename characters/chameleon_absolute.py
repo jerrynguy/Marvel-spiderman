@@ -755,15 +755,18 @@ ABSOLUTE = Profile(
              "30 ngày"),
     ),
 
-    # Nhãn giữ dưới 94 px — bề ngang cột nhãn của FactTable, quá thì bị cắt.
+    # Nhãn giữ dưới 94 px, giá trị dưới 188 px: quá cỡ thì nhãn bị cắt, còn
+    # giá trị bị đẩy xuống dòng riêng — mỗi dòng thừa làm bảng cao thêm ~14 px,
+    # và bảng cao quá thì cả khối lý lịch bị dồn xuống cuối cột đọc
+    # (`Card.fit`), để lại một khung chân dung phình to trống trơn.
     facts=(
-        ("Cấp đe doạ", "Hành tinh — bằng lòng tin, không bằng vũ lực"),
-        ("Nền tảng", "Sinh học đột biến · công cụ thủ công · người thật"),
-        ("Không dùng", "AI · drone · máy tự động — chỉ bộ não người"),
-        ("Sao chép", "Vân tay, mống mắt, vi sinh da, kháng nguyên bề mặt"),
-        ("Hạn bản sao", "48–72 giờ, rồi cơ thể trở lại nguyên bản"),
-        ("Rình mục tiêu", "5–10 phút quan sát, thay cho nhiều tuần"),
-        ("Bậc Omega", "30 ngày  ·  sụp đổ bản sắc toàn cầu"),
+        ("Cấp đe doạ", "Hành tinh — bằng lòng tin"),
+        ("Nền tảng", "Sinh học · thủ công · người thật"),
+        ("Không dùng", "AI · drone · máy tự động"),
+        ("Sao chép", "Vân tay, mống mắt, vi sinh da"),
+        ("Hạn bản sao", "48–72 giờ mỗi lần"),
+        ("Rình mục tiêu", "5–10 phút quan sát"),
+        ("Bậc Omega", "30 ngày  ·  toàn cầu"),
     ),
 
     blurb="Absolute Chameleon là mối đe doạ hành tinh không cần bắn một viên "
