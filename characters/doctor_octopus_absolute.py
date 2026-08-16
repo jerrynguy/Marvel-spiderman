@@ -250,8 +250,12 @@ def _face(p, t, beat):
     p.drawEllipse(core, 6.4, 6.4)
 
 
-def _mites(p, t):
-    """Octo-Mites: bầy drone quẩn quanh, thỉnh thoảng dồn thành tấm chắn."""
+def _filaments(p, t):
+    """Vi sợi tách khỏi càng, quẩn quanh, thỉnh thoảng dồn lại thành tấm chắn.
+
+    Chúng không bay lấy: mỗi sợi vẫn là một mẩu xúc tu, vẫn nằm trong tay
+    Otto. Cái quẩn quanh đó là chuyển động của hắn, không phải của chúng.
+    """
     shield = max(0.0, math.sin(t * 0.42) - 0.55) / 0.45   # từng chặp mới dồn
     r = Rolls(3071963)
     p.setPen(Qt.PenStyle.NoPen)
@@ -274,8 +278,12 @@ def _mites(p, t):
         p.drawRect(QRectF(x, y, 0.75, 0.75))
 
 
-def _lidar(p, t):
-    """Quét LIDAR 360°: một nan sáng quay đều quanh trục lò."""
+def _seismic(p, t):
+    """Vòng nghe địa chấn: một nan sáng quay đều quanh trục lò.
+
+    Không phải radar hay LIDAR — hắn không phát gì ra cả. Nan quay chỉ là
+    nhịp mà bản đồ rung động trong bán kính 50 km được dựng lại.
+    """
     a = (t * 66) % 360
     p.setPen(Qt.PenStyle.NoPen)
     sweep = QRadialGradient(QPointF(50, 46), 58)
@@ -345,12 +353,12 @@ def draw_absolute_octopus(p, rect, t=0.0):
     with design(p, rect):
         _hall(p, t)
         beat = _reactor(p, t)
-        _lidar(p, t)
+        _seismic(p, t)
         _limbs(p, t)
         p.drawImage(QRectF(-6, -6, still.width() / scale,
                            still.height() / scale), still)
         _face(p, t, beat)
-        _mites(p, t)
+        _filaments(p, t)
         _gauges(p, t)
         marks(p, QColor("#6E5346"))
 
@@ -363,171 +371,235 @@ ABSOLUTE = Profile(
     keys=("Doctor Octopus Absolute",),
 
     kicker="Hồ sơ tuyệt đối",
-    stamp="PHÂN LOẠI  ·  MỐI ĐE DOẠ CẤP QUỐC GIA",
+    stamp="PHÂN LOẠI  ·  MỐI ĐE DOẠ CẤP HÀNH TINH",
     note="ABSOLUTE",
     note_kind="new",
     tab="Absolute",
     skin="forge",
     evolve_fx="crush",       # bốn càng bấu vào, nén cho oằn rồi bẻ thành tảng
 
-    tagline="Không còn là gã béo bám sau bốn cánh tay máy. Là một hệ thống vũ "
-            "khí quốc gia có ý thức, vận hành bằng bộ não Otto Octavius.",
+    tagline="Bạch tuộc Địa chấn Hạt nhân. Không huỷ diệt hành tinh — chỉ trở "
+            "thành hệ thần kinh của nó, và mỗi nhịp đập là một trận động đất.",
 
     summary=(
-        "Ở bản Absolute, Otto trở thành một khung công nghiệp sống — sinh vật "
-        "nửa người nửa máy được tối ưu hoá để điều khiển chiến trường. Cột "
-        "sống sinh học bị bỏ đi, thay bằng chuỗi đốt titan-beryllium bọc ống "
-        "nano carbon; tim thay bằng tim nhân tạo kép bơm dung dịch thuỷ lực "
-        "12.000 psi; phổi thay bằng bộ trao đổi khí màng lọc.",
+        "Otto Octavius vốn là một thiên tài vật lý hạt nhân với bốn xúc tu cơ "
+        "khí nối thẳng vào cột sống, quen đánh bằng kế hoạch nhiều lớp hơn là "
+        "bằng sức. Toàn bộ sức mạnh của hắn đến từ trí tuệ và công nghệ; "
+        "điểm yếu cốt tử cũng chỉ có hai — một cơ thể người thường, và một "
+        "cái tôi khiêu khích là nổ.",
 
-        "Bốn càng thành tám. Mỗi càng dài 9 mét, nặng 1,2 tấn, nâng được 80 "
-        "tấn và đập ra 3 MJ — đủ xuyên bê tông cốt thép dày hai mét. Nhưng "
-        "thứ khiến hắn thành mối đe doạ cấp quốc gia không phải sức mạnh ấy, "
-        "mà là bộ não được cấy 12.000 vi điện cực nối thẳng vào một AI chỉ "
-        "huy.",
+        "Bản Absolute vá cái thứ nhất và giữ nguyên cái thứ hai. Cột sống "
+        "thành một lò tokamak, khung xương thành ống nano carbon pha sắt, "
+        "não được cấy các nút giao thoa photon vướng víu để điều khiển tám "
+        "xúc tu với độ trễ picosecond. Bốn càng thành tám cộng một càng trục, "
+        "mỗi càng vươn được ba cây số và tự lắp thêm đốt bằng quặng nó nhặt "
+        "dọc đường.",
 
-        "Hắn không cần chiếm đất. Hắn biến một quốc gia thành nhà tù công "
-        "nghiệp đang sụp đổ.",
+        "Nhưng bước nhảy thật nằm ở chỗ khác: cắm xuống đất, tám xúc tu ấy "
+        "thành một mạng thần kinh địa chấn. Otto nghe được mọi rung động "
+        "trong bán kính 50 km, và biết cách trả lời chúng bằng những rung "
+        "động của riêng mình — đúng tần số, đúng đứt gãy.",
+
+        "Trong toàn hệ thống không có một dòng AI hay một chiếc drone nào. "
+        "Otto tin tự động hoá là chỗ hở để người khác chọc vào, nên mọi thứ "
+        "đều phải là phần nối dài của chính thân thể và thần kinh hắn — kể cả "
+        "khi thứ phải điều khiển là một cơn động đất.",
     ),
 
     sections=(
         Section(
             title="Khuyếch đại năng lực vật lý & sinh học",
-            intro="Gần như không còn bộ phận sinh học nào nguyên vẹn — mỗi thứ "
-                  "bị thay đều để phục vụ việc vận hành tám chi cùng lúc.",
+            intro="Bản gốc là người thường về mặt sinh học: xúc tu quật đổ "
+                  "tường được, nhưng cái thân mang chúng thì vẫn bị thương như "
+                  "mọi cái thân khác. Absolute vá đúng khoảng hở đó, không thêm "
+                  "một siêu năng lực nào — chỉ thêm kỹ thuật.",
             items=(
-                ("Khung xương và nội tạng thay thế",
-                 "Đốt sống nhân tạo titan-beryllium bọc ống nano carbon, tuỷ "
-                 "sống nằm trong vỏ giáp chống phản hồi lực. Tim nhân tạo kép "
-                 "bơm thuỷ lực 12.000 psi nuôi toàn bộ chi máy. Phổi màng lọc "
-                 "cho phép hoạt động trong chân không, dưới nước sâu 2.000 m "
-                 "hoặc giữa khí độc công nghiệp."),
-                ("Cơ tiêm sợi polymer",
-                 "Chịu được gia tốc 40G và một cú đâm trực diện tương đương xe "
-                 "tải 10 tấn ở 80 km/h."),
-                ("12.000 vi điện cực xuyên vỏ não",
-                 "Nối thẳng não vào AI. Phản xạ 0,07 giây, đủ để vận hành tám "
-                 "xúc tu như tám chi thể thật chứ không phải tám cái máy."),
-                ("Xúc tu bốn lớp",
-                 "Lõi truyền động thuỷ lực và cơ điện hoá; giữa là cáp sợi "
-                 "carbon xoắn chịu kéo 1.200 tấn; ngoài là giáp composite "
-                 "chống đạn 20 mm; ngoài cùng là cảm biến áp điện phủ polymer "
-                 "chống dính. Mỗi càng nâng 80 tấn, đầu càng đi 200 m/s, một "
-                 "cú đập ra 3 MJ."),
-                ("Module đầu càng, đổi trong 0,3 giây",
-                 "Mũi khoan kim cương 30.000 vòng/phút · đèn plasma 3.000°C · "
-                 "laser cắt 50 kW · súng bắn đinh điện từ Mach 4 · vòi phun "
-                 "nitơ lỏng."),
-                ("Lò nhiệt hạch 40 MW",
-                 "Gắn trên lưng, nuôi toàn hệ thống. Bị phá thì cho một vụ nổ "
-                 "sạch cỡ 50 kiloton — nhưng Otto không dùng nó làm bom tự sát "
-                 "trừ khi bị dồn tới đường cùng."),
+                ("Cột sống Tokamak cá nhân",
+                 "Cả cột sống bị thay bằng một lò nhiệt hạch dạng cột: plasma "
+                 "deuterium–tritium giam trong từ trường siêu dẫn, công suất "
+                 "đỉnh 5 terawatt nuôi trọn hệ thống. Hợp hạch không rải chất "
+                 "thải phóng xạ ra xung quanh, nên hắn mang nó trong người "
+                 "được — và nhờ nó, hắn sống nhiều ngày không cần ăn, không "
+                 "cần oxy, chịu được cả nhiệt độ lõi lò."),
+                ("Hệ xương carbon pha sắt",
+                 "Khung xương tái cấu trúc bằng ống nano carbon pha sắt từ, "
+                 "hấp thụ lực nén tới 500 tấn. Da phủ boron carbide và "
+                 "graphene: chống đạn, chống bức xạ, chống cả xung điện từ — "
+                 "thứ vũ khí đầu tiên người ta nghĩ tới khi đối đầu một kẻ "
+                 "chạy bằng điện."),
+                ("Thần kinh lượng tử điều khiển",
+                 "Não được cấy các nút giao thoa photon vướng víu, truyền lệnh "
+                 "xuống xúc tu với độ trễ tính bằng picosecond. Đây mới là "
+                 "bước nhảy về chất: Otto thôi phản xạ như một con người, hắn "
+                 "xử lý song song hàng nghìn luồng tín hiệu từ tám xúc tu và "
+                 "từ cả mạng lưới ngoài kia cùng một lúc."),
+                ("Hệ xúc tu bạch tuộc 8+1",
+                 "Tám xúc tu chính — hai lưng, hai bên, bốn bụng — cộng một "
+                 "càng trục mọc từ xương cụt. Lõi vẫn là truyền động thuỷ lực "
+                 "áp suất cao, nhưng chiều dài thì không còn cố định: mỗi càng "
+                 "vươn 3 km trong không khí, 10 km dưới nước bằng cách tự lắp "
+                 "thêm đốt từ quặng sắt, silicon và carbon nhặt dọc đường. Mỗi "
+                 "càng nâng 20.000 tấn, cả bộ là 160.000 tấn. Đầu càng đổi "
+                 "được thành mỏ cắt plasma, súng điện từ, hoặc lưới vi sợi."),
+                ("Mạng thần kinh địa chấn",
+                 "Xúc tu tự vá lại bằng kim loại hút từ môi trường, nên đánh "
+                 "gãy một càng chỉ là làm chậm hắn. Nhưng công dụng đáng sợ "
+                 "nhất lại là lúc chúng cắm xuống đất: cả bộ thành một mạng "
+                 "thần kinh địa chấn khổng lồ, nghe được mọi rung động trong "
+                 "bán kính 50 km và dựng bản đồ thời gian thực của mọi vật "
+                 "nặng trên 100 kg. Hắn trở thành hệ thần kinh của nền địa "
+                 "chất đô thị — không cần nhìn cũng biết ai đang đứng ở đâu."),
             ),
         ),
         Section(
             title="Đột phá công nghệ & tự động hoá",
-            intro="Bộ càng không phải vũ khí. Nó là một sở chỉ huy quân sự di "
-                  "động.",
+            intro="Không một dòng AI, không một chiếc drone. Otto tin tự động "
+                  "hoá là chỗ hở để người khác chọc vào — thứ gì tự quyết được "
+                  "thì cũng bị chiếm quyền được — nên mọi hệ thống ở đây đều "
+                  "chỉ là phần nối dài của thân thể và thần kinh hắn.",
             items=(
-                ("AI ORACLE-8",
-                 "Octal Rational Adaptive Combat & Logistics Engine: tự học từ "
-                 "2 triệu giờ mô phỏng cộng dữ liệu camera chiến trường thật. "
-                 "Dự đoán chuyển động đối thủ trước 0,8 giây với độ chính xác "
-                 "94%, xử lý đồng thời 50.000 nguồn — vệ tinh quang học, radar "
-                 "xuyên tường, camera giao thông, micro định hướng, cảm biến "
-                 "địa chấn — và xâm nhập được mạng quân sự cấp quốc gia để giả "
-                 "lệnh điều động hoặc chiếm quyền drone."),
-                ("Bầy Octo-Mites",
-                 "10.000 drone cỡ 3 cm, bay 50 km/h, sạc bằng cách đậu lên "
-                 "lưng Otto. Mỗi con mang tụ 50 kV hoặc 0,5 g chất nổ nano — "
-                 "đủ cắt cáp quang, làm mù cảm biến, hoặc tiêm độc thần kinh. "
-                 "Khi hắn đứng yên, cả bầy phủ lên người thành lớp giáp phản "
-                 "ứng chặn đạn đạo."),
-                ("Xúc tu tự hành",
-                 "Mỗi càng tách rời khỏi khung chính và sống độc lập 120 phút "
-                 "bằng pin dự phòng, làm việc như một con rắn máy: cắt cáp "
-                 "ngầm, đặt mìn, khoan đường hầm."),
-                ("Máy in nano trong thân càng",
-                 "Chế vật liệu ngay tại chỗ: mìn dẻo bám bề mặt, dung môi phá "
-                 "kim loại, bọt polymer nở 50 lần thể tích trong 2 giây để bịt "
-                 "hầm hoặc giam mục tiêu, và chất bôi trơn siêu trơn xoá sạch "
-                 "ma sát cả một khu vực."),
-                ("Cảm biến diện rộng",
-                 "LIDAR 360°, radar xuyên tường 200 m, sonar chủ động dưới "
-                 "nước, từ kế dò kim loại và mìn, máy dò hoá chất cùng rung "
-                 "động mặt đất tới 0,1 micron."),
+                ("Cụm lò nhiệt hạch nén quán tính",
+                 "Tám lõi nhỏ gắn ở gốc mỗi xúc tu, mỗi lõi 1,5 GW, cộng lại "
+                 "12 GW. Viên nhiên liệu deuterium–lithium được laser nén "
+                 "quán tính kích nổ, và toàn bộ nhịp bắn ấy do thần kinh lượng "
+                 "tử của Otto điều khiển trực tiếp — không có máy tính phụ trợ "
+                 "nào đứng giữa để mà tấn công."),
+                ("Mũi khoan plasma địa nhiệt",
+                 "Đầu xúc tu phun plasma 10.000°C, khoan xuyên lớp vỏ Trái Đất "
+                 "ở tốc độ 50 km/h. Hắn dùng chúng để đặt những “Bom Hài hoà” "
+                 "vào đúng các đứt gãy kiến tạo: không phá bằng sức nổ, mà "
+                 "bằng cách thúc cho vỏ Trái Đất làm nốt phần việc còn lại."),
+                ("Bộ cộng hưởng thuỷ âm đại dương",
+                 "Dưới nước, xúc tu phát hạ âm 7 Hz ở cường độ cực lớn, đúng "
+                 "tần số dao động tự nhiên của tầng nước sâu. Cộng hưởng "
+                 "khuếch đại năng lượng lên hàng nghìn lần và sinh ra sóng "
+                 "thần — thứ vũ khí không cần mang theo một gam thuốc nổ nào."),
+                ("Mạng lưới cáp bạch tuộc",
+                 "Những “sâu cáp” — phân đoạn xúc tu dạng mảnh — bò theo tuyến "
+                 "cáp ngầm dưới biển và cáp điện trong lòng đô thị, nối vật lý "
+                 "vào lưới điện, cáp quang và đường ống dẫn khí. Chúng không "
+                 "tự hành: từng sợi một đều do chính não Otto điều khiển, đúng "
+                 "kiểu kiểm soát tuyệt đối của hắn. Không có gì để hack, vì "
+                 "không có gì tự nghĩ."),
+                ("Tháp cộng hưởng địa chấn lưu động",
+                 "Tám tháp phát dựng quanh một thành phố, tạo sóng đứng trong "
+                 "nền đất cho tới khi móng công trình hoá lỏng. Tháp không "
+                 "chạy một mình được — phải có xúc tu của Otto cắm vào để "
+                 "chỉnh tần số theo thời gian thực, nghĩa là muốn dừng chúng "
+                 "thì phải tới chỗ hắn."),
             ),
         ),
         Section(
             title="Khắc chế phần cứng của Spider-Man",
-            intro="Mọi lợi thế của Spider-Man đều bị bẻ ngược thành điểm chết.",
+            intro="Bản gốc đã biết đánh nhiều hướng cùng lúc để giác quan nhện "
+                  "không kịp chọn, và biết bẫy Peter bằng tâm lý thay vì bằng "
+                  "sức. Absolute giữ nguyên lối đánh ấy, chỉ đẩy từng mảnh của "
+                  "nó tới giới hạn vật lý.",
             items=(
-                ("Spider-Sense Flooder",
-                 "Phát cùng lúc 40 tín hiệu đe doạ giả: loa siêu âm 18–40 kHz, "
-                 "laser chớp 60 Hz, rung nền 0,5 mm, drone cắt ngang tầm nhìn. "
-                 "Giác quan nhện buộc phải xử lý tất cả một lượt, gây co giật "
-                 "nhẹ, buồn nôn, phản xạ chậm 0,4–0,6 giây. Mọi đòn của Otto "
-                 "trở thành đòn chí mạng bị bỏ lỡ."),
-                ("Web-Breaker 4.0",
-                 "Dung môi enzyme serine protease trộn axit hữu cơ và chất "
-                 "hoạt động bề mặt, phun sương 5 micron ở 280°C: tơ bị thuỷ "
-                 "phân, mất 92% độ bền kéo trong 0,2 giây. Mặt càng phủ polymer "
-                 "chống dính cộng rung siêu âm 40 kHz nên tơ không bám nổi."),
-                ("Oracle Prediction",
-                 "AI ghi 500 cú bắn tơ đầu tiên rồi tính ra chu kỳ tay, trọng "
-                 "tâm, lực kéo, góc vung. Sau đó drone đã chờ sẵn ở điểm neo "
-                 "để cắt dây hoặc đặt mìn, còn càng thì đánh vào đúng góc chết "
-                 "của chu kỳ — chỗ không đổi hướng kịp."),
-                ("Vibration Cage",
-                 "Sóng âm 7 Hz cộng hưởng với dịch trong ống bán khuyên gây "
-                 "chóng mặt và mất phương hướng; tám càng vây quanh thành một "
-                 "lồng rung cộng hưởng, đứng còn không vững."),
-                ("Magnetic Webbing Interference",
-                 "Xung điện từ hẹp 10 kW làm hỏng van điện từ trong bộ bắn tơ: "
-                 "tơ tắc hoặc bắn ngược, cơ động coi như hết."),
-                ("Myosin Inhibitor",
-                 "Sương nano chứa chất ức chế ATP thẩm thấu qua da, giảm 50% "
-                 "lực co cơ trong 30 giây — mất luôn khả năng nâng đỡ, nắm bám "
-                 "và phản công."),
+                ("Tấn công đa vector bất định",
+                 "Tám xúc tu tách thành 128 vi sợi, mỗi sợi chuyển động theo "
+                 "quỹ đạo Brown hỗn loạn do một bộ tạo số ngẫu nhiên lượng tử "
+                 "cầm nhịp. Giác quan nhện vốn báo được vì mối nguy có tính "
+                 "xác định — có hướng, có ý đồ. Khi mọi vector đều nguy hiểm "
+                 "và đều ngẫu nhiên thật, nó tụt xuống thành nhiễu trắng: vẫn "
+                 "kêu, nhưng thôi chỉ được đường nào mà né."),
+                ("Bẫy cộng hưởng tơ nhện",
+                 "Tơ Spider-Man là chất lỏng đặc dần theo lực cắt, nên Otto "
+                 "không đi phá sợi tơ đã bắn ra — hắn phá nó khi còn trong "
+                 "ống. Một xung vi ba 2,4 GHz nhắm đúng bộ phóng, nhiệt vi "
+                 "sóng làm chuỗi polymer đông đặc sớm; tơ bắn ra giòn và đứt "
+                 "ngay tại chỗ. Mất đu dây, mất luôn trói."),
+                ("Chặn trước giác quan nhện",
+                 "Đầu xúc tu gắn cảm biến điện não siêu nhạy, đọc được xung "
+                 "thần kinh tiền vận động trong não Peter ngay khi giác quan "
+                 "nhện vừa kích hoạt — tức là biết cậu sắp né về đâu trước khi "
+                 "chính cậu kịp cử động. Một mũi tên tungsten đã đợi sẵn ở "
+                 "điểm đó. Giác quan nhện càng nhanh thì càng phản chủ, vì nó "
+                 "là thứ báo trước cho Otto."),
+                ("Kìm toả tiền đình",
+                 "Hạ âm 7 Hz cộng hưởng với ống bán khuyên trong tai trong. "
+                 "Sức mạnh và độ bám không cứu được ai khỏi mất thăng bằng: "
+                 "Peter thôi chạy được trên vách, thôi lộn được giữa không "
+                 "trung, chỉ còn chóng mặt và buồn nôn."),
+                ("Chuỗi thảm hoạ bắt cóc tinh thần",
+                 "Otto biết Peter sẽ không bao giờ tha thứ cho mình nếu bỏ mặc "
+                 "người vô tội. Nên hắn cho sập ba toà nhà ở ba quận khác "
+                 "nhau, rò rỉ hoá chất cạnh trường Mary Jane, và một trận rung "
+                 "nhỏ ngay gần nhà dì May — tất cả cùng một lúc. Peter buộc "
+                 "phải chọn một chỗ, và cái giá của bốn chỗ còn lại đánh gục "
+                 "cậu trước khi trận đánh kịp bắt đầu."),
+                ("Đòn kết liễu",
+                 "Khi đối thủ đã mất thăng bằng, mất tơ và quá tải giác quan, "
+                 "càng trục bọc cậu trong một kén ferrofluid rồi hoá rắn. Kén "
+                 "siết lại từ từ; giãy thì nó dẫn điện, hoặc chiếu xạ. Không "
+                 "phải một cú đấm kết thúc trận đấu — là một cái ôm."),
             ),
         ),
     ),
 
+    # Thang chữ cái Hy Lạp, đọc từ Zeta lên Omega như ba dạng Absolute kia.
+    # Bậc Delta có ghi mốc so với bản gốc: đó là trần của Otto ngày xưa.
     tiers=(
-        Tier("Tier 1", "Đô thị",
-             "Drone cắt trạm biến áp, xúc tu khoan ống dẫn khí đốt và cáp "
-             "quang, AI mở van xả khí gây cháy lan. Ba tới năm triệu dân mất "
-             "điện; cầu, toà nhà và hầm ngầm đổ sập.",
-             "0 – 6 giờ"),
-        Tier("Tier 2", "Vùng kinh tế",
-             "Đục thủng tàu chở dầu, kích nổ kho xăng, giả mạo hệ thống hậu "
-             "cần, phát tán hoá chất công nghiệp vào sông. Cảng biển, sân bay "
-             "và nhà máy lọc dầu tê liệt, nguồn nước nhiễm độc.",
-             "6 – 24 giờ"),
-        Tier("Tier 3", "Quốc gia",
-             "Đánh đồng bộ 50 trạm biến áp bằng drone kèm EMP bán kính 20 km; "
-             "AI xâm nhập hệ thống IFF khiến tiêm kích bắn nhầm nhau; khoan "
-             "thủng tàu khu trục từ dưới nước. Lưới điện quốc gia sụp, hải "
-             "quân và không quân mất khả năng phản ứng.",
-             "24 – 72 giờ"),
+        Tier("Tier Zeta", "Một toà nhà, một tiểu đội",
+             "Một xúc tu là đủ: quật đổ toà nhà, xoá sổ một tiểu đội vũ trang. "
+             "Không cần chuẩn bị, không cần vũ khí địa chấn.",
+             "Vài giây"),
+        Tier("Tier Epsilon", "San phẳng một khu phố",
+             "Đánh gãy cột chống của cả dãy nhà rồi để cháy nổ lan theo dây "
+             "chuyền — hắn chỉ cần chọn đúng vài điểm chịu lực, phần còn lại "
+             "do trọng lực làm.",
+             "5 phút"),
+        Tier("Tier Delta", "Một quận của siêu đô thị",
+             "Cắt điện, cắt nước, sập cầu đường, xoá trọn một quận. Đây chính "
+             "là trần của bản gốc — mối đe doạ cấp thành phố mà Otto ngày xưa "
+             "phải chuẩn bị hàng tuần mới với tới. Absolute làm y như vậy chỉ "
+             "bằng một xúc tu, chưa đụng tới vũ khí địa chấn.",
+             "10–30 phút"),
+        Tier("Tier Gamma", "Sụp đổ một siêu đô thị",
+             "Cắm xúc tu xuống nền đất và kích hoạt hoá lỏng toàn diện: móng "
+             "công trình mất sức chịu, điện nước giao thông viễn thông đứt "
+             "cùng lúc. Thành phố không bị đánh sập — nó bị rút nền ra từ bên "
+             "dưới.",
+             "2 giờ"),
+        Tier("Tier Beta", "Tê liệt một quốc gia",
+             "Đánh đồng thời lưới điện quốc gia và các tuyến cáp ngầm: mất "
+             "điện toàn quốc, hệ thống tài chính đứng, liên lạc quân sự đứt. "
+             "Không có mặt trận nào để dàn quân, vì thứ tấn công đang nằm "
+             "trong chính đường dây của họ.",
+             "24 giờ"),
+        Tier("Tier Alpha", "Thảm hoạ cấp châu lục",
+             "Kích hoạt ba tới bốn đứt gãy lớn cùng lúc: động đất và sóng thần "
+             "xoá hàng loạt thành phố ven biển, sản xuất lương thực của cả một "
+             "châu lục vỡ trận.",
+             "72 giờ"),
+        Tier("Tier Omega", "“Chuỗi Bạch tuộc Địa chấn”",
+             "Tám điểm nóng kiến tạo trên toàn cầu — Vành đai lửa Thái Bình "
+             "Dương, Địa Trung Hải, đứt gãy San Andreas — được đánh thức cùng "
+             "lúc. Sóng thần đập vào cả bờ đông lẫn bờ tây các lục địa, tro "
+             "núi lửa che mờ ánh sáng, mùa màng mất trắng, chuỗi cung ứng và "
+             "cùng với nó là kinh tế lẫn chính trị toàn cầu sụp theo. Hành "
+             "tinh không bị huỷ diệt: chỉ có nền văn minh công nghiệp trên đó "
+             "bị xoá sổ. Một sự kiện tuyệt chủng công nghiệp.",
+             "30 ngày"),
     ),
 
+    # Nhãn giữ dưới 94 px, giá trị dưới 188 px — xem chú thích cùng chỗ trong
+    # `chameleon_absolute.py`: bảng cao quá thì nó bị dồn xuống cuối cột đọc.
     facts=(
-        ("Tên thật", "Otto Gunther Octavius"),
-        ("Cấp đe doạ", "Quốc gia — dưới hành tinh/vũ trụ một bậc"),
-        ("Số càng", "8  ·  mỗi càng 9 m, 1,2 tấn, nâng 80 tấn"),
-        ("Lực một cú đập", "3 MJ  ·  đầu càng đi 200 m/s"),
-        ("Thuỷ lực", "12.000 psi  ·  phản xạ 0,07 giây"),
-        ("Nguồn", "Lò nhiệt hạch 40 MW trên lưng"),
-        ("AI", "ORACLE-8  ·  dự đoán trước 0,8 giây, 94%"),
-        ("Bầy drone", "10.000 Octo-Mites cỡ 3 cm"),
+        ("Cấp đe doạ", "Hành tinh · văn minh công nghiệp"),
+        ("Nguồn", "Cột sống tokamak · 5 TW đỉnh"),
+        ("Số càng", "8 + 1 càng trục"),
+        ("Tầm với", "3 km trên cạn · 10 km dưới nước"),
+        ("Sức nâng", "20.000 tấn mỗi càng"),
+        ("Tai địa chấn", "Nghe rung động trong 50 km"),
+        ("Không dùng", "AI · drone · máy tự hành"),
+        ("Chuỗi Omega", "8 điểm kiến tạo  ·  30 ngày"),
     ),
 
-    blurb="Một tiểu đoàn thiết giáp 30 xe: vô hiệu trong 10 phút. Một tàu khu "
-          "trục lớp Arleigh Burke: thủng vỏ dưới mực nước trong 3 phút. Một "
-          "sân bay quân sự: tê liệt trong 5 phút. Và trong 48 giờ, một quốc "
-          "gia nhỏ mất 60–70% hạ tầng thiết yếu — Otto không cần chiếm lấy nó, "
-          "hắn chỉ cần tắt nó đi.",
+    blurb="Hắn không phải kẻ huỷ diệt vũ trụ, và cũng chẳng buồn chiếm lấy "
+          "thứ gì. Tám xúc tu cắm xuống đất biến hắn thành hệ thần kinh của "
+          "chính nền địa chất mà loài người xây nhà lên trên — và một hệ thần "
+          "kinh thì không cần phá cái gì cả, nó chỉ cần quyết định co lại.",
 
     art=draw_absolute_octopus,
     caption="Dựng lại từ dữ liệu cảm biến  ·  khung hình trực tiếp",
