@@ -11,7 +11,7 @@ Mọi thứ đã push xong, không còn gì lơ lửng.
 
 ## ĐỌC CÁI NÀY TRƯỚC: việc còn dang dở là gì
 
-**Mới 9 trên 91 nhân vật có hồ sơ trong app. 82 người còn lại click vào là
+**Mới 10 trên 91 nhân vật có hồ sơ trong app. 81 người còn lại click vào là
 mở trình duyệt ra Wikipedia** — xem `on_click()` trong `spiderman.py`:
 
 ```python
@@ -23,9 +23,9 @@ self.open_profile(profile, self.sender())                      # chỉ 9 ngườ
 ```
 
 Đó là khoảng trống chính của project, và cũng là việc đang chạy: **viết hồ sơ
-gốc cho những nhân vật chưa có**, đi tuần tự theo dòng thời gian. Chín người
-đã xong là chín cái tên đầu danh sách; người kế tiếp là **Mysterio** (ASM #13,
-06/1964), rồi Green Goblin, Kraven, Beetle, Scorpion...
+gốc cho những nhân vật chưa có**, đi tuần tự theo dòng thời gian. Mười người
+đã xong là mười cái tên đầu danh sách; người kế tiếp là **Green Goblin**
+(ASM #14, 07/1964), rồi Kraven, Beetle, Scorpion...
 
 Hệ "dạng tiến hoá Absolute" bên dưới **đã xong và không cần làm thêm gì**.
 Đừng đề xuất gắn Absolute cho ai đó chưa có hồ sơ gốc: Absolute treo dưới
@@ -35,7 +35,7 @@ muốn)**.
 
 ## Chín hồ sơ đã có
 
-Sáu người đầu có thêm dạng Absolute; ba người sau mới chỉ có hồ sơ gốc.
+Sáu người đầu có thêm dạng Absolute; bốn người sau mới chỉ có hồ sơ gốc.
 
 | # | Nhân vật | Số báo | Chân dung dựng quanh cái gì | Absolute |
 |---|---|---|---|---|
@@ -48,10 +48,11 @@ Sáu người đầu có thêm dạng Absolute; ba người sau mới chỉ có 
 | 7 | Living Brain | ASM #8 | cỗ máy đối xứng, băng giấy đục lỗ | chưa |
 | 8 | Electro | ASM #9 | mặt nạ hình sao giữa vụ phóng điện | chưa |
 | 9 | Big Man | ASM #10 | người thật bé tí dưới cái bóng khổng lồ | chưa |
+| 10 | Mysterio | ASM #13 | quả cầu thuỷ tinh không có mặt bên trong | chưa |
 
 ## Nguyên tắc vẽ chân dung — quan trọng nhất
 
-**Mỗi chân dung phải khác hẳn tám cái kia.** Không chỉ khác nội dung mà khác
+**Mỗi chân dung phải khác hẳn chín cái kia.** Không chỉ khác nội dung mà khác
 cả cách dựng hình. Sáu hồ sơ đầu đều theo một lối: bóng đen đặc trên nền
 giấy, `misprint()` lo phần mực lệch trục. Ba hồ sơ sau cố tình bẻ lối đó:
 
@@ -227,6 +228,6 @@ tổ chức). `git push` trả 403 từ chính GitHub. Cách làm đã chốt:
 Đừng mất thời gian thử push lại — đã thử hết: git thẳng, GIT_ASKPASS, GitHub
 MCP, `add_repo` access:push. Tất cả đều 403.
 
-Lưu ý: nhánh `main` **ở local** là một lịch sử khác hẳn `origin/main` (README
-chỉ có một dòng). Đừng `git checkout main` rồi làm việc ở đó. Nhánh làm việc
-là `claude/chameleon-absolute-evolution-xjo069`.
+Trước khi cắt patch, **luôn `git fetch origin main` rồi kiểm lại** — người
+dùng có thể đã push commit trước xen vào giữa, và gửi patch chứa cả commit đã
+có trên remote thì `git am` sẽ xung đột. Chỉ gửi phần `origin/main..HEAD`.
