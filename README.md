@@ -62,6 +62,8 @@ characters/
     living_brain.py     ASM #8 — cỗ máy của Giáo sư Petty, băng giấy đục lỗ
     electro.py          ASM #9 — mặt nạ hình sao giữa một vụ phóng điện
     big_man.py          ASM #10 — người thật bé tí dưới cái bóng của chính mình
+    mysterio.py         ASM #13 — quả cầu thuỷ tinh, bên trong chỉ có sương
+    green_goblin.py     ASM #14 — nhìn từ dưới lên, quả bom đang rơi xuống ta
 assets/characters/      nơi thả ảnh nhân vật
 BAN-GIAO.md             đang làm tới đâu, mấy cái bẫy đã gặp, cách kiểm chứng
 ```
