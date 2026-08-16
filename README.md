@@ -9,8 +9,8 @@ Nhân vật chưa có hồ sơ thì vẫn mở trang web như trước.
 
 Hồ sơ nào có dạng tiến hoá thì mọc thêm nút **EVOLVE** ở chân trang: bấm vào,
 tờ giấy cũ vỡ ra và dạng mới hiện lên ở một tai hồ sơ riêng, với chân dung tự
-chạy theo thời gian. Cả sáu nhân vật đã có hồ sơ đều có dạng tiến hoá, và
-chúng cố tình không giống nhau chỗ nào:
+chạy theo thời gian. Sáu nhân vật đang có dạng tiến hoá, và chúng cố tình
+không giống nhau chỗ nào:
 
 | | Bảng màu | Phá tờ giấy | Dựng tấm mới | Chân dung |
 |---|---|---|---|---|
@@ -59,6 +59,7 @@ characters/
     sandman_absolute.py    dạng tiến hoá của Sandman, bão sa mạc hoá
     lizard.py           ASM #6 — áo blouse rách trên mình bò sát
     lizard_absolute.py     dạng tiến hoá của Lizard, đầm lầy đồng hoá
+    living_brain.py     ASM #8 — cỗ máy của Giáo sư Petty, băng giấy đục lỗ
 assets/characters/      nơi thả ảnh nhân vật
 ```
 
