@@ -11,21 +11,21 @@ Mọi thứ đã push xong, không còn gì lơ lửng.
 
 ## ĐỌC CÁI NÀY TRƯỚC: việc còn dang dở là gì
 
-**Mới 12 trên 91 nhân vật có hồ sơ trong app. 79 người còn lại click vào là
+**Mới 13 trên 91 nhân vật có hồ sơ trong app. 78 người còn lại click vào là
 mở trình duyệt ra Wikipedia** — xem `on_click()` trong `spiderman.py`:
 
 ```python
 profile = characters.get(name)
 if profile is None:
-    self.open_web(url_for(name, self.source.currentText()))   # 79 người rơi vào đây
+    self.open_web(url_for(name, self.source.currentText()))   # 78 người rơi vào đây
     return
-self.open_profile(profile, self.sender())                      # chỉ 12 người
+self.open_profile(profile, self.sender())                      # chỉ 13 người
 ```
 
 Đó là khoảng trống chính của project, và cũng là việc đang chạy: **viết hồ sơ
-gốc cho những nhân vật chưa có**, đi tuần tự theo dòng thời gian. Mười hai người
-đã xong là mười hai cái tên đầu danh sách; người kế tiếp là **Beetle**
-(Strange Tales #123, 08/1964), rồi Scorpion, Molten Man...
+gốc cho những nhân vật chưa có**, đi tuần tự theo dòng thời gian. Mười ba người
+đã xong là mười ba cái tên đầu danh sách; người kế tiếp là **Scorpion**
+(ASM #20, 01/1965), rồi Molten Man, Crime Master...
 
 Hệ "dạng tiến hoá Absolute" bên dưới **đã xong và không cần làm thêm gì**.
 Đừng đề xuất gắn Absolute cho ai đó chưa có hồ sơ gốc: Absolute treo dưới
@@ -33,9 +33,9 @@ Hệ "dạng tiến hoá Absolute" bên dưới **đã xong và không cần là
 chỗ mà treo. Trình tự bắt buộc là **hồ sơ gốc trước, Absolute sau (nếu
 muốn)**.
 
-## Mười hai hồ sơ đã có
+## Mười ba hồ sơ đã có
 
-Sáu người đầu có thêm dạng Absolute; sáu người sau mới chỉ có hồ sơ gốc.
+Sáu người đầu có thêm dạng Absolute; bảy người sau mới chỉ có hồ sơ gốc.
 
 | # | Nhân vật | Số báo | Chân dung dựng quanh cái gì | Absolute |
 |---|---|---|---|---|
@@ -51,10 +51,11 @@ Sáu người đầu có thêm dạng Absolute; sáu người sau mới chỉ c�
 | 10 | Mysterio | ASM #13 | quả cầu thuỷ tinh không có mặt bên trong | chưa |
 | 11 | Green Goblin | ASM #14 | nhìn từ dưới lên: bom bí ngô đang rơi xuống ta | chưa |
 | 12 | Kraven the Hunter | ASM #15 | mặt nhìn qua khe rách giữa tán lá | chưa |
+| 13 | Beetle | Strange Tales #123 | bản vẽ chế tạo, bộ giáp tháo rời và rỗng | chưa |
 
 ## Nguyên tắc vẽ chân dung — quan trọng nhất
 
-**Mỗi chân dung phải khác hẳn mười một cái kia.** Không chỉ khác nội dung mà khác
+**Mỗi chân dung phải khác hẳn mười hai cái kia.** Không chỉ khác nội dung mà khác
 cả cách dựng hình. Sáu hồ sơ đầu đều theo một lối: bóng đen đặc trên nền
 giấy, `misprint()` lo phần mực lệch trục. Ba hồ sơ sau cố tình bẻ lối đó:
 
@@ -67,7 +68,7 @@ giấy, `misprint()` lo phần mực lệch trục. Ba hồ sơ sau cố tình b
   kèm bóng in lệch trục (nó vốn không có thật), người thật tô đen đặc kèm đủ
   hai lớp mực lệch.
 
-Ba hồ sơ mới nhất bẻ tiếp ba trục khác:
+Bốn hồ sơ mới nhất bẻ tiếp bốn trục khác:
 
 - **Mysterio** cho một quả cầu thuỷ tinh mà bên trong không có gì ngoài
   sương — không giấu mặt như Chameleon, mà là không có mặt để giấu.
@@ -76,6 +77,10 @@ Ba hồ sơ mới nhất bẻ tiếp ba trục khác:
   thoát ra qua mấy lỗ khoét.
 - **Kraven** chèn thêm một tầng: mực (tán lá) → giấy (khe rách) → mực (chính
   hắn, lọt trong khe). Cùng một màu mực cho tầng ngoài cùng và trong cùng.
+- **Beetle** bỏ hẳn mảng đặc: toàn bộ là nét — đường bao, gạch bóng, đường
+  dóng, số khoanh tròn trên giấy kẻ ô. Không phải chân dung mà là bản vẽ chế
+  tạo, vì Jenkins là thợ máy; và bộ giáp tháo rời thì rỗng, vì cuối cùng hắn
+  cởi ra thật.
 
 Khi làm người kế tiếp, hãy hỏi trước: hình này có thể là hình của ai khác
 trong danh sách không? Nếu có thì nghĩ lại.
@@ -87,7 +92,7 @@ lối đó đều ra một bức tượng nhợt nhạt — khoảng âm không 
 
 ## Cách làm việc bắt buộc: vẽ xong phải nhìn ảnh
 
-Đừng tin code đúng chỉ vì nó chạy. Mọi lỗi nặng của mười hai chân dung này đều
+Đừng tin code đúng chỉ vì nó chạy. Mọi lỗi nặng của mười ba chân dung này đều
 chỉ lộ ra khi render ra PNG rồi mở lên nhìn. Vòng lặp là: viết code → render
 offscreen → **mở ảnh ra xem** → sửa. Thường mất ba bốn vòng.
 
@@ -136,6 +141,11 @@ ra tay vẫn đó, chỉ là bị lớp khác nuốt mất.
   in ra nguyên hai dấu sao. Đã dính hai lần (Mysterio, Kraven). Muốn nhấn thì
   đổi cách đặt câu; `_bullets()` có dùng rich text nhưng đó là HTML nó tự
   bọc, còn `summary` thì cứ coi như chữ trơn.
+- **Chữ trong chân dung thì dùng `QFont.setPixelSize`, đừng vẽ tay từng nét.**
+  Beetle cần mấy số chú thích cỡ hai đơn vị; vẽ bằng `drawLine` cho khỏi phụ
+  thuộc font thì ra nét nguệch ngoạc chứ không ra con số. `setPixelSize` tính
+  theo đơn vị khung 100×120 nên chữ đúng cỡ ở mọi độ phóng và mọi DPI —
+  `setPointSizeF` thì không, nó đi theo DPI.
 - **`misprint()` chỉ hợp với hình cỡ vừa.** Nó đẻ ra hai bản lệch 2–3 đơn vị;
   áp lên một bóng người thì ra chất pulp, áp lên mảng phủ gần kín tờ giấy
   (nền, tán lá, bầu trời) thì mọi đường biên hoá dải đỏ-lam dày cộp, cả khung

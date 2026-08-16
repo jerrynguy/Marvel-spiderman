@@ -65,6 +65,7 @@ characters/
     mysterio.py         ASM #13 — quả cầu thuỷ tinh, bên trong chỉ có sương
     green_goblin.py     ASM #14 — nhìn từ dưới lên, quả bom đang rơi xuống ta
     kraven.py           ASM #15 — mặt hắn nhìn qua một khe rách giữa tán lá
+    beetle.py           Strange Tales #123 — bản vẽ chế tạo, bộ giáp tháo rời
 assets/characters/      nơi thả ảnh nhân vật
 BAN-GIAO.md             đang làm tới đâu, mấy cái bẫy đã gặp, cách kiểm chứng
 ```
