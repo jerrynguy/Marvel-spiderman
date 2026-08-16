@@ -61,6 +61,7 @@ characters/
     lizard_absolute.py     dạng tiến hoá của Lizard, đầm lầy đồng hoá
     living_brain.py     ASM #8 — cỗ máy của Giáo sư Petty, băng giấy đục lỗ
     electro.py          ASM #9 — mặt nạ hình sao giữa một vụ phóng điện
+    big_man.py          ASM #10 — người thật bé tí dưới cái bóng của chính mình
 assets/characters/      nơi thả ảnh nhân vật
 ```
 
