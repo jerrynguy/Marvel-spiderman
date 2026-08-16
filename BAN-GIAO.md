@@ -11,21 +11,21 @@ Mọi thứ đã push xong, không còn gì lơ lửng.
 
 ## ĐỌC CÁI NÀY TRƯỚC: việc còn dang dở là gì
 
-**Mới 11 trên 91 nhân vật có hồ sơ trong app. 80 người còn lại click vào là
+**Mới 12 trên 91 nhân vật có hồ sơ trong app. 79 người còn lại click vào là
 mở trình duyệt ra Wikipedia** — xem `on_click()` trong `spiderman.py`:
 
 ```python
 profile = characters.get(name)
 if profile is None:
-    self.open_web(url_for(name, self.source.currentText()))   # 80 người rơi vào đây
+    self.open_web(url_for(name, self.source.currentText()))   # 79 người rơi vào đây
     return
-self.open_profile(profile, self.sender())                      # chỉ 11 người
+self.open_profile(profile, self.sender())                      # chỉ 12 người
 ```
 
 Đó là khoảng trống chính của project, và cũng là việc đang chạy: **viết hồ sơ
-gốc cho những nhân vật chưa có**, đi tuần tự theo dòng thời gian. Mười một người
-đã xong là mười một cái tên đầu danh sách; người kế tiếp là **Kraven the
-Hunter** (ASM #15, 08/1964), rồi Beetle, Scorpion...
+gốc cho những nhân vật chưa có**, đi tuần tự theo dòng thời gian. Mười hai người
+đã xong là mười hai cái tên đầu danh sách; người kế tiếp là **Beetle**
+(Strange Tales #123, 08/1964), rồi Scorpion, Molten Man...
 
 Hệ "dạng tiến hoá Absolute" bên dưới **đã xong và không cần làm thêm gì**.
 Đừng đề xuất gắn Absolute cho ai đó chưa có hồ sơ gốc: Absolute treo dưới
@@ -33,9 +33,9 @@ Hệ "dạng tiến hoá Absolute" bên dưới **đã xong và không cần là
 chỗ mà treo. Trình tự bắt buộc là **hồ sơ gốc trước, Absolute sau (nếu
 muốn)**.
 
-## Mười một hồ sơ đã có
+## Mười hai hồ sơ đã có
 
-Sáu người đầu có thêm dạng Absolute; năm người sau mới chỉ có hồ sơ gốc.
+Sáu người đầu có thêm dạng Absolute; sáu người sau mới chỉ có hồ sơ gốc.
 
 | # | Nhân vật | Số báo | Chân dung dựng quanh cái gì | Absolute |
 |---|---|---|---|---|
@@ -50,10 +50,11 @@ Sáu người đầu có thêm dạng Absolute; năm người sau mới chỉ c�
 | 9 | Big Man | ASM #10 | người thật bé tí dưới cái bóng khổng lồ | chưa |
 | 10 | Mysterio | ASM #13 | quả cầu thuỷ tinh không có mặt bên trong | chưa |
 | 11 | Green Goblin | ASM #14 | nhìn từ dưới lên: bom bí ngô đang rơi xuống ta | chưa |
+| 12 | Kraven the Hunter | ASM #15 | mặt nhìn qua khe rách giữa tán lá | chưa |
 
 ## Nguyên tắc vẽ chân dung — quan trọng nhất
 
-**Mỗi chân dung phải khác hẳn mười cái kia.** Không chỉ khác nội dung mà khác
+**Mỗi chân dung phải khác hẳn mười một cái kia.** Không chỉ khác nội dung mà khác
 cả cách dựng hình. Sáu hồ sơ đầu đều theo một lối: bóng đen đặc trên nền
 giấy, `misprint()` lo phần mực lệch trục. Ba hồ sơ sau cố tình bẻ lối đó:
 
@@ -66,12 +67,27 @@ giấy, `misprint()` lo phần mực lệch trục. Ba hồ sơ sau cố tình b
   kèm bóng in lệch trục (nó vốn không có thật), người thật tô đen đặc kèm đủ
   hai lớp mực lệch.
 
+Ba hồ sơ mới nhất bẻ tiếp ba trục khác:
+
+- **Mysterio** cho một quả cầu thuỷ tinh mà bên trong không có gì ngoài
+  sương — không giấu mặt như Chameleon, mà là không có mặt để giấu.
+- **Green Goblin** đổi **góc nhìn**: nhìn từ dưới đất ngước lên, quả bom rơi
+  về phía người xem nên to gần kín nửa khung. Và nguồn sáng nằm *trong* vật,
+  thoát ra qua mấy lỗ khoét.
+- **Kraven** chèn thêm một tầng: mực (tán lá) → giấy (khe rách) → mực (chính
+  hắn, lọt trong khe). Cùng một màu mực cho tầng ngoài cùng và trong cùng.
+
 Khi làm người kế tiếp, hãy hỏi trước: hình này có thể là hình của ai khác
 trong danh sách không? Nếu có thì nghĩ lại.
 
+Và một cái đã thử rồi mà hỏng, đừng thử lại: **để nhân vật là khoảng giấy
+âm**, tức bỏ hẳn mực trên người và chỉ vẽ nền quanh. Kraven đi bốn vòng theo
+lối đó đều ra một bức tượng nhợt nhạt — khoảng âm không tô bóng vào trong
+được, mà nhân vật nào cũng nằm ở khuôn mặt.
+
 ## Cách làm việc bắt buộc: vẽ xong phải nhìn ảnh
 
-Đừng tin code đúng chỉ vì nó chạy. Mọi lỗi nặng của mười một chân dung này đều
+Đừng tin code đúng chỉ vì nó chạy. Mọi lỗi nặng của mười hai chân dung này đều
 chỉ lộ ra khi render ra PNG rồi mở lên nhìn. Vòng lặp là: viết code → render
 offscreen → **mở ảnh ra xem** → sửa. Thường mất ba bốn vòng.
 
@@ -116,6 +132,14 @@ ra tay vẫn đó, chỉ là bị lớp khác nuốt mất.
   hàm đó đã đổi sang tra bảng nên không còn chỗ chen.
 - Qt nuốt phím `Tab` cho việc chuyển tiêu điểm, nên phím tắt đổi tai hồ sơ
   dùng mũi tên trái/phải.
+- **Chữ trong hồ sơ không phải Markdown.** Viết `*nhấn mạnh*` thì tấm hồ sơ
+  in ra nguyên hai dấu sao. Đã dính hai lần (Mysterio, Kraven). Muốn nhấn thì
+  đổi cách đặt câu; `_bullets()` có dùng rich text nhưng đó là HTML nó tự
+  bọc, còn `summary` thì cứ coi như chữ trơn.
+- **`misprint()` chỉ hợp với hình cỡ vừa.** Nó đẻ ra hai bản lệch 2–3 đơn vị;
+  áp lên một bóng người thì ra chất pulp, áp lên mảng phủ gần kín tờ giấy
+  (nền, tán lá, bầu trời) thì mọi đường biên hoá dải đỏ-lam dày cộp, cả khung
+  loè loẹt. Mảng lớn thì tô mực trơn, để dành mực lệch cho chi tiết nhỏ.
 
 ## Hiệu năng chân dung
 
