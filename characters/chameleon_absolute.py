@@ -5,9 +5,14 @@ File này không khai báo `PROFILE` nên sổ tra ở `__init__.py` bỏ qua n�
 Absolute không đứng riêng trong dòng thời gian, nó treo dưới hồ sơ gốc qua
 `evolution=ABSOLUTE` trong `chameleon.py`, mở ra bằng nút tiến hoá.
 
-Chân dung vẽ bằng code và có tham số thời gian (`t`) nên nó sống: bầy nano
-quay, mắt thở, mặt nạ vỡ rung theo từng chặp nhiễu. Bảng màu lấy từ `VOID`
-chứ không phải giấy pulp — cả tấm hồ sơ đổi da khi tiến hoá.
+Chân dung vẽ bằng code và có tham số thời gian (`t`) nên nó sống: bầy gương
+mặt đã lấy quay quanh, mắt thở, mặt nạ vỡ rung theo từng chặp nhiễu. Bảng màu
+lấy từ `VOID` chứ không phải giấy pulp — cả tấm hồ sơ đổi da khi tiến hoá.
+
+Hắn không dùng máy móc tự hành, nên trong tranh không có gì là drone hay vệ
+tinh: những chấm sáng trên trời là bản sắc bị đánh cắp, các sợi chạy ra mép
+khung là người của Hội Gương, và bộ khung ngắm quanh đầu là của phía đang cố
+nhận dạng hắn — không phải của hắn.
 """
 
 import math
@@ -75,7 +80,7 @@ def _body():
 
 
 def _spines():
-    """Dãy ăng-ten mảnh dựng sau lưng, xoè dần ra hai bên.
+    """Dãy lưỡi gương mảnh dựng sau lưng, xoè dần ra hai bên.
 
     Các lưỡi không chạm nhau nên ghép thẳng thành nhiều nhánh của một
     đường dẫn, khỏi phải hợp path — hợp xong tô chậm gấp bốn lần.
@@ -201,8 +206,8 @@ def _city_lights(p, t):
             p.drawRect(QRectF(wx, wy, 0.55, 0.8))
 
 
-def _swarm(p, t):
-    """Ghost Swarm: bầy nano dày trên trời, hai vành vệ tinh gãy khúc."""
+def _shards(p, t):
+    """Bầy bản sắc đã đánh cắp: mảnh gương dày trên trời, hai vành gãy khúc."""
     r = Rolls(20260815)
     p.setPen(Qt.PenStyle.NoPen)
     for i in range(120):
@@ -370,8 +375,8 @@ def _mask(p, t):
     p.drawPath(_HEAD)
 
 
-def _core(p, t):
-    """Cổng phát của mạng lượng tử, gắn giữa ngực, kéo hai sợi cáp lên vai."""
+def _gland(p, t):
+    """Tuyến pheromone xã hội: hạch phát giữa ngực, hai ống dẫn chạy lên vai."""
     beat = 0.55 + 0.45 * math.sin(t * 1.7 + 0.6)
     hub = QPointF(50, 104)
 
@@ -403,7 +408,10 @@ def _core(p, t):
 
 
 def _hud(p, t):
-    """Bốn ngoặc khoá mục tiêu quanh đầu, cộng vạch đo ở lề khung."""
+    """Khung ngắm của phía đang truy tìm hắn: bốn ngoặc quanh đầu, vạch đo ở lề.
+
+    Khoá được cái đầu nhưng không đọc nổi cái mặt — đó là toàn bộ vấn đề.
+    """
     tone = QColor(CYAN)
     tone.setAlpha(110)
     p.setBrush(Qt.BrushStyle.NoBrush)
@@ -433,8 +441,8 @@ def _hud(p, t):
     p.drawRect(QRectF(3, 8, 3.4, 1.2))
 
 
-def _nerves(p, t):
-    """Bào tử đồng hoá: mạng thần kinh bò ra hai góc dưới, có tín hiệu chạy."""
+def _threads(p, t):
+    """Hội Gương: các mối liên lạc bò ra hai góc dưới, mỗi đốm sáng một người."""
     lines = (((30, 100), (18, 108), (4, 119)), ((70, 100), (82, 108), (96, 119)),
              ((50, 108), (38, 115), (24, 121)), ((50, 108), (62, 115), (76, 121)))
     for i, pts in enumerate(lines):
@@ -508,15 +516,15 @@ def draw_absolute_chameleon(p, rect, t=0.0):
     still = _still(scale)
     with design(p, rect):
         _void(p, t)
-        _swarm(p, t)
+        _shards(p, t)
         _echoes(p, t)
         p.drawImage(QRectF(-6, -6, still.width() / scale,
                            still.height() / scale), still)
         _city_lights(p, t)
         _mask(p, t)
-        _core(p, t)
+        _gland(p, t)
         _hud(p, t)
-        _nerves(p, t)
+        _threads(p, t)
         _glitch(p, t)
         marks(p, QColor("#6E6A86"))
 
@@ -529,173 +537,243 @@ ABSOLUTE = Profile(
     keys=("Chameleon Absolute",),
 
     kicker="Hồ sơ tuyệt đối",
-    stamp="PHÂN LOẠI  ·  MỐI ĐE DOẠ CẤP QUỐC GIA",
+    stamp="PHÂN LOẠI  ·  MỐI ĐE DOẠ CẤP HÀNH TINH",
     note="ABSOLUTE",
     note_kind="new",
     tab="Absolute",
     skin="void",
     evolve_fx="shatter",     # kẻ giả dạng thì vỡ vụn ra rồi được quét lại
 
-    tagline="Không phép thuật vũ trụ, không thao túng thực tại. Chỉ vật lý "
-            "cường hoá, sinh học đột biến và công nghệ huỷ diệt — đủ để một "
-            "quốc gia tự sụp đổ trong 72 giờ.",
+    tagline="Không cơ bắp, không tia laser, không AI. Một kẻ đánh cắp bản "
+            "sắc — và một nền văn minh không còn cách nào xác minh ai là ai.",
 
     summary=(
-        "Chameleon gốc chỉ là kẻ giả dạng bằng mặt nạ và hoá chất. Ở phiên "
-        "bản Absolute, cơ thể hắn được tái cấu trúc thành một cỗ máy nguỵ "
-        "trang sinh học hoàn hảo, vượt xa mọi giới hạn vật lý thông thường — "
-        "và quanh cỗ máy đó là một hạ tầng thông tin đủ sức thao túng cả một "
-        "quốc gia.",
+        "Chameleon chưa bao giờ là kẻ huỷ diệt bằng sức mạnh. Bản chất của "
+        "hắn là đánh cắp bản sắc, thao túng tâm lý xã hội và tiến hành chiến "
+        "tranh thông tin. Nên phiên bản Absolute không lớn lên theo hướng "
+        "năng lượng vũ trụ hay máy móc tự hành, mà theo đúng hướng của chính "
+        "hắn: một mối đe doạ hành tinh dựng hoàn toàn trên lòng tin bị thao "
+        "túng.",
 
-        "Giới hạn sức mạnh được giữ nguyên ở cấp quốc gia: hắn không bẻ cong "
-        "thực tại, không mượn phép thuật. Mọi thứ hắn làm đều có thể truy ra "
-        "một chuỗi nhân quả vật lý — và chính điều đó khiến hắn không thể bị "
-        "phủ nhận, cũng không thể bị đánh bại bằng cách đấm mạnh hơn.",
+        "Bản gốc là người thường — mặt nạ, phấn, keo dán, và nhiều tuần rình "
+        "một mục tiêu; đứng gần là lộ, quét vân tay là hỏng. Absolute biến "
+        "chính cơ thể thành một cỗ máy đánh cắp bản sắc sống: mô mềm nắn lại "
+        "được, sinh trắc học mượn được, giọng nói và mùi cơ thể sao chép "
+        "được. Giới hạn duy nhất còn giữ là hình thái người.",
+
+        "Và hắn tuyệt đối không dùng AI, drone hay máy tự động. Chameleon "
+        "tin rằng chỉ bộ não người mới đủ linh hoạt để lừa người khác — nên "
+        "quanh hắn chỉ có công cụ thủ công và một mạng lưới người thật. "
+        "Chính vì thế không có hệ thống mạng nào để tấn công ngược, không có "
+        "máy chủ nào để đánh sập.",
     ),
 
     sections=(
         Section(
             title="Khuyếch đại năng lực vật lý & sinh học",
-            intro="Cơ thể không còn là chỗ để đeo mặt nạ, nó chính là mặt nạ.",
+            intro="Bản gốc không có siêu năng lực nào: hắn quan sát, bắt "
+                  "chước, hoá trang và kiên nhẫn. Absolute giữ nguyên con "
+                  "người đó rồi biến cơ thể thành công cụ của nó — cơ thể "
+                  "không còn là chỗ để đeo mặt nạ, nó chính là mặt nạ.",
             items=(
-                ("Biến hình tế bào toàn phần",
-                 "Tái lập trình toàn bộ cấu trúc sinh học ở cấp độ tế bào: "
-                 "dáng người, giọng nói, mùi cơ thể, nhiệt độ bề mặt, cả DNA, "
-                 "dấu vân tay, mống mắt và hệ vi sinh vật trên da — chỉ cần "
-                 "một mẫu tế bào nhỏ. Mọi hệ nhận dạng sinh trắc học trên thế "
-                 "giới trở nên vô dụng."),
-                ("Tăng cường thể chất thích ứng",
-                 "Cơ, xương và mô liên kết tái cấu trúc để mô phỏng sức mạnh, "
-                 "tốc độ và độ bền của mục tiêu: tăng mật độ cơ gấp nhiều lần, "
-                 "biến cánh tay thành lưỡi dao xương, tạo lớp da sừng chống "
-                 "đạn, tự lành vết thương trong vài giây bằng cách tăng tốc "
-                 "nguyên phân."),
-                ("Tuyến pheromone điều khiển hành vi",
-                 "Pheromone tổng hợp tác động thẳng vào hệ thần kinh người và "
-                 "động vật: sợ hãi tột độ, tuân phục vô thức, hoặc thịnh nộ "
-                 "tập thể. Trong vài km, hắn biến một đám đông thành công cụ "
-                 "bạo loạn mà không cần lộ diện."),
-                ("Bào tử đồng hoá sinh quyển",
-                 "Bào tử biến đổi gen lây vào cây cối, côn trùng, thú vật, "
-                 "biến chúng thành cảm biến sinh học. Ở chế độ cực đoan, các "
-                 "sinh vật nhiễm bệnh phát triển thành mạng thần kinh cộng "
-                 "sinh — cả một vùng rộng lớn trở thành hệ thần kinh mở rộng "
-                 "của hắn."),
-                ("Tàng hình đa phổ",
-                 "Da đổi màu, kết cấu và độ phản xạ để biến mất trước mắt "
-                 "thường, camera, radar lẫn cảm biến hồng ngoại; thân nhiệt "
-                 "chỉnh được để qua mặt thiết bị tầm nhiệt."),
+                ("Da bản sắc biến đổi — Epidermal Mimicry Matrix",
+                 "Lớp hạ bì được cấy tế bào sắc tố nhân tạo và các túi "
+                 "collagen–sụn dẻo. Dưới tín hiệu thần kinh, tế bào gốc trung "
+                 "mô phản ứng với cortisol và noradrenaline, tái hấp thu canxi "
+                 "cục bộ để làm mềm sụn: gò má, đường hàm, sống mũi, trán, độ "
+                 "dày môi và mí mắt được nắn lại trong 5–10 phút. Giới hạn: "
+                 "chỉ trong phạm vi hình thái người — không mọc thêm chi, "
+                 "không đổi hẳn chiều cao — nhưng thừa sức đánh lừa mọi hệ "
+                 "nhận diện khuôn mặt."),
+                ("Retrovirus đánh cắp sinh trắc — Biometric Hijack",
+                 "Một mẩu da, một giọt nước bọt hay một sợi tóc của mục tiêu "
+                 "là đủ. Retrovirus đặc chế gắn vào tế bào gốc biểu mô của "
+                 "Chameleon và chèn đoạn gen tổng hợp mã hoá protein bề mặt "
+                 "của mục tiêu: vân tay, protein mồ hôi, hệ vi sinh trên da, "
+                 "cả kháng nguyên nhóm máu bề mặt trở nên giống hệt trong "
+                 "48–72 giờ — qua được máy quét sinh trắc, xét nghiệm DNA "
+                 "nhanh và khoá vân tay. Hết hạn, tế bào tự chết theo chu kỳ "
+                 "và cơ thể trở lại nguyên bản, không để lại bằng chứng."),
+                ("Thanh quản đa âm sắc — Polyphonic Vocal Cords",
+                 "Hai cặp dây thanh phụ cho phép phát nhiều tần số cùng lúc: "
+                 "nghe vài phút là nhại lại chính xác giọng nói, ngữ điệu, "
+                 "tiếng thở và tiếng cười của bất kỳ ai. Cùng bộ máy đó phát "
+                 "được hạ âm 15–20 Hz — thứ âm thanh không ai nghe thấy nhưng "
+                 "khiến người trong phòng thấy bất an và dễ bị dẫn dắt."),
+                ("Tuyến pheromone xã hội — Social Pheromone Gland",
+                 "Tuyến dưới da tổng hợp hỗn hợp oxytocin, vasopressin và "
+                 "androstenone, pha theo đúng hồ sơ MHC của người đối diện. "
+                 "Mục tiêu không nhận ra mình đang bị tác động; họ chỉ thấy kẻ "
+                 "trước mặt quen thuộc và đáng tin một cách khó giải thích. "
+                 "Khi cần gây rối, hắn đổi công thức sang pheromone adrenaline "
+                 "để đẩy cả một đám đông vào kích động."),
+                ("Hệ thần kinh gương cường hoá — Mirror Neuron Hyperplasia",
+                 "Mật độ neuron gương gấp mười lần người thường. Hắn không "
+                 "còn cần nhiều tuần nghiên cứu: quan sát 5–10 phút là hấp thụ "
+                 "trọn ngôn ngữ cơ thể, biểu cảm vi mô, thói quen và cách phản "
+                 "ứng xã hội của mục tiêu. Đây là thay đổi về chất — từ "
+                 "“chuẩn bị kỹ lưỡng” thành “bắt chước tức thời”."),
             ),
         ),
         Section(
             title="Đột phá công nghệ & tự động hoá",
-            intro="Một sinh vật đột biến thì giết được vài người. Một sinh vật "
-                  "đột biến có hạ tầng thì giết được một thể chế.",
+            intro="Đây là chỗ hắn đi ngược mọi ác nhân Absolute khác: không "
+                  "một dòng AI, không một con drone, không một cỗ máy tự "
+                  "hành. Chameleon tin chỉ bộ não người mới đủ linh hoạt để "
+                  "thao túng người — nên hạ tầng của hắn là công cụ thủ công "
+                  "và người thật, thứ không hệ thống mạng nào rà ra được.",
             items=(
-                ("Mạng vệ tinh nano “Ghost Swarm”",
-                 "Hàng nghìn vệ tinh siêu nhỏ lơ lửng ở tầng khí quyển thấp, "
-                 "quét quang học, nhiệt và tín hiệu điện từ trên phạm vi toàn "
-                 "quốc, dựng bản đồ sinh trắc học 3D của mọi công dân — đủ để "
-                 "tạo bản sao chính xác đến từng milimet."),
-                ("Android thay người thật",
-                 "Hàng trăm “Doppelganger Drones” phủ da sinh học tổng hợp "
-                 "đổi được màu và nhiệt, mang AI tự học để nhại giọng, ngôn "
-                 "ngữ cơ thể và thói quen. Chúng ngồi được vào ghế trong chính "
-                 "phủ, quân đội, ngân hàng và cơ quan an ninh mà không ai nghi."),
-                ("AI “Mirror Mind”",
-                 "Nuốt toàn bộ dữ liệu từ vệ tinh nano, camera công cộng, mạng "
-                 "xã hội, giao dịch tài chính và sinh trắc học; dự đoán phản "
-                 "ứng đám đông, quyết định của chính trị gia và cả đường di "
-                 "chuyển của siêu anh hùng với độ chính xác trên 95%."),
-                ("Nanite “Spoof Cloud”",
-                 "Hạt nano tự sao chép phát tán trong không khí, chui vào mọi "
-                 "thiết bị điện tử: làm lệch GPS, chặn và giả mạo liên lạc, "
-                 "phát tin giả, kích hoạt lệnh sai trong hệ thống ngân hàng và "
-                 "quân sự, dựng cả “bóng ma điện tử” cho radar nhìn thấy thứ "
-                 "không tồn tại."),
-                ("Puppet Master Protocol",
-                 "Điều khiển đồng thời hàng trăm android và thiết bị tự hành "
-                 "qua mạng lượng tử — trong giới hạn một quốc gia. Đủ để dựng "
-                 "một cuộc tấn công giả, làm rối loạn hạ tầng, hoặc quay hệ "
-                 "thống vũ khí tự động của một nước vào chính phủ nước đó."),
+                ("Xưởng mặt nạ sinh học “Nhà máy Gương”",
+                 "Một phòng thí nghiệm bí mật do các nhà khoa học bị khống chế "
+                 "hoặc cuồng tín vận hành: nuôi cấy da nhân tạo, in sinh học "
+                 "3D khuôn mặt, kính áp tròng mống mắt giả, găng silicon vân "
+                 "tay, răng giả, miếng dán vi sinh da. Không có dây chuyền tự "
+                 "động — từng món làm thủ công như đồ may đo, nên không để lại "
+                 "dấu vết nào cho hệ thống giám sát công nghệ bắt được."),
+                ("Kho lưu trữ bản sắc “Mật thất Nhân dạng”",
+                 "Mạng lưới kho phân tán khắp thế giới, chứa DNA, mẫu giọng, "
+                 "hồ sơ hành vi và thói quen của hàng chục nghìn nhân vật quan "
+                 "trọng: chính trị gia, giám đốc ngân hàng, tướng lĩnh, người "
+                 "nổi tiếng. Việc tra cứu và đối chiếu do con người làm, phần "
+                 "lớn dữ liệu nằm trong trí nhớ của chính Chameleon — không có "
+                 "cơ sở dữ liệu nào để hack, không có máy chủ nào để đánh sập."),
+                ("Mạng lưới điệp viên “Hội Gương”",
+                 "Một tổ chức gồm kẻ trung thành, người bị tống tiền, điệp "
+                 "viên hai mang và những “bản sao” được đào tạo bài bản. Họ lo "
+                 "chỗ ở, chứng cứ ngoại phạm, tin tình báo — và quan trọng "
+                 "nhất là đóng thế để hắn có mặt ở nhiều nơi cùng lúc. Trong "
+                 "lúc Chameleon đang là một tổng thống, một thành viên Hội "
+                 "Gương khác đang là Chameleon ở đầu kia địa cầu."),
+                ("Bộ công cụ sinh trắc giả “Bộ Mặt Thứ Hai”",
+                 "Kính áp tròng in mống mắt, găng silicone vân tay, miếng dán "
+                 "màng nhĩ đổi giọng, răng giả chỉnh khớp cắn. Tự thân là đồ "
+                 "tĩnh, không mạch điện; ghép với phần nâng cấp sinh học thì "
+                 "đủ vượt qua mọi vòng kiểm tra thông thường."),
+                ("Máy phát nhiễu nhận thức “Khói Gương”",
+                 "Thiết bị đeo nhỏ phát xung ánh sáng 30 Hz và âm thanh cận "
+                 "ngưỡng, đồng bộ với sóng alpha của não người quan sát. Nó "
+                 "khuếch đại hiện tượng pareidolia: bộ não vốn hay điền vào "
+                 "chỗ trống theo kỳ vọng, nay điền hẳn ra đúng khuôn mặt mà "
+                 "người đó đang mong được thấy, chứ không phải khuôn mặt "
+                 "đang đứng trước họ. Không phải thôi miên — chỉ là bắt não "
+                 "bỏ qua những sai lệch nhỏ."),
             ),
         ),
         Section(
             title="Khắc chế phần cứng của Spider-Man",
-            intro="Hắn hiểu điểm mạnh lớn nhất của Spider-Man là giác quan "
-                  "báo động và hệ thần kinh siêu nhạy — nên hắn không đánh vào "
-                  "cơ bắp, hắn đánh vào cảm biến.",
+            intro="Spider-Man mạnh về thể chất, nhanh, và có giác quan nhện. "
+                  "Nhưng điểm yếu lớn nhất của Peter Parker không nằm ở phần "
+                  "cứng: đó là trách nhiệm, lòng tin và những người anh "
+                  "thương. Chameleon đánh đúng vào đó.",
             items=(
-                ("Spider-Sense Jamming Array",
-                 "Xung điện từ tần số cao cộng sóng âm hạ tần, hiệu chỉnh để "
-                 "làm quá tải các hạch thần kinh cảm nhận nguy hiểm. Giác quan "
-                 "nhện reo báo động giả từ mọi hướng cho đến khi hệ thần kinh "
-                 "suy nhược, không còn phân biệt nổi mối đe doạ thật."),
-                ("Nanite Webbing Dissolver",
-                 "Đám mây nano chui vào cấu trúc polymer của tơ nhện, cắt liên "
-                 "kết hoá học ngay khi chạm: tơ tan thành chất lỏng vô hại "
-                 "trong chưa đầy 0,2 giây, mất cả khả năng di chuyển lẫn khống "
-                 "chế đối thủ."),
-                ("Sensory Overload Protocol",
-                 "Ánh sáng nhấp nháy đa tần, âm thanh cường độ cao trải nhiều "
-                 "dải, mùi hoá chất kích thích thần kinh — bộ ba nhắm thẳng "
-                 "vào giác quan siêu nhạy, gây chóng mặt, mất phương hướng và "
-                 "co giật."),
-                ("Ghost Pattern Algorithm",
-                 "Mirror Mind đọc chuyển động của Spider-Man theo thời gian "
-                 "thực rồi thả ra tín hiệu giả, ảo ảnh nhiệt và android giả "
-                 "dạng chính anh ta. Anh ta đấm vào những mục tiêu không tồn "
-                 "tại cho tới lúc kiệt sức và hở sườn."),
-                ("Chiến tranh tâm lý",
-                 "Giả dạng Mary Jane, dì May hoặc chính Peter Parker; dựng "
-                 "cảnh người thân bị thương, đồng đội phản bội. Cộng thêm bào "
-                 "tử pheromone gây sợ hãi là đủ đẩy anh ta vào hoảng loạn."),
-                ("Độc thần kinh “Arachnotoxin”",
-                 "Đặc chế cho hệ thần kinh tăng cường của Spider-Man: tê liệt "
-                 "dây thần kinh vận động, cơ bắp co cứng ngoài tầm kiểm soát. "
-                 "Phát tán dạng khí dung hoặc qua mảnh vỡ nano."),
+                ("Mây pheromone đồng minh",
+                 "Miếng dán giải phóng hỗn hợp oxytocin và peptide MHC đặc "
+                 "trưng của những người Peter yêu quý nhất — dì May, Mary "
+                 "Jane, Harry Osborn. Giác quan nhện không toàn năng: nó là "
+                 "một hệ đánh giá mối đe doạ dựa trên dữ liệu giác quan, nên "
+                 "khi mọi tín hiệu hoá sinh đều báo “người thân, an toàn”, não "
+                 "Peter đọc cái tín hiệu nguy hiểm yếu ớt kia thành lo âu "
+                 "thường ngày. Anh do dự đúng một tích tắc — vừa đủ cho một "
+                 "nhát dao từ phía sau."),
+                ("Độc tố hoảng loạn nhện — Arachnid Panic Toxin",
+                 "Độc tố thần kinh dạng khí, bắt chước cortisol và adrenaline "
+                 "ngay trong thân não, kéo tụt ngưỡng kích hoạt của giác quan "
+                 "nhện. Từ đó mọi thứ đều báo động: tiếng bước chân, giọt "
+                 "nước, ánh đèn. Hệ cảnh báo không bị phá, nó bị làm cho vô "
+                 "dụng — sau vài giờ Peter kiệt sức và không còn phân biệt "
+                 "nổi nguy hiểm thật với nhiễu."),
+                ("Nghịch lý bản sắc — Identity Paradox Protocol",
+                 "Hắn không đối đầu trực diện. Hắn giả dạng lần lượt nhiều "
+                 "người trong đời Peter và thả ra những thông tin đá nhau: dì "
+                 "May gọi “đừng ra ngoài tối nay, dì cần con”, một giờ sau "
+                 "Mary Jane nói “dì May bị Chameleon bắt rồi, đừng tin ai "
+                 "cả”. Kèm theo là một chất gây rối loạn tái củng cố trí nhớ, "
+                 "khiến Peter không xác minh nổi ký ức của chính mình. Giác "
+                 "quan nhện phải qua não bộ mới thành hành động; một cái não "
+                 "đã nghi ngờ tất cả sẽ bỏ qua cả tín hiệu thật."),
+                ("Bầy người hoảng loạn",
+                 "Hạ âm 19 Hz dựng lên nỗi sợ không có nguồn gốc, pheromone "
+                 "đẩy nó thành bạo lực: cả một đám đông lao vào tấn công bất "
+                 "cứ thứ gì chuyển động, kể cả Spider-Man. Peter không thể "
+                 "đánh trả người vô tội nên chỉ còn cách chịu đòn và sơ tán, "
+                 "trong khi giác quan nhện réo từ mọi hướng cho tới lúc quá "
+                 "tải. Hắn bị vô hiệu hoá bằng chính những người anh đang bảo "
+                 "vệ — Chameleon không cần ra mặt lấy một lần."),
             ),
         ),
     ),
 
+    # Thang bậc đặt tên theo chữ cái Hy Lạp, đọc ngược từ Zeta lên Omega:
+    # bậc càng cao thì phạm vi càng rộng, nhưng thời gian càng dài — hắn
+    # không phá nhanh hơn, hắn phá xa hơn.
     tiers=(
-        Tier("Tier 1", "Gián điệp & ám sát chính xác",
-             "Giả dạng bất kỳ ai để vào cơ sở tuyệt mật, lấy dữ liệu nhà nước "
-             "hoặc thay thế nhân vật chủ chốt. Ám sát bằng khuôn mặt người "
-             "thân cận, hiện trường không để lại dấu vết.",
-             "Vài giờ  ·  không thương vong ngoài mục tiêu"),
-        Tier("Tier 2", "Phá hoại hạ tầng & khủng hoảng tài chính",
-             "Tê liệt lưới điện, giao thông, nhà máy nước, mạng viễn thông. "
-             "Thao túng thị trường chứng khoán và niềm tin vào ngân hàng, dẫn "
-             "tới rút tiền ồ ạt và sụp đổ kinh tế.",
-             "Hỗn loạn trong 24 giờ"),
-        Tier("Tier 3", "Chiến tranh thông tin & thao túng chính phủ",
-             "Giả dạng tổng thống, bộ trưởng quốc phòng hay tướng lĩnh để phát "
-             "lệnh tấn công sai mục tiêu; tung video giả chân thực tuyệt đối "
-             "để kích động bạo loạn và lật đổ chính quyền.",
-             "Một tuần để đẩy vào nội chiến"),
-        Tier("Tier 4", "Sụp đổ quốc gia",
-             "Chiếm quyền các hệ thống vũ khí tự động, làm sai lệch mọi liên "
-             "lạc, thay toàn bộ giới lãnh đạo bằng android. Một quốc gia tự "
-             "huỷ diệt mà không cần bắn một viên đạn nào.",
-             "72 giờ tới vô chính phủ hoàn toàn"),
+        Tier("Tier Zeta", "Giả dạng tức thời",
+             "Đổi mặt trong vài phút rồi bước qua các máy quét sinh trắc "
+             "thông thường: phá hoại một công ty, lấy trọn tài liệu mật. Bản "
+             "gốc cần hàng tuần chuẩn bị cho đúng một lần vào cửa; Absolute "
+             "cần một buổi chiều.",
+             "Vài giờ"),
+        Tier("Tier Epsilon", "Một thành phố mất kiểm soát",
+             "Thay giám đốc ngân hàng hoặc sĩ quan chỉ huy cảnh sát trong một "
+             "ngày: rút cạn quỹ, bẻ hướng điều tra, châm ngòi bạo loạn cục "
+             "bộ. Bản gốc chỉ gây rối được một tổ chức; Absolute làm cả thành "
+             "phố tuột khỏi tay chính quyền của nó.",
+             "6–12 giờ"),
+        Tier("Tier Delta", "Tập đoàn & cơ quan tình báo",
+             "Chiếm quyền điều hành một tập đoàn đa quốc gia hoặc một cơ quan "
+             "tình báo: làm rò rỉ danh tính điệp viên, thao túng chứng khoán. "
+             "Bản gốc không chạm nổi tới cấp nhà nước; Absolute làm sụp niềm "
+             "tin của dân chúng vào chính phủ của họ.",
+             "3–5 ngày"),
+        Tier("Tier Gamma", "Lật đổ một chính phủ",
+             "Thay bộ trưởng quốc phòng hoặc thống đốc ngân hàng trung ương: "
+             "ra lệnh điều quân, phá giá tiền tệ, dựng một cuộc đảo chính ở "
+             "nước nhỏ. Bước nhảy từ thành phố lên quốc gia — và không ai bắt "
+             "được kẻ đã ký lệnh, vì kẻ đó vẫn đang ngồi ở bàn làm việc.",
+             "Một tuần"),
+        Tier("Tier Beta", "Xung đột giữa hai cường quốc",
+             "Hội Gương đồng thời thay nhiều quan chức ở hai cường quốc, dựng "
+             "bằng chứng giả về một vụ tấn công hạt nhân, đẩy cả hai quân đội "
+             "vào trạng thái báo động. Bản gốc không thể gây ra một cuộc "
+             "chiến; Absolute kích hoạt xung đột ở tầm lục địa.",
+             "2–3 tuần"),
+        Tier("Tier Alpha", "Tê liệt ngoại giao toàn cầu",
+             "Giả mạo nhiều nguyên thủ cùng lúc, cắt đứt mọi kênh xác minh "
+             "giữa các thủ đô, kích hoạt khủng hoảng tên lửa trên nhiều châu "
+             "lục. Bản gốc là kẻ đóng vai người khác; Absolute là kẻ giật dây "
+             "toàn bộ trật tự thế giới.",
+             "Một tháng"),
+        Tier("Tier Omega", "Sự sụp đổ bản sắc toàn cầu",
+             "Đồng loạt thay thế và tống tiền giới lãnh đạo, phát tán bằng "
+             "chứng sinh trắc giả mạo, phủ pheromone và Khói Gương lên đám "
+             "đông cho tới khi hoang tưởng trở thành trạng thái đại chúng. Hệ "
+             "thống tài chính đứng lại vì không xác minh nổi danh tính, các "
+             "hiệp ước phòng thủ tan rã, chiến tranh hạt nhân có thể nổ ra "
+             "chỉ vì một nhầm lẫn. Bản gốc là mối đe doạ cấp thành phố; "
+             "Absolute khiến nền văn minh tự huỷ diệt chỉ bằng lòng tin bị "
+             "đánh cắp.",
+             "30 ngày"),
     ),
 
+    # Nhãn giữ dưới 94 px — bề ngang cột nhãn của FactTable, quá thì bị cắt.
     facts=(
-        ("Cấp đe doạ", "Quốc gia — không vũ trụ, không thao túng thực tại"),
-        ("Nền tảng", "Vật lý cường hoá · sinh học đột biến · công nghệ huỷ diệt"),
-        ("Sao chép", "DNA, vân tay, mống mắt, hệ vi sinh vật trên da"),
-        ("Tầm điều khiển", "Trọn một quốc gia, qua mạng lượng tử"),
-        ("Dự đoán hành vi", "Mirror Mind  ·  chính xác trên 95%"),
-        ("Thời gian sụp đổ", "72 giờ"),
+        ("Cấp đe doạ", "Hành tinh — bằng lòng tin, không bằng vũ lực"),
+        ("Nền tảng", "Sinh học đột biến · công cụ thủ công · người thật"),
+        ("Không dùng", "AI · drone · máy tự động — chỉ bộ não người"),
+        ("Sao chép", "Vân tay, mống mắt, vi sinh da, kháng nguyên bề mặt"),
+        ("Hạn bản sao", "48–72 giờ, rồi cơ thể trở lại nguyên bản"),
+        ("Rình mục tiêu", "5–10 phút quan sát, thay cho nhiều tuần"),
+        ("Bậc Omega", "30 ngày  ·  sụp đổ bản sắc toàn cầu"),
     ),
 
-    blurb="Bản gốc mở màn danh sách này bằng cách không có gương mặt nào. Bản "
-          "Absolute kết thúc nó bằng cách có tất cả các gương mặt — kể cả "
-          "gương mặt của người vừa ra lệnh truy lùng hắn.",
+    blurb="Absolute Chameleon là mối đe doạ hành tinh không cần bắn một viên "
+          "đạn. Hắn không phá thành phố bằng sức mạnh, hắn phá nền văn minh "
+          "bằng cách đánh cắp lòng tin, bản sắc và mọi mối quan hệ giữa người "
+          "với người. Với Spider-Man, hắn không cần thắng bằng cơ bắp — chỉ "
+          "cần khiến Peter Parker thôi tin vào chính mình.",
 
     art=draw_absolute_chameleon,
-    caption="Dựng lại từ dữ liệu quét  ·  khung hình trực tiếp",
+    caption="Ảnh ghép từ Mật thất Nhân dạng  ·  khung hình trực tiếp",
 
     links=(
         ("Wikipedia", "https://en.wikipedia.org/wiki/Chameleon_(character)"),
