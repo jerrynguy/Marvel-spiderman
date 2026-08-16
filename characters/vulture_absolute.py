@@ -184,10 +184,11 @@ def _shock(p, t):
 
 
 def _storm(p, t):
-    """Feather Storm: lông vũ cơ khí tách khỏi mép cánh rồi trôi ra xa.
+    """Bão Lông Vũ: phiến lông tách khỏi mép cánh rồi bay thẳng ra xa.
 
     Mỗi hạt là một lưỡi mảnh xoay đúng theo hướng bay của nó, không phải
-    chấm tròn — nhìn là biết bầy drone chứ không phải bụi.
+    chấm tròn — nhìn là biết dao bay chứ không phải bụi. Chúng đi thẳng và
+    không đổi ý giữa đường: đây là đạn, không phải drone.
     """
     r = Rolls(2051963)
     p.setPen(Qt.PenStyle.NoPen)
@@ -295,7 +296,11 @@ def _talons(p, t):
 
 
 def _face(p, t):
-    """Hai thấu kính mắt và lò nhiệt hạch giữa ngực — thứ duy nhất tự phát sáng."""
+    """Hai thấu kính mắt và lò ăn xác thối giữa ngực — thứ duy nhất tự sáng.
+
+    Lò không đốt nhiên liệu, nó rút điện của thứ khác; nên nhịp đập của nó là
+    nhịp của một cái bụng đang no dần, không phải của một động cơ chạy đều.
+    """
     beat = 0.55 + 0.45 * math.sin(t * 2.0)
     for side in (-1, 1):
         eye = QPointF(50 + side * 4.4, 30)
@@ -320,7 +325,12 @@ def _face(p, t):
 
 
 def _lock(p, t):
-    """Sagittarius khoá mục tiêu: khung ngắm nhảy chỗ, kèm sợi chỉ nối về mắt."""
+    """Khung ngắm nhảy chỗ, kèm sợi chỉ nối về mắt hắn.
+
+    Không có máy nào chọn mục tiêu hộ: cảm biến thụ động chỉ dựng ra bản đồ,
+    còn khoá vào ai là do chính Toomes — nên sợi chỉ nối về mắt, không nối về
+    một hộp máy tính nào.
+    """
     step = int(t / 1.45)
     r = Rolls(step * 7919 + 11)
     tx, ty = r(14, 86), r(58, 108)
@@ -423,140 +433,240 @@ ABSOLUTE = Profile(
     keys=("Vulture Absolute", "Apex Predator", "Sky Tyrant"),
 
     kicker="Hồ sơ tuyệt đối",
-    stamp="PHÂN LOẠI  ·  MỐI ĐE DOẠ CẤP QUỐC GIA",
+    stamp="PHÂN LOẠI  ·  MỐI ĐE DOẠ CẤP HÀNH TINH",
     note="ABSOLUTE",
     note_kind="new",
     tab="Absolute",
     skin="sky",
     evolve_fx="shred",       # vuốt xé tờ giấy rồi cuốn đi, không nổ
 
-    tagline="The Apex Predator · The Sky Tyrant. Làm chủ bầu trời, phá huỷ "
-            "mặt đất — một ông già trong bộ cánh đã thành thứ không quân "
-            "nào bắn tới.",
+    tagline="The Apex Predator · The Sky Tyrant. Kẻ ăn xác thối không giết "
+            "con mồi — hắn bay vòng bên trên, chờ nền văn minh công nghiệp "
+            "tự gục xuống, rồi mới đáp.",
 
     summary=(
-        "Bản gốc chỉ là một ông già mặc bộ cánh bay lượn. Để thành thế lực "
-        "cấp quốc gia, chính cơ thể sinh học của Adrian Toomes và bộ cánh của "
-        "hắn được tái cấu trúc toàn bộ theo nguyên lý của loài chim săn mồi "
-        "đã tuyệt chủng — Argentavis magnificens — kết hợp với vật liệu siêu "
-        "nhẹ.",
+        "Adrian Toomes chưa bao giờ có siêu năng lực. Hắn là một kỹ sư cơ khí "
+        "thiên tài dựng bộ cánh điện từ từ vật liệu nhặt nhạnh, và hắn đánh "
+        "theo đúng lối của loài kền kền: kiên nhẫn, lượn trên cao, không bao "
+        "giờ đối đầu trực diện, chỉ lao xuống khi con mồi đã yếu hoặc mất "
+        "cảnh giác. Động cơ của hắn là phẫn uất — bị hệ thống chèn ép, muốn "
+        "giữ lấy gia đình, và căm ghét giới tinh hoa.",
 
-        "Bộ cánh từ trường ngày xưa nay là một Hệ thống Săn mồi Trên không "
-        "Tích hợp: động cơ nhiệt hạch, mười nghìn lông vũ biết bay tách rời, "
-        "và một AI đọc trước ba giây mọi chuyển động của con mồi. Toomes "
-        "không còn đi cướp nữa — hắn đóng cửa cả một vùng trời.",
+        "Ba điểm yếu của bản gốc là tuổi tác, sự lệ thuộc vào bộ giáp, và cái "
+        "tôi của một kẻ tự coi mình là nạn nhân. Absolute xoá hai điểm đầu: "
+        "cơ thể lão hoá được tái cấu trúc thành một sinh vật lai cơ khí — "
+        "sinh học, nên tách khỏi cánh hắn vẫn là sát thủ cận chiến. Điểm yếu "
+        "thứ ba thì giữ nguyên, vì chính nó là động cơ.",
+
+        "Bộ giáp Aasvogel Mk.VII không có AI tự hành. Nó chỉ có một bộ phản "
+        "xạ bay giữ thăng bằng và né chướng ngại khi Toomes bị thương; mọi "
+        "quyết định tấn công đều đi qua giao diện thần kinh của chính hắn. "
+        "Đây không phải kẻ ngồi thả drone — đây là một con chim săn mồi tự "
+        "chọn thời điểm bổ nhào.",
     ),
 
     sections=(
         Section(
             title="Khuếch đại năng lực vật lý & sinh học",
-            intro="Toomes không còn là ông già yếu ớt: từ bộ xương trở đi, "
-                  "mọi thứ trong người hắn đều được thay để chịu được tốc độ.",
+            intro="Bản gốc là một người đàn ông lão niên, thể chất bình "
+                  "thường: mọi sức mạnh đến từ bộ giáp, tách khỏi giáp là gần "
+                  "như vô hại. “Sinh lý Kền kền Apex” sửa đúng chỗ đó — cơ thể "
+                  "thôi làm gánh nặng và trở thành một nửa của vũ khí.",
             items=(
-                ("Bộ xương khí động học",
-                 "Xương được thay bằng mạng hợp kim cấu trúc rỗng tổ ong, nhẹ "
-                 "hơn xương người 80% nhưng cứng hơn titan. Hắn chịu được lực "
-                 "G cực lớn khi bổ nhào ở Mach 3 mà nội tạng không vỡ."),
-                ("Mắt chim săn mồi & gia tốc thần kinh",
-                 "Võng mạc thay bằng thấu kính sinh học tổng hợp: phóng đại "
-                 "quang học 50 lần, nhìn được cả tử ngoại lẫn hồng ngoại. Dây "
-                 "thần kinh thị giác khuếch đại bằng sợi nano truyền tín hiệu "
-                 "nhanh gấp 10 lần não thường — đủ để thấy viên đạn đang bay."),
-                ("Nội tạng chống áp suất",
-                 "Phổi và hệ tuần hoàn bọc trong lớp mô tổng hợp đàn hồi. Bổ "
-                 "nhào từ 15.000 mét ở tốc độ siêu thanh, cơ thể tự điều chỉnh "
-                 "áp suất nội môi thay vì vỡ phổi."),
-                ("Móng vuốt đầu vibranium",
-                 "Vuốt tay và chân dao động ở tần số cao. Chạm vào bất cứ vật "
-                 "rắn nào — bê tông cốt thép hay vỏ xe tăng — rung động phân "
-                 "tử phá vỡ liên kết cấu trúc, hắn xé mọi thứ như xé giấy."),
+                ("Hệ xương khí nén titan–hữu cơ",
+                 "Xương thay bằng cấu trúc tổ ong từ titan xốp và sợi carbon: "
+                 "nhẹ, nhưng chịu được lực nén của cú bổ nhào Mach 5. Các "
+                 "khớp bọc trong bao hoạt dịch áp suất cao, cho biên độ "
+                 "chuyển động vượt xa người thường — hắn gập người giữa không "
+                 "trung theo những góc mà cột sống người không cho phép."),
+                ("Hệ tuần hoàn perfluorocarbon",
+                 "Máu được thay một phần bằng dung dịch perfluorocarbon tổng "
+                 "hợp, hoà tan oxy gấp khoảng 20 lần hemoglobin. Nhờ đó hắn "
+                 "bay ở tầng bình lưu 20.000–30.000 m mà không cần mặt nạ "
+                 "dưỡng khí, và chịu được cú giảm áp đột ngột khi lao xuống. "
+                 "Tim bọc cơ tim nhân tạo polyme dẫn điện, tự chỉnh nhịp theo "
+                 "gia tốc."),
+                ("Bó cơ Electro-Active Polymer",
+                 "Sợi cơ được cấy xen kẽ polymer điện hoạt. Có dòng điện từ "
+                 "bộ giáp, chúng co rút mạnh gấp 15 lần cơ người — đủ để nâng "
+                 "một xe tải nhỏ mà không cần trợ lực khung ngoài. Quan trọng "
+                 "hơn: bẻ gãy đôi cánh không còn là kết thúc trận đấu."),
+                ("Giác quan kền kền",
+                 "Thuỷ tinh thể đa quang phổ nhìn từ hồng ngoại tới cực tím, "
+                 "vỏ não thị giác dựng lại ảnh độ phân giải cao từ 5 km. Tai "
+                 "trong có màng rung áp điện, bắt được dao động không khí do "
+                 "con mồi tạo ra trong bán kính 300 m. Xoang mũi mang một cơ "
+                 "quan cảm từ, đủ để hắn định hướng theo từ trường Trái Đất "
+                 "giữa đêm không trăng."),
+                ("Tuyến thượng thận “Cơn điên kiếm ăn”",
+                 "Căng thẳng cực độ thì tuyến thượng thận cấy ghép bơm ra hỗn "
+                 "hợp adrenaline, norepinephrine và enzyme steroid tổng hợp: "
+                 "tốc độ phản xạ tăng gấp đôi, ngưỡng chịu đau dâng lên, nỗi "
+                 "sợ bị khoá lại. Đây đúng là hành vi của con kền kền lao vào "
+                 "xác thối giữa bầy đối thủ — và cũng là lúc hắn nguy hiểm "
+                 "nhất vì không còn biết lùi."),
             ),
         ),
         Section(
             title="Đột phá công nghệ & tự động hoá",
-            intro="Bộ cánh không còn là một khối liền. Nó là một hệ vũ khí "
-                  "biết tự tháo rời.",
+            intro="“Bộ giáp Kền kền Aasvogel Mk.VII” là phần nối dài tự nhiên "
+                  "của triết lý nhặt nhạnh và đánh từ trên cao. Nó không có AI "
+                  "tự hành — chỉ một bộ phản xạ bay giữ thăng bằng và né "
+                  "chướng ngại khi Toomes bị thương; mọi phát bắn đều do hắn "
+                  "quyết, qua giao diện thần kinh.",
             items=(
-                ("Lõi phản lực Aerospike Ramjet",
-                 "Động cơ dòng thẳng ghép lò nhiệt hạch mini: tối đa Mach 5, "
-                 "đồng thời treo lơ lửng hoàn hảo ở chế độ tàng hình âm thanh "
-                 "— không một tiếng động."),
-                ("Lưới drone “Feather Storm”",
-                 "Mười nghìn lông vũ cơ khí tách khỏi khung cánh và bay tự do. "
-                 "Ba việc: quét cảm biến 360 độ, đâm xuyên bằng động năng, và "
-                 "kết thành lưới điện từ cắt đứt mọi thứ bay qua không phận."),
-                ("AI “Sagittarius”",
-                 "Dự đoán trước ba giây chuyển động của mục tiêu từ dữ liệu "
-                 "sinh trắc, chuyển động cơ bắp và hướng gió. Với Spider-Man, "
-                 "nó dựng bản đồ tư thế nhện rồi tính ra điểm mù duy nhất mà "
-                 "Peter không né được dù giác quan có báo."),
-                ("Sonic Boom Cascade",
-                 "Bay siêu thanh thì bộ cánh sinh ra sóng xung kích; hệ vũ khí "
-                 "gom chúng lại thành một lưỡi dao áp suất hẹp, san phẳng cả "
-                 "dãy nhà mà không tốn một quả bom."),
+                ("Cánh lông vũ hợp kim thông minh — “Bão Lông Vũ”",
+                 "Bốn nghìn phiến lông vũ bằng hợp kim nhớ hình và graphene, "
+                 "mỗi phiến xoay độc lập dưới điện trường: cánh phẳng thì lượn "
+                 "không tiếng động, cánh xoáy thì bổ nhào. Rời khỏi khung, mỗi "
+                 "phiến thành một mũi dao đơn phân tử bay theo quỹ đạo đạn đạo "
+                 "nạp sẵn bằng tín hiệu điện từ. Phóng cả bầy một lượt là một "
+                 "trận mưa dao cắt đứt dây điện, tháp ăng-ten, cầu thép. Đây "
+                 "không phải drone: từng phiến chỉ là viên đạn đã nạp sẵn "
+                 "đường bay, không có AI — và thu lại được bằng từ trường nếu "
+                 "còn nguyên."),
+                ("Lò phản ứng ăn xác thối",
+                 "Bộ giáp không mang nhiên liệu, nó ăn năng lượng của môi "
+                 "trường. Móng vuốt và mép cánh có dải đồng siêu dẫn: cắm vào "
+                 "đường dây cao thế hay máy biến áp là rút điện thẳng. Lớp phủ "
+                 "áp điện thu thêm nhiệt thải và động năng gió. Hắn “ăn” điện "
+                 "của một thành phố theo đúng nghĩa đen, và lưới điện mất ổn "
+                 "định là dấu chân hắn để lại."),
+                ("Móng vuốt cộng hưởng huỷ kết dính",
+                 "Titan pha cacbua vonfram, gắn bộ rung siêu âm áp điện. Chạm "
+                 "vào bề mặt, chúng phát rung 40 kHz phá vỡ lực bám Van der "
+                 "Waals — thứ giữ Spider-Man trên tường. Trong rãnh vuốt còn "
+                 "tiết ra dung môi tơ nhện: hợp chất hydrocarbon thơm bẻ gãy "
+                 "liên kết polypeptide, tơ chảy nhão ngay chỗ bị cắt."),
+                ("Hệ thống cảm biến thụ động",
+                 "Radar chủ động thì phát sóng, mà phát sóng là bị bắt bài — "
+                 "nên bộ giáp chỉ dùng cảm biến quang học và từ trường thụ "
+                 "động, dựng bản đồ chiến trường từ ánh sáng phản chiếu và "
+                 "biến thiên từ trường. Hắn nhìn thấy tất cả mà không để lại "
+                 "một tín hiệu nào: vẫn là con kền kền quan sát từ xa."),
+                ("Thiết bị phóng “Mưa Xác Thối”",
+                 "Khoang bụng giáp mang 200 kg đạn chùm — khối kim loại nặng, "
+                 "bi thép, mảnh vỡ công trình. Thả từ độ cao 3.000 m, động "
+                 "năng va chạm ngang một loạt pháo kích. Vì toàn là đồ nhặt "
+                 "nhạnh nên bắn hết thì quay lại bãi phế liệu nạp thêm; không "
+                 "có dây chuyền tiếp đạn nào để cắt đứt."),
             ),
         ),
         Section(
             title="Khắc chế phần cứng của Spider-Man",
-            intro="Mọi lợi thế của Peter đều bị bẻ thành điểm yếu chí mạng.",
+            intro="Cả bộ chiến thuật dựng trên bản chất kền kền: kiên nhẫn, "
+                  "lượn trên cao, đánh chớp nhoáng từ trên xuống, và hiểu tâm "
+                  "lý con mồi. Không đòn nào trong đây là một cuộc đấu tay đôi "
+                  "sòng phẳng — kền kền không đánh sòng phẳng bao giờ.",
             items=(
-                ("Noise-Cancelling Mirage",
-                 "Giác quan nhện báo nguy hiểm nhưng không phân biệt được mức "
-                 "độ hay nguồn gốc nếu xung quanh cái gì cũng nguy hiểm. Mười "
-                 "nghìn drone phát hạ âm và dao động điện từ mô phỏng đúng "
-                 "“tần số của một cú đấm”, khiến giác quan réo liên tục ở mọi "
-                 "hướng. Phản xạ của Peter chậm đi 1,5 giây — trong một trận "
-                 "đánh tốc độ, 1,5 giây là cái chết."),
-                ("“Moth's Dust” — bụi bướm đêm",
-                 "Tơ nhện bền kéo cực cao, dao thường không cắt nổi. Nên khi "
-                 "Peter bắn tơ, bầy Feather Storm phun ra đám mây hoá chất ở "
-                 "đúng nhiệt độ nóng chảy của polyme, phá liên kết hydro và "
-                 "liên kết chéo. Tơ tan thành tro sau 0,5 giây."),
-                ("Khoá tứ chi bằng trường áp suất",
-                 "Peter thoát được mọi loại còng, nên vũ khí này không dùng "
-                 "xích. Bay ngang qua, hắn thả bốn con quay hồi chuyển bám vào "
-                 "cổ tay cổ chân, tạo bong bóng chân không ép ngược hai tấn "
-                 "trên mỗi centimet vuông. Mọi cú vung tay thành vô dụng — anh "
-                 "ta bị chính không khí quanh mình đóng băng tại chỗ."),
+                ("Bão Lông Vũ bão hoà giác quan nhện",
+                 "Toomes không phá giác quan nhện, hắn làm nó quá tải. Bốn "
+                 "nghìn phiến lông vũ lao đi ở tốc độ siêu thanh theo quỹ đạo "
+                 "hỗn loạn, mỗi phiến mang một điện tích và hướng xoay khác "
+                 "nhau, buộc giác quan nhện xử lý hàng nghìn tín hiệu đe doạ "
+                 "cùng lúc. Trường điện từ dao động của chúng biến “cảm giác "
+                 "báo động” thành tiếng ồn trắng; độ trễ thần kinh 0,3–0,5 "
+                 "giây là vừa đủ cho một mũi dao cắt dây tơ hoặc găm vào vai."),
+                ("Dung môi tơ nhện & rung siêu âm huỷ bám",
+                 "Móng vuốt rung 40 kHz phá lực Van der Waals ở tay chân "
+                 "Peter, cậu trượt khỏi tường như trượt trên kính ướt. Lông vũ "
+                 "thì tẩm dung môi hydrocarbon thơm: cắt trúng tơ là tơ rã ra "
+                 "thành từng chuỗi polypeptide rời. Mất bám và mất tơ, "
+                 "Spider-Man mất luôn hai thứ làm nên mình — di chuyển và "
+                 "giăng bẫy."),
+                ("Khoá chết trên không",
+                 "Vulture tuyệt đối không đánh dưới mặt đất, nơi Peter có "
+                 "tường để bám và phố xá để mượn. Cánh xoáy thổi gió giật 200 "
+                 "km/h cuốn bay mọi điểm bám, rồi móng vuốt kẹp cổ chân và kéo "
+                 "cậu lên 12.000 m. Trên đó không khí loãng, âm 50 độ, tơ bắn "
+                 "ra chẳng có gì để neo. Peter vùng thoát thì hắn chỉ việc thả "
+                 "rơi tự do rồi bổ nhào đón đầu."),
+                ("Phục kích thụ động",
+                 "Kền kền không săn con mồi khoẻ mạnh, nó chờ con mồi kiệt "
+                 "sức. Cảm biến thụ động cho phép Toomes bám theo Peter từ 3 "
+                 "km mà không phát một tín hiệu nào — giác quan nhện không có "
+                 "gì để bắt. Hắn đợi đúng lúc Peter đang đánh nhau với kẻ khác "
+                 "hoặc đã bị thương mới lao xuống; giác quan đang chia cho "
+                 "nhiều mối đe doạ, còn cú bổ nhào Mach 5 chỉ chừa lại 0,2 "
+                 "giây để phản ứng."),
+                ("Đòn tâm lý gia đình — mạng lưới “kền kền non”",
+                 "Toomes vốn đã biết Peter Parker là ai và biết cậu sợ mất "
+                 "những gì. Hắn nuôi một mạng lưới dân buôn phế liệu, thợ máy "
+                 "và người lao động bất mãn để theo dõi gia đình Peter. Hắn "
+                 "không ra tay với dì May — hắn gửi cho Peter ảnh dì May đi "
+                 "chợ, ảnh bạn gái ở sân trường, kèm một chiếc lông vũ kim "
+                 "loại. Đây là chiến tranh hao mòn: mất ngủ trước, sơ hở sau."),
             ),
         ),
     ),
 
+    # Thang đọc ngược từ Zeta lên Omega, cùng lối với Chameleon: bậc càng cao
+    # thì phạm vi càng rộng chứ không phải càng nhanh — kền kền không vội.
     tiers=(
-        Tier("Tier Alpha", "Phá hạ tầng giao thông & viễn thông",
-             "Mười nghìn drone phủ kín một thành phố lớn, cắt đứt lưới điện "
-             "ngầm, cáp quang và mọi cột sóng trên 100 km². Sân bay quốc tế "
-             "đóng cửa vĩnh viễn vì drone xuyên thủng được động cơ máy bay dân "
-             "dụng giữa không trung.",
-             "30 phút cho một thành phố"),
-        Tier("Tier Beta", "Đánh sập mạng lưới kinh tế & công nghiệp",
-             "Dàn tên lửa hành trình siêu nhỏ trên lưng, Sagittarius quét ra "
-             "điểm yếu nhất của nền kinh tế: nhà máy lọc dầu, trạm biến áp cao "
-             "thế, kho dự trữ lương thực. Một phi vụ là 40% sản lượng điện tê "
-             "liệt, hậu cần vỡ trận, chứng khoán sụp.",
-             "45 phút bay qua một quốc gia nhỏ"),
-        Tier("Tier Gamma", "Tiêu diệt lực lượng phản ứng nhanh",
-             "Mach 5 cộng khả năng bẻ quỹ đạo gấp khúc: không tên lửa đất đối "
-             "không hay tiêm kích thế hệ 5 nào bám kịp. Hắn bổ nhào từ tầng "
-             "bình lưu, dùng vuốt tần số cao rạch đôi boong-ke chỉ huy và "
-             "boong tàu sân bay trước khi phòng không kịp nhả đạn.",
-             "4 phút cho trọn một phi đội 12 chiếc"),
+        Tier("Tier Zeta", "Đe doạ đường phố",
+             "Chế độ tối thiểu: không phóng lông vũ, chỉ cơ thể cường hoá và "
+             "móng vuốt. Hạ gục trọn một đội cảnh sát trong vài phút. Bản gốc "
+             "mà mất giáp thì chỉ còn là một lão già; Absolute mất cánh vẫn "
+             "là sát thủ cận chiến.",
+             "Vài phút"),
+        Tier("Tier Epsilon", "Tàn phá một khu phố",
+             "Phóng một phần Bão Lông Vũ vào một toà nhà: cắt dây cáp, làm "
+             "sập trần, đẩy cả khu vào hoảng loạn. Một đồn cảnh sát bị xoá "
+             "trong mười lăm phút.",
+             "30 phút"),
+        Tier("Tier Delta", "Vô hiệu hoá một căn cứ quân sự",
+             "Móng vuốt và Mưa Xác Thối phá radar, kho đạn, bãi đáp trực "
+             "thăng; cảm biến thụ động chỉ ra chỗ chôn đường ống nhiên liệu "
+             "để một cú bổ nhào cắt đứt. Bộ giáp gốc chỉ trộm được vũ khí rồi "
+             "chạy; Absolute biến cả căn cứ thành phế liệu — và phế liệu thì "
+             "hắn nhặt được.",
+             "1–2 giờ"),
+        Tier("Tier Gamma", "Một thành phố bị phong toả",
+             "Cắm móng vuốt vào trạm biến áp chính rút cạn điện, thả lông vũ "
+             "cắt cáp ngầm làm tê liệt giao thông. Trong nửa ngày, một đô thị "
+             "mười triệu dân rơi vào hỗn loạn mà không cần một quả bom nào.",
+             "6–12 giờ"),
+        Tier("Tier Beta", "Sụp đổ hạ tầng một quốc gia",
+             "Bay dọc tuyến cao thế quốc gia, hút năng lượng từ nhiều trạm "
+             "biến áp cùng lúc để tạo dao động điện áp đồng bộ — lưới điện cả "
+             "nước sụp theo dây chuyền. Sân bay, bệnh viện, nhà máy lọc dầu "
+             "dừng lại; một quốc gia công nghiệp bị đẩy về thời chưa có điện.",
+             "24–72 giờ"),
+        Tier("Tier Alpha", "Khủng hoảng đa quốc gia",
+             "Ghép phá hoại năng lượng với phá hoại vận tải: lông vũ đơn phân "
+             "tử cắt cáp quang biển ngay tại các điểm nút, cảng trung chuyển "
+             "và kho dầu chiến lược bị đánh lần lượt. Chuỗi cung ứng toàn cầu "
+             "đứt gãy trong khi chưa ai kịp gọi được cho ai.",
+             "Một tuần"),
+        Tier("Tier Omega", "“Cuộc săn toàn cầu”",
+             "Nhờ hệ tuần hoàn perfluorocarbon và lò phản ứng ăn xác thối, "
+             "hắn bay vòng quanh Trái Đất ở tầng bình lưu, lần lượt nhằm vào "
+             "các nút sống còn: trạm biến áp siêu cao thế, cáp quang liên lục "
+             "địa, trung tâm dữ liệu, sân bay và cảng biển chiến lược. Trong "
+             "72 giờ, lưới điện Bắc Mỹ, châu Âu rồi Đông Á sụp theo nhau; "
+             "ngân hàng, truyền thông và hậu cần quốc tế tê liệt. Trong 120 "
+             "giờ, không còn chuyến bay thương mại hay tàu container nào an "
+             "toàn. Hắn không cho nổ hành tinh — hắn làm nền văn minh công "
+             "nghiệp gục xuống rồi ăn xác nó, đúng chất kền kền.",
+             "72–120 giờ"),
     ),
 
+    # Nhãn giữ dưới 94 px — bề ngang cột nhãn của FactTable, quá thì bị cắt.
     facts=(
         ("Danh hiệu", "The Apex Predator  ·  The Sky Tyrant"),
-        ("Cấp đe doạ", "Quốc gia — làm chủ bầu trời, phá huỷ mặt đất"),
-        ("Tốc độ tối đa", "Mach 5, treo lơ lửng không tiếng động"),
-        ("Bầy drone", "10.000 lông vũ cơ khí tách rời"),
-        ("Nguyên mẫu", "Argentavis magnificens"),
-        ("Trần bay", "Tầng bình lưu, bổ nhào từ 15.000 m"),
+        ("Cấp đe doạ", "Hành tinh — làm sụp nền văn minh công nghiệp"),
+        ("Bộ giáp", "Aasvogel Mk.VII  ·  4.000 phiến lông vũ"),
+        ("Nhiên liệu", "Không mang theo — rút từ lưới điện và gió"),
+        ("Trần bay", "20.000–30.000 m, không cần dưỡng khí"),
+        ("Không dùng", "AI tự hành — chỉ phản xạ giữ thăng bằng"),
+        ("Cuộc săn", "72–120 giờ  ·  bậc Omega"),
     ),
 
-    blurb="Chạm trán Spider-Man, hắn bay lên độ cao Peter không nhảy tới, bật "
-          "False Positive Overload để phá hệ thần kinh, thả Moth's Dust để "
-          "vô hiệu hoá tơ, rồi bổ nhào Mach 5 xuyên qua nạn nhân bằng móng "
-          "vuốt. Nếu Peter sống sót, cậu ta sẽ không bao giờ dám bắn tơ hay né "
-          "đòn trong bán kính 500 mét quanh Vulture nữa.",
+    blurb="Absolute Vulture không phải kẻ huỷ diệt hành tinh theo nghĩa cho "
+          "nó nổ tung. Hắn là một mối đe doạ hệ thống: biến nền văn minh công "
+          "nghiệp thành xác thối rồi bay lượn bên trên nó. Mọi nâng cấp đều "
+          "phục vụ đúng một triết lý — không giết ngay, mà chờ con mồi gục "
+          "xuống.",
 
     art=draw_absolute_vulture,
     caption="Dựng lại từ dữ liệu bay  ·  khung hình trực tiếp",
