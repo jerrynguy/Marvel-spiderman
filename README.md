@@ -63,7 +63,12 @@ characters/
     electro.py          ASM #9 — mặt nạ hình sao giữa một vụ phóng điện
     big_man.py          ASM #10 — người thật bé tí dưới cái bóng của chính mình
 assets/characters/      nơi thả ảnh nhân vật
+BAN-GIAO.md             đang làm tới đâu, mấy cái bẫy đã gặp, cách kiểm chứng
 ```
+
+Mới 9 trên 91 nhân vật có hồ sơ trong app; 82 người còn lại click vào vẫn mở
+trang web. Việc đang chạy là viết hồ sơ gốc cho họ, đi tuần tự theo dòng thời
+gian — chi tiết trong [`BAN-GIAO.md`](BAN-GIAO.md).
 
 ## Thêm một nhân vật
 
