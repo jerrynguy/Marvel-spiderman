@@ -60,6 +60,7 @@ characters/
     lizard.py           ASM #6 — áo blouse rách trên mình bò sát
     lizard_absolute.py     dạng tiến hoá của Lizard, đầm lầy đồng hoá
     living_brain.py     ASM #8 — cỗ máy của Giáo sư Petty, băng giấy đục lỗ
+    electro.py          ASM #9 — mặt nạ hình sao giữa một vụ phóng điện
 assets/characters/      nơi thả ảnh nhân vật
 ```
 
@@ -123,6 +124,10 @@ def draw_ai_do(p, rect, t=0.0):
 Những lớp không đổi theo `t` nên dựng sẵn một lần rồi dán vào, như
 `chameleon_absolute.py` làm với thành phố và bóng người: vẽ thẳng cả tám lớp
 mỗi khung hình tốn 23 ms, dán lớp tĩnh xuống còn 9 ms.
+
+Chân dung **đứng yên** mà nặng thì cũng đáng dựng sẵn: khung hồ sơ vẽ lại tấm
+chân dung hơn hai chục lần trong lúc mở, nên `electro.py` dựng nguyên tấm vào
+một `QImage` theo đúng cỡ thật rồi dán — 16,7 ms mỗi lần vẽ xuống còn 0,2 ms.
 
 ## Dạng tiến hoá
 
