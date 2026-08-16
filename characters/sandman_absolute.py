@@ -1,5 +1,5 @@
 """
-Absolute Sandman — Flint Marko, cơn bão sa mạc hoá quốc gia.
+Absolute Sandman — Flint Marko, một sa mạc biết suy nghĩ.
 
 Bản sắc riêng, khác cả bốn dạng Absolute trước:
     · bộ da `dust` — bộ da **sáng** duy nhất. Bốn bộ kia mở ra là tối sầm
@@ -304,164 +304,234 @@ ABSOLUTE = Profile(
     keys=("Sandman Absolute",),
 
     kicker="Hồ sơ tuyệt đối",
-    stamp="PHÂN LOẠI  ·  MỐI ĐE DOẠ CẤP QUỐC GIA",
+    stamp="PHÂN LOẠI  ·  MỐI ĐE DOẠ CẤP HÀNH TINH",
     note="ABSOLUTE",
     note_kind="new",
     tab="Absolute",
     skin="dust",
     evolve_fx="erode",       # giấy bị mài mòn, rồi cát bồi lại thành tờ mới
 
-    tagline="Không còn một gã biến thành cát. Là một hệ sinh thái huỷ diệt "
-            "biết tư duy — và nó đang biến cả một quốc gia thành sa mạc.",
+    tagline="Một kẻ bị ruồng bỏ, giờ là một sa mạc biết suy nghĩ. Hắn không "
+            "cần đánh bại ai — chỉ cần tồn tại và lan ra là đủ.",
 
     summary=(
-        "Flint Marko vốn chỉ biến cơ thể thành cát, điều khiển khối lượng và "
-        "tái tạo. Ở bản Absolute, mỗi hạt cát trong người hắn là một đơn vị "
-        "xử lý độc lập: ý thức không còn nằm trong não mà trải khắp khối cát. "
-        "Hắn tách thành hàng triệu hạt, trú trong không khí, nước và đất, rồi "
-        "tụ lại lúc nào tuỳ ý.",
+        "Flint Marko chưa bao giờ là kẻ chủ mưu. Hắn là một tội phạm đường "
+        "phố bị tai nạn phóng xạ ném vào một hình hài khác, và cái hình hài "
+        "ấy nói đúng chủ đề của đời hắn: bào mòn, tan rã, rồi tụ lại. Hắn "
+        "đánh trực diện chứ không bày mưu, và thứ giữ hắn sống sót lâu hơn "
+        "mọi kẻ khác chỉ là sự bền bỉ.",
 
-        "Điều đó xoá sạch khái niệm “đánh vào chỗ hiểm”. Không có lõi để phá — "
-        "chỉ cần một hạt sống sót là hắn dựng lại được toàn bộ. Và hắn không "
-        "còn giới hạn ở cát: mọi thứ chứa silicat — thuỷ tinh, bê tông, nhựa "
-        "đường, gốm — đều bị bẻ liên kết phân tử rồi nuốt vào người.",
+        "Bản Absolute không cho hắn thêm một cỗ máy nào — hắn vốn thuần sinh "
+        "học và vẫn thuần sinh học. Thứ thay đổi là quy mô và là chất: ý thức "
+        "không còn nằm trong một khối cát hình người mà trải ra từng hạt, và "
+        "hắn học được cách biến đá thành cát. Từ một cơ thể vài mét, hắn "
+        "thành một sa mạc di động rộng hàng chục km².",
 
-        "Bản phân tích này để ngỏ đúng một lỗ hổng: nhiệt độ cực thấp. Đóng "
-        "băng được khối cát thì mới có chuyện để nói.",
+        "Điều đó xoá sạch khái niệm “đánh vào chỗ hiểm”. Không có lõi để phá, "
+        "không có máy chủ để tắt, không có gì để hack — chỉ cần một hạt sống "
+        "sót là hắn dựng lại được tất cả.",
+
+        "Ba điểm yếu cũ thì hắn mới vá được một: nhiệt độ cao từng hoá hắn "
+        "thành thuỷ tinh, nay bị lớp polymer chịu nhiệt chặn lại. Nước vẫn "
+        "làm cát nặng và rã rời. Còn cái thứ ba thì không có lớp phủ nào bọc "
+        "được — một cái đầu bất ổn, dễ bị thao túng, và một đứa con gái.",
     ),
 
     sections=(
         Section(
             title="Khuyếch đại năng lực vật lý & sinh học",
-            intro="Không còn ranh giới giữa cơ thể hắn và mặt đất hắn đứng lên.",
+            intro="Bản gốc là một người có cơ thể bằng cát, tái tạo được "
+                  "chừng nào còn cát quanh mình. “Sinh quyển Silicat Tự trị” "
+                  "xoá nốt cái ranh giới cuối cùng: giữa cơ thể hắn và mặt đất "
+                  "hắn đứng lên không còn gì ngăn cách.",
             items=(
-                ("Mạng thần kinh phân tán vô hạn",
-                 "Mỗi hạt cát tự xử lý, ý thức trải khắp khối. Không có lõi để "
-                 "tiêu diệt — một hạt sống sót là tái tạo được tất cả."),
-                ("Hấp thụ và phản xạ động năng",
-                 "Cát hành xử như chất lỏng phi Newton ở cấp vĩ mô: chịu lực "
-                 "thì các hạt xếp lại thành cấu trúc cứng hơn thép, nuốt trọn "
-                 "động năng rồi bật ngược bằng sóng xung kích. Đạn pháo và tên "
-                 "lửa đều bị nuốt."),
-                ("Đồng hoá khoáng vật diện rộng",
-                 "Bẻ gãy liên kết phân tử của mọi vật liệu chứa silicat. Một "
-                 "toà nhà bê tông cốt thép rã thành cát mịn trong vài phút rồi "
-                 "sáp nhập vào cơ thể hắn."),
-                ("Hút ẩm và sa mạc hoá",
-                 "Rút nước từ mọi sinh vật trong bán kính hàng km: cây héo, "
-                 "sông hồ bốc hơi, người mất nước cấp tốc dẫn tới trụy tim. "
-                 "Đất màu mỡ thành sa mạc chỉ sau vài giờ."),
-                ("Cát siêu mịn cỡ PM2.5",
-                 "Bào tử cát cỡ nano phát tán vào khí quyển, chui vào phế nang "
-                 "gây viêm phổi cấp và suy hô hấp. Quân đội không có mặt nạ "
-                 "chuyên dụng bị loại khỏi vòng chiến ngay từ đầu."),
-                ("Áp lực kiến tạo",
-                 "Nén hàng nghìn tấn cát ở áp suất cực lớn để tạo mũi tên "
-                 "obsidian sắc hơn dao mổ, hoặc kim cương nhân tạo làm đầu đạn "
-                 "xuyên giáp."),
+                ("Hạt cát phủ polymer hữu cơ",
+                 "Mỗi hạt được bọc một lớp polymer do chính hắn tiết ra, vừa "
+                 "tăng kết dính vừa dẫn tín hiệu thần kinh. Nhờ đó hắn điều "
+                 "khiển từng hạt riêng lẻ như một tế bào, và thôi phải giữ một "
+                 "hình dạng liên tục để còn là mình — đây mới là chỗ bản "
+                 "Absolute rẽ khỏi bản gốc."),
+                ("Phản ứng khoáng hoá",
+                 "Chạm vào granite, bazan hay thạch anh, hắn tiết ra axit "
+                 "silicic cùng một loại enzyme xúc tác phá vỡ mạng tinh thể "
+                 "silicat: đá cứng rã thành cát bột trong vài giờ. Hắn không "
+                 "còn phải đi tìm sa mạc nữa — hắn ăn núi đá và tự làm ra sa "
+                 "mạc của mình."),
+                ("Phân thân hữu cơ",
+                 "Tách ý thức vào hàng trăm khối cát độc lập, hoạt động như "
+                 "một bầy. Chúng không phải máy móc và cũng chẳng có trí tuệ "
+                 "riêng: chúng là phần mở rộng tự nhiên của hắn, chung đúng "
+                 "một ý chí, nên phối hợp được mà không cần ai ra lệnh cho ai."),
+                ("Hút ẩm chủ động",
+                 "Những xúc tu cát siêu mịn phủ lớp hút ẩm kiểu silica gel, "
+                 "diện tích bề mặt cực lớn, rút nước từ không khí, từ đất và "
+                 "từ cả sinh vật sống. Đất canh tác thành hoang mạc, còn thứ "
+                 "gì đứng trong đó thì khô kiệt dần."),
+                ("Tĩnh điện cát",
+                 "Ma sát giữa hàng tỷ hạt bay ở tốc độ cao sinh ra điện tích, "
+                 "và cơn bão cát bắt đầu phóng ra sét cát: đủ đánh sập lưới "
+                 "điện, đủ châm cháy rừng. Một cơn bão thường không làm được "
+                 "việc đó; cơn bão này thì có, vì nó có chủ đích."),
+                ("Cấu trúc phức hợp",
+                 "Hắn không chỉ dựng cột và tường. Hắn mô phỏng cả cơ quan "
+                 "sinh học bằng cát: phổi cát lọc độc tố, tim cát tạo áp lực "
+                 "bơm cát đi xa, màng cát bán thấm để lọc nước. Cơ thể hắn "
+                 "thôi là một khối và thành một cơ thể thật, chỉ khác vật liệu."),
             ),
         ),
         Section(
             title="Đột phá công nghệ & tự động hoá",
-            intro="Khối cát đã hợp nhất với một hệ điều khiển nano-cơ học: "
-                  "Silicat Swarm Intelligence.",
+            intro="Đây là dạng Absolute duy nhất không có mục công nghệ, vì "
+                  "nhân vật gốc chưa từng cầm tới một cái máy nào. Chỗ đáng lẽ "
+                  "là máy móc thì hắn mọc ra bằng cát — không AI, không drone, "
+                  "chỉ là những cơ quan hữu cơ nối dài ra khỏi thân thể.",
             items=(
-                ("Lưới cảm biến bụi thông minh",
-                 "Mỗi hạt mang một vi mạch lượng tử thu áp suất, nhiệt độ, "
-                 "rung động và sóng điện từ. Rải một lớp bụi phủ kín cả một "
-                 "bang là mọi chuyển động quân sự thành dữ liệu thời gian "
-                 "thực."),
-                ("AI “Dune Mind”",
-                 "Cấy thẳng vào mạng cát, tự học và dự đoán chuyển động đối "
-                 "thủ từ hàng tỷ điểm dữ liệu; mô phỏng 1.000 kịch bản chiến "
-                 "đấu mỗi giây rồi chọn phản ứng tối ưu."),
-                ("Phi đội ong cát",
-                 "Hàng triệu cụm cát nhỏ tách ra hoạt động như drone siêu nhỏ: "
-                 "luồn qua khe hở, khoét rỗng động cơ, làm tắc nòng súng, phá "
-                 "bo mạch máy bay."),
-                ("Vũ khí thuỷ tinh nóng chảy",
-                 "Nung cát trên 1.700°C thành thuỷ tinh lỏng rồi bắn ra như "
-                 "dòng plasma bán rắn xuyên thép tấm. Tháp pháo cát tự mọc lên "
-                 "từ mặt đất và tự khai hoả, không cần hắn điều khiển."),
-                ("Chiến tranh điện tử bằng bụi",
-                 "Bụi cát hấp thụ sóng radar, gây nhiễu liên lạc, dựng “bức "
-                 "tường cát tĩnh điện” làm mù mọi thiết bị trinh sát."),
+                ("Mạng lưới sợi nấm cát",
+                 "Dưới lòng đất, hắn đan những sợi cát li ti thành một hệ như "
+                 "sợi nấm, truyền tín hiệu bằng rung động cơ học đi hàng chục "
+                 "km. Mọi bước chân, mọi bánh xe, mọi tiếng nổ trên mặt đất "
+                 "đều được ghi lại và chạy ngược về lõi ý thức của hắn."),
+                ("Bãi cát cảm ứng",
+                 "Vùng cát hắn kiểm soát đổi áp suất ngay khi có vật đi qua, "
+                 "giống một cây bắt ruồi trải rộng hàng mẫu. Dẫm lên là bị "
+                 "quấn lấy, giữ chặt, hoặc nuốt hẳn xuống."),
+                ("Cơn mưa cát cảm biến",
+                 "Hạt cát cỡ micromet lơ lửng khắp không khí, va vào vật thể "
+                 "rồi dội rung động về lõi — một thứ radar sinh học không phát "
+                 "ra tín hiệu nào để mà dò ngược. Cùng lúc, chính đám bụi ấy "
+                 "là vũ khí: hít vào là phổi hỏng."),
+                ("Thạch nhũ cát lưu trữ",
+                 "Những cấu trúc cát kết tinh dựng sâu dưới đất, tích nước, "
+                 "khoáng chất và axit silicic. Đây là kho dự phòng để dựng lại "
+                 "cơ thể sau một tổn thất lớn — thứ khiến việc đánh tan hắn "
+                 "một lần trở nên vô nghĩa."),
+                ("Lò phản ứng hoá học cát",
+                 "Trong lòng các khối lớn, hắn mở những buồng phản ứng trộn "
+                 "cát với axit để chế ra vật liệu mới: thuỷ tinh lỏng để bắn "
+                 "đi, hoặc chất kết dính siêu bền để dựng thứ cần đứng vững. "
+                 "Một nhà máy không có lấy một bánh răng."),
             ),
         ),
         Section(
             title="Khắc chế phần cứng của Spider-Man",
-            intro="Từ giác quan báo nguy tới khả năng bám tường, mọi lợi thế "
-                  "đều có một biện pháp riêng.",
+            intro="Không đòn nào ở đây là công cụ mượn từ chỗ khác: tất cả đều "
+                  "mọc thẳng ra từ bản chất vô định hình của cát. Hai đòn đầu "
+                  "đánh vào giác quan nhện từ hai phía ngược nhau — một bên "
+                  "làm ngập tín hiệu, một bên hút sạch tín hiệu.",
             items=(
-                ("Thuật toán nhiễu giác quan",
-                 "Dune Mind điều hàng triệu hạt va chạm để phát tín hiệu rung "
-                 "và điện từ giả từ mọi hướng, không theo quy luật nào. Giác "
-                 "quan nhện vốn bắt mối đe doạ tức thời, nay ngập trong hàng "
-                 "tỷ tín hiệu nhiễu: đau đầu dữ dội, mất phương hướng, rồi tê "
-                 "liệt tạm thời."),
-                ("“Glass Web-Breaker”",
-                 "Hợp chất axit silicic phát tán ở trên 300°C bẻ gãy liên kết "
-                 "peptide trong tơ nhện: tơ co rút rồi tan thành bụi. Mất luôn "
-                 "phương tiện di chuyển lẫn cách khống chế."),
-                ("Bẫy cát lún thông minh",
-                 "Độ nhớt mặt cát chỉnh liên tục. Đặt chân xuống là vùng cát "
-                 "quanh chân hoá lỏng và nuốt; càng giãy thì hiệu ứng phi "
-                 "Newton càng làm cát cứng lại và siết chặt hơn."),
-                ("Hút ẩm qua da",
-                 "Dựng một vùng vi khí hậu khô cằn quanh Spider-Man, rút nước "
-                 "thẳng qua da. Vài phút là cơ co rút, tốc độ và sức mạnh tụt "
-                 "hẳn."),
-                ("Bão cát tĩnh điện",
-                 "Hạt cát cọ xát sinh tĩnh điện phá thiết bị trong bộ đồ, đồng "
-                 "thời che tầm nhìn và làm tắc lỗ thở trên mặt nạ."),
-                ("Mưa obsidian",
-                 "Thả hàng nghìn mảnh thuỷ tinh siêu sắc từ trên cao. Diện phủ "
-                 "quá rộng để né, mà giác quan báo nguy thì đang bị nhiễu; "
-                 "mảnh còn găm lại trên người gây vết cắt sâu và nhiễm trùng."),
-                ("Vô hiệu hoá khả năng bám dính",
-                 "Một lớp bụi nano trơn phủ lên mọi bề mặt, phá lực bám tĩnh "
-                 "điện ở tay chân. Không trèo tường, không bám trần, và trên "
-                 "mặt cát trơn thì đứng cũng không vững."),
+                ("Trường cát gây nhiễu",
+                 "Giác quan nhện đọc rung động và thay đổi áp suất quanh "
+                 "người. Hắn thả một màn cát siêu mịn dày đặc, mỗi hạt chuyển "
+                 "động ngẫu nhiên, dựng nên một trường nhiễu đẳng hướng — mọi "
+                 "phương đều báo nguy hiểm y như nhau. Giác quan không tắt, "
+                 "nó chỉ thôi chỉ được hướng nào để né."),
+                ("Trường cát hấp thụ rung động",
+                 "Cát dập rung rất giỏi, nên lớp cát dày bao quanh chỗ giao "
+                 "chiến hoạt động như một tấm đệm giảm chấn: rung động của mọi "
+                 "chuyển động bị nuốt trước khi kịp tới chỗ Peter. Ghép với "
+                 "trường nhiễu ở trên thì thành một cái kìm — bên ngoài ồn đến "
+                 "mức vô nghĩa, bên trong im đến mức không kịp báo."),
+                ("Cát ăn mòn mạng nhện",
+                 "Hạt cát phủ axit silicic cùng enzyme phân huỷ polymer: chạm "
+                 "vào tơ là chuỗi polymer đứt liên kết, tơ giòn ra và mất đàn "
+                 "hồi. Cát bám lại còn xoá nốt độ bám dính trên tường. Mất đu "
+                 "dây, mất bám, Peter bị ghìm xuống mặt đất — đúng chỗ mà cát "
+                 "làm chủ."),
+                ("Tấn công qua đường hô hấp",
+                 "Cát dưới 10 micromet lọt qua khe mặt nạ và lỗ thông khí của "
+                 "bộ đồ, bám vào phế nang gây viêm và dựng dần một lớp màng "
+                 "trong phổi. Hắn còn xoáy một cơn lốc quanh Peter để tạo áp "
+                 "suất âm ở tâm: không khí bị hút ra khỏi phổi trong khi cát "
+                 "bị đẩy vào mọi khe hở. Thiếu oxy thì sức mạnh nào cũng hết."),
+                ("Phân tán mối đe doạ",
+                 "Hàng chục khối cát mang ý thức của hắn đánh cùng lúc vào "
+                 "dân thường, vào hạ tầng, vào người thân của Peter. Cậu không "
+                 "ưu tiên được chỗ nào vì chỗ nào cũng thật. Rồi hắn dựng thêm "
+                 "những “con tin cát” — hình nộm người bằng cát — để ngay cả "
+                 "lòng trắc ẩn cũng thành thứ bị lợi dụng: giác quan báo nguy "
+                 "khắp nơi, nhưng không nói được đâu là người, đâu là bẫy."),
+                ("Phản đòn nhiệt",
+                 "Nhiệt độ cao vốn là cách hoá hắn thành thuỷ tinh, nên hắn vá "
+                 "đúng chỗ đó: lớp polymer chịu nhiệt hút lấy nhiệt rồi tản đi "
+                 "bằng cách luân chuyển cát nóng ra xa và đưa cát nguội vào. "
+                 "Tệ hơn, hắn chủ động hoá thuỷ tinh một phần thân mình để lấy "
+                 "mảnh vỡ sắc mà bắn trả. Đòn khắc chế cũ giờ thành kho đạn."),
             ),
         ),
     ),
 
+    # Thang chữ cái Hy Lạp, đọc từ Zeta lên Omega như các dạng Absolute khác.
+    # Đây là dạng chậm nhất trong cả tập: không bậc nào tính bằng giây, và
+    # bậc cao nhất mất trọn một tháng — sa mạc hoá vốn không biết vội.
     tiers=(
-        Tier("Tier 1", "Đô thị",
-             "Bão cát trên 300 km/h chôn vùi đường sá, sân bay, nhà ga; nền "
-             "đất rung làm sập hàng loạt toà nhà, cầu cống, đê điều. Cát chui "
-             "vào máy biến áp và đường dây, nước sạch bị hút cạn, viễn thông "
-             "chết lặng.",
-             "6 giờ cho một thành phố lớn"),
-        Tier("Tier 2", "Vùng lãnh thổ",
-             "Nông nghiệp bị xoá sổ vì sa mạc hoá diện rộng, chuỗi cung ứng "
-             "thực phẩm đứt gãy. Cảng biển và sân bay bị cồn cát khổng lồ "
-             "phong toả; trung tâm dữ liệu bị cát xâm nhập, hệ thống tài chính "
-             "sụp theo.",
-             "Nhiều thành phố, khủng hoảng khu vực"),
-        Tier("Tier 3", "Quốc gia",
-             "Xe tăng và xe bọc thép chết máy vì cát chui vào động cơ; tiêm "
-             "kích không cất cánh nổi vì turbine bám cát; binh lính khô kiệt "
-             "nước và hít phải cát siêu mịn; tên lửa bị bão làm lệch hướng "
-             "hoặc bị hấp thụ động năng trước khi chạm mục tiêu.",
-             "48 – 72 giờ  ·  đỉnh cấp quốc gia"),
+        Tier("Tier Zeta", "Một mục tiêu",
+             "Cát trong phạm vi vài mét, một người. Đúng bằng bản gốc lúc mới "
+             "biết mình làm được gì — và cũng là bậc duy nhất mà hai bản "
+             "ngang nhau.",
+             "Tức thời"),
+        Tier("Tier Epsilon", "Một toà nhà",
+             "Dồn một khối cát khổng lồ đè sập, hoặc luồn vào trong kết cấu bê "
+             "tông rồi khoáng hoá cho nó tự đổ từ bên trong. Bản gốc phình hết "
+             "cỡ mới làm nổi việc này; Absolute làm mà không cần gắng sức.",
+             "Vài phút"),
+        Tier("Tier Delta", "Một khu phố",
+             "Biến toàn bộ mặt đất trong bán kính 500 mét thành cát lún, nuốt "
+             "nhà cửa, xe cộ, cột điện, rồi dựng xúc tu cát quật ngã những gì "
+             "còn đứng. Bản gốc phải dồn toàn lực mới gây được ngần ấy thiệt "
+             "hại; Absolute chỉ chia ra một phần nhỏ ý thức.",
+             "Vài giờ"),
+        Tier("Tier Gamma", "Một quận",
+             "Một cồn cát di động cao 30 mét, chạy 20 km/h, vùi lấp mọi thứ "
+             "trên đường đi, đồng thời hút cạn sông hồ giếng trong vùng. Bản "
+             "gốc chỉ nguy hiểm lúc đang đánh nhau; Absolute phá hạ tầng quy "
+             "mô lớn mà không cần có mặt.",
+             "Một ngày cho 10 km²"),
+        Tier("Tier Beta", "Một tỉnh, một bang",
+             "Bão cát tĩnh điện phủ hàng trăm km², che khuất mặt trời, sét cát "
+             "đánh sập lưới điện, cát chui vào làm hỏng máy móc. Đất nông "
+             "nghiệp thành hoang mạc chỉ sau vài ngày. Đây là chỗ hắn bắt đầu "
+             "biến thời tiết thành vũ khí — thứ bản gốc chưa từng chạm tới.",
+             "3–5 ngày"),
+        Tier("Tier Alpha", "Một quốc gia lớn",
+             "Hút ẩm từ khí quyển và đất trên hàng trăm nghìn km²: hạn hán "
+             "nghiêm trọng, cháy rừng lan rộng, nước ngọt cạn dần. Những sa "
+             "mạc nhân tạo cứ thế nới ra và chôn dần các thành phố, trong khi "
+             "bão cát làm loạn hàng không và viễn thông.",
+             "1–2 tuần"),
+        Tier("Tier Omega", "“Sa mạc Hành tinh”",
+             "Hắn thả hạt cát của mình vào các dòng hải lưu và gió mậu dịch để "
+             "đi khắp địa cầu. Bụi cỡ PM2.5 lơ lửng trong tầng đối lưu phản xạ "
+             "ánh nắng, làm lạnh cục bộ nhưng chặn bốc hơi nên hạn hán càng "
+             "nặng; nước ngọt bị rút khỏi sông hồ và khỏi cả đất trồng. Vòi "
+             "rồng cát cao hàng km cuốn phăng công trình, bão tĩnh điện cấp "
+             "lục địa xoá lưới điện. Đáng sợ nhất là hắn phá cấu trúc đất sét "
+             "và mùn, để lại cát trơ không trồng được gì nữa — sa mạc vĩnh "
+             "viễn. Trong 30 ngày: kinh tế toàn cầu sụp, đói diện rộng, 20–30% "
+             "đất canh tác thành hoang mạc. Bản gốc chỉ cần một đội cứu hoả "
+             "và Spider-Man là chặn được; bậc này thì không chính phủ hay quân "
+             "đội nào đảo ngược nổi.",
+             "30 ngày"),
     ),
 
+    # Nhãn giữ dưới 94 px, giá trị dưới 188 px — xem chú thích cùng chỗ trong
+    # `chameleon_absolute.py`. Bỏ dòng "Tên thật" vì `real_name` đã in ngay
+    # dưới masthead rồi.
     facts=(
-        ("Tên thật", "William Baker  ·  bí danh Flint Marko"),
-        ("Cấp đe doạ", "Tier 3 — đỉnh cấp quốc gia"),
-        ("Ý thức", "Phân tán trong từng hạt, không có lõi"),
-        ("Đồng hoá", "Mọi vật liệu chứa silicat"),
-        ("Sức gió", "Trên 300 km/h"),
-        ("Diện phủ", "Cỡ bang Texas, lớp cát dày 1 mét"),
-        ("Thời gian", "48 – 72 giờ để phủ trọn một quốc gia"),
-        ("Lỗ hổng", "Nhiệt độ cực thấp — đóng băng khối cát"),
+        ("Cấp đe doạ", "Hành tinh · sa mạc hoá"),
+        ("Ý thức", "Trải khắp từng hạt, không có lõi"),
+        ("Không dùng", "Công nghệ · AI · drone"),
+        ("Ăn được", "Granite, bazan, thạch anh"),
+        ("Sa mạc di động", "Hàng chục km²"),
+        ("Sét cát", "Tĩnh điện từ hàng tỷ hạt"),
+        ("Điểm yếu", "Nước — và một đứa con gái"),
+        ("Bậc Omega", "30 ngày · 20–30% đất trồng"),
     ),
 
     blurb="Mọi hồ sơ khác trong tập này đều có một chỗ để đánh vào: một cái "
-          "đầu, một lò phản ứng, một trung tâm chỉ huy. Hồ sơ này thì không. "
-          "Muốn hạ hắn thì phải hạ cả sa mạc — hoặc tìm cho ra chỗ đủ lạnh để "
-          "biến nó thành thuỷ tinh.",
+          "đầu, một lò phản ứng, một trung tâm chỉ huy. Hồ sơ này thì không — "
+          "và hắn cũng chẳng cần thắng ai. Hắn chỉ cần tồn tại, rồi lan ra, "
+          "cho tới lúc thứ người ta phải đánh bại không còn là một kẻ nào cả, "
+          "mà là chính mặt đất dưới chân mình.",
 
     art=draw_absolute_sandman,
     caption="Dựng lại từ ảnh vệ tinh xuyên bụi  ·  khung hình trực tiếp",
