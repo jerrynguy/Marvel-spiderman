@@ -20,6 +20,7 @@ from theme import INK, PAPER_HI
 
 from .art import (Rolls, curve_at, curve_normal, design, fan, marks, mirrored,
                   misprint, ribbon)
+from .living_brain_absolute import ABSOLUTE
 from .profile import Profile
 
 PANEL = QColor("#EFE7D5")     # mặt đồng hồ, mặt kính — chỗ sáng nhất
@@ -346,6 +347,9 @@ PROFILE = Profile(
     blurb="Nó là cái tên duy nhất ở đây chưa từng muốn hại ai. Người ta hỏi nó "
           "đúng một câu, và nó trả lời đúng — chỉ là bằng thứ chữ không ai đọc "
           "được.",
+
+    evolution=ABSOLUTE,
+    evolve_label="Evolve",
 
     art=draw_living_brain,
     caption="Chân dung dựng lại bằng code",

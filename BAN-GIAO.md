@@ -6,8 +6,8 @@ App PySide6 (`python3 spiderman.py`) hiện dòng thời gian 91 ác nhân
 Spider-Man theo phong cách truyện Silver Age: giấy pulp, lưới halftone, mực
 in lệch trục. Click một nhân vật đã có hồ sơ thì mở tấm hồ sơ ngay trong app.
 
-Repo: `jerrynguy/Marvel-spiderman`, nhánh `main`, mới nhất `961ab32`.
-Mọi thứ đã push xong, không còn gì lơ lửng.
+Repo: `jerrynguy/Marvel-spiderman`. Mới nhất là hồ sơ Absolute của Living
+Brain trên nhánh `claude/villain-evolution-profiles-aavzr8`.
 
 ## ĐỌC CÁI NÀY TRƯỚC: việc còn dang dở là gì
 
@@ -35,7 +35,7 @@ muốn)**.
 
 ## Mười ba hồ sơ đã có
 
-Sáu người đầu có thêm dạng Absolute; bảy người sau mới chỉ có hồ sơ gốc.
+Bảy người đầu có thêm dạng Absolute; sáu người sau mới chỉ có hồ sơ gốc.
 
 | # | Nhân vật | Số báo | Chân dung dựng quanh cái gì | Absolute |
 |---|---|---|---|---|
@@ -45,7 +45,7 @@ Sáu người đầu có thêm dạng Absolute; bảy người sau mới chỉ c
 | 4 | Doctor Octopus | ASM #3 | bốn càng máy | có |
 | 5 | Sandman | ASM #4 | nửa người rã thành cát | có |
 | 6 | Lizard | ASM #6 | áo blouse rách trên mình bò sát | có |
-| 7 | Living Brain | ASM #8 | cỗ máy đối xứng, băng giấy đục lỗ | chưa |
+| 7 | Living Brain | ASM #8 | cỗ máy đối xứng, băng giấy đục lỗ | có |
 | 8 | Electro | ASM #9 | mặt nạ hình sao giữa vụ phóng điện | chưa |
 | 9 | Big Man | ASM #10 | người thật bé tí dưới cái bóng khổng lồ | chưa |
 | 10 | Mysterio | ASM #13 | quả cầu thuỷ tinh không có mặt bên trong | chưa |
@@ -110,7 +110,8 @@ Ba phép thử hay dùng (viết trong scratchpad, không commit):
   không, hàng lý lịch có gãy làm hai không.
 - **Vòng đời**: mở từng nhân vật, bấm `EvolveButton`, kiểm `stage.index`,
   `stage.card.s.name`, `stage._fx_style`, `stage.tabs.count()`, rồi đóng.
-  Hiện là 81 mục cho chín nhân vật, phải xanh hết trước khi commit.
+  Hiện là 68 mục cho mười ba nhân vật (2 mục mỗi hồ sơ, thêm 6 mục cho mỗi
+  dạng Absolute), phải xanh hết trước khi commit.
 
 Khi chưa nhìn ra hình bị gì, **render riêng cái bóng người** (chỉ `_figure()`,
 tô một màu, không nền không hiệu ứng). Nhiều lần tưởng thiếu cánh tay mà thật
@@ -135,6 +136,27 @@ ra tay vẫn đó, chỉ là bị lớp khác nuốt mất.
   `ui/character_modal.py`. Đã mắc hai lần: nhánh mặc định thành code chết sau
   `return`, kiểu `shatter` nhận `None` rồi **sập trong paintEvent**. Nay hai
   hàm đó đã đổi sang tra bảng nên không còn chỗ chen.
+- **Thêm một `evolve_fx` là phải sờ đúng bốn chỗ** trong `ui/character_modal.py`:
+  bảng tra ở `_make_cracks`, bảng tra ở `_make_shards`, một nhánh trong
+  `_paint_boom`, và chiều quét trong `_paint_rebuild` (cả khúc tính `band` lẫn
+  khúc vẽ nét sáng ở mép). Thiếu chỗ nào cũng chỉ lộ ra lúc chạy.
+- **Dữ liệu của mảnh vỡ luôn nằm ở `self._shards`**, kể cả khi nó không phải
+  mảnh vỡ. Kiểu `scan` cất các dòng quét ở đó; viết `self._rows` cho dễ đọc thì
+  `paintEvent` ném `AttributeError` mỗi khung hình rồi **sập cả app** — cùng
+  loại bẫy với `_make_shards` trả về `None` ngày trước.
+- **Phá tờ giấy theo thứ tự thì mới ra chuyện, phá rải rác thì chỉ ra hoa văn.**
+  Kiểu `scan` lúc đầu cho mỗi dòng tắt vào một lúc bốc ngẫu nhiên: kết quả là
+  một tấm mành sáo, không ai đọc ra là cái gì. Sửa thành dòng chỉ mất đồng bộ
+  **sau khi đầu đọc chạy qua** thì đọc ra ngay là một trang đang bị đọc dở.
+  Cùng lý do, độ trượt ngang phải giữ dưới ~13% bề ngang tờ giấy; rộng hơn thì
+  mấy chục dải giấy văng ra kín cả cửa sổ, trông như thanh cuộn.
+- **Cắt tờ giấy thành nhiều dải thì chụp sẵn tờ giấy vào `QImage`.** Gọi
+  `paint_sheet()` bốn sáu lần mỗi khung hình là không kịp; `_sheet_image()` trong
+  `ui/character_modal.py` lo chỗ này.
+- **Chữ nhỏ trong chân dung: đừng vẽ cả nghìn ký tự mỗi khung.** Trường ký tự
+  của Living Brain có ~1.900 ô, dựng sẵn hết vào ảnh rồi mỗi khung chỉ xoá và
+  viết lại 30 ô — 3,7 ms mỗi khung. Muốn xoá được một ô thì nền dưới nó phải là
+  **màu phẳng**; để nền chuyển sắc thì mỗi chỗ xoá thành một vệt vuông thấy rõ.
 - Qt nuốt phím `Tab` cho việc chuyển tiêu điểm, nên phím tắt đổi tai hồ sơ
   dùng mũi tên trái/phải.
 - **Chữ trong hồ sơ không phải Markdown.** Viết `*nhấn mạnh*` thì tấm hồ sơ
@@ -229,16 +251,30 @@ Ba trục tạo khác biệt, khai trong `Profile`:
 | Doctor Octopus | `forge` gang chảy + đồng thau | `crush` càng bấu, bẻ thành tảng | cửa thép trượt lại |
 | Sandman | `dust` cát bệch (**sáng**) | `erode` mài mòn | cát bồi từ đáy |
 | Lizard | `swamp` xanh rêu + lưu huỳnh | `bloom` bào tử phủ kín | nở tròn từ một hạt |
+| Living Brain | `signal` đen trung tính, mực trắng | `scan` đầu đọc chạy dọc, dòng mất đồng bộ | ghi từng dòng từ đầu trang |
 
-Sáu cái trên đã chiếm hết các hướng dễ thấy; làm dạng thứ bảy thì phải nghĩ
+Bảy cái trên đã chiếm hết các hướng dễ thấy; làm dạng thứ tám thì phải nghĩ
 ra bộ da và cú chuyển cảnh mới. Nhưng nhắc lại: đó không phải việc đang cần.
+
+Bộ da `signal` và hiệu ứng `scan` của Living Brain là bộ mới nhất, và nó bẻ
+hai trục mà sáu dạng kia đều chung:
+
+- **Không có màu.** Sáu bộ da kia đều ám một sắc; `signal` đen trung tính, mực
+  trắng, và là bộ duy nhất khai **ba** lớp `ghosts` thay vì hai — R · G · B
+  của một màn hình bị xé, chứ không phải bản in chồng sai. `paint_sheet()` vốn
+  chỉ lặp qua `skin.ghosts` nên thêm lớp thứ ba không phải sửa gì.
+- **Chân dung không có một mảng mực nào**, toàn bộ dựng bằng ký tự trên lưới
+  ô 2,5 × 3,3. Cái bóng đọc ra được là nhờ ba thứ cùng lúc: ô trong bóng thì ô
+  nào cũng có chữ và sáng, ô ngoài chỉ 22% có chữ và mờ hẳn, cộng một mảng nền
+  phẳng cùng một nét viền mảnh. Bỏ mảng nền và nét viền đi thì thử rồi: ra một
+  đám nhiễu, không ra hình cỗ máy.
 
 ## Vị trí file
 
 ```
 spiderman.py                khung app: danh sách, bộ lọc, tìm kiếm, dòng thời gian
-theme.py                    Skin + 7 bảng màu (PULP, VOID, SKY, MESH, FORGE, DUST, SWAMP)
-ui/character_modal.py       tấm hồ sơ, nút EVOLVE, tai hồ sơ, toàn bộ 6 hiệu ứng
+theme.py                    Skin + 8 bảng màu (PULP, VOID, SKY, MESH, FORGE, DUST, SWAMP, SIGNAL)
+ui/character_modal.py       tấm hồ sơ, nút EVOLVE, tai hồ sơ, toàn bộ 7 hiệu ứng
 characters/profile.py       Profile, Section, Tier
 characters/art.py           đồ nghề vẽ dùng chung (design, ribbon, fan, glow, Rolls...)
 characters/<tên>.py         hồ sơ gốc

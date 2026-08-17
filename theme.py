@@ -194,9 +194,33 @@ SWAMP = Skin(
     dark=True,
 )
 
+# Tín hiệu: bộ da duy nhất gần như không có màu. Nền đen trung tính tuyệt đối
+# — sáu bộ kia đều ám một sắc (tím, lam, lục, nâu, cát, rêu) — mực trắng sạch
+# nhất dàn, và chỗ lệch trục không còn là bản in chồng sai mà là ba kênh cộng
+# màu R · G · B của một màn hình bị xé. Đây cũng là bộ duy nhất có ba lớp
+# `ghosts` thay vì hai: mực in chỉ có hai bản lệch, còn màn hình thì ba.
+SIGNAL = Skin(
+    name="signal",
+    paper=QColor("#08090B"), paper_hi=QColor("#101217"),
+    ink=QColor("#F8FAFC"), ink_soft=QColor("#78808C"),
+    red=QColor("#FF2D2D"), blue=QColor("#2D6BFF"), yellow=QColor("#DCE6F5"),
+    dot=QColor(210, 226, 255, 13),
+    frame=QColor("#39404A"),
+    scrim=QColor(2, 2, 3, 232),
+    grid=QColor(200, 220, 255, 20),
+    ghosts=((QColor("#FF2D2D"), -9, -4, 74), (QColor("#25E06A"), 0, 7, 46),
+            (QColor("#2D6BFF"), 9, 4, 80)),
+    accents={"edge": (QColor("#2D6BFF"), QColor("#0A1428")),
+             "new": (QColor("#FF2D2D"), QColor("#260C0C")),
+             "fix": (QColor("#DCE6F5"), QColor("#171A20"))},
+    dark=True,
+    dot_size=1.0,
+    dot_step=4,
+)
+
 # Tra theo tên để hồ sơ chỉ cần ghi `skin="sky"`.
 SKINS = {skin.name: skin
-         for skin in (PULP, VOID, SKY, MESH, FORGE, DUST, SWAMP)}
+         for skin in (PULP, VOID, SKY, MESH, FORGE, DUST, SWAMP, SIGNAL)}
 
 
 def pick_font(candidates, fallback="DejaVu Sans"):

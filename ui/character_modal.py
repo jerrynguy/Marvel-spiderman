@@ -24,9 +24,9 @@ import time
 from PySide6.QtCore import (Property, QEasingCurve, QParallelAnimationGroup,
                             QPoint, QPointF, QPropertyAnimation, QRectF, QSize,
                             Qt, QTimer, Signal)
-from PySide6.QtGui import (QBrush, QColor, QFontMetrics, QLinearGradient,
-                           QPainter, QPainterPath, QPen, QPixmap, QPolygonF,
-                           QRadialGradient)
+from PySide6.QtGui import (QBrush, QColor, QFontMetrics, QImage,
+                           QLinearGradient, QPainter, QPainterPath, QPen,
+                           QPixmap, QPolygonF, QRadialGradient)
 from PySide6.QtWidgets import (QGraphicsOpacityEffect, QHBoxLayout, QLabel,
                                QScrollArea, QSizePolicy, QVBoxLayout, QWidget)
 
@@ -36,6 +36,7 @@ SHADOW = 12      # chỗ chừa cho bóng đổ quanh tờ giấy
 BAND = 7         # dải màu ở mép trên tờ giấy
 _tiles = {}
 _grids = {}
+_sheets = {}
 
 
 def skin_of(profile):
@@ -114,6 +115,32 @@ def paint_sheet(p, box, alpha=1.0, scale=1.0, skin=PULP):
     p.drawRect(box)
     p.drawLine(QPointF(box.x(), box.y() + BAND * scale),
                QPointF(box.right(), box.y() + BAND * scale))
+
+
+def _sheet_image(box, skin, scale):
+    """Ảnh chụp sẵn của một tờ giấy, đúng cỡ điểm ảnh thật.
+
+    Kiểu `scan` cắt tờ giấy thành bốn chục dòng rồi trượt từng dòng một chỗ
+    khác nhau. Gọi `paint_sheet` bốn chục lần mỗi khung hình thì không kịp
+    thở, nên chụp một lần rồi dán từng dải ảnh.
+    """
+    key = (skin.name, round(box.width()), round(box.height()), round(scale, 2))
+    ready = _sheets.get(key)
+    if ready is None:
+        if len(_sheets) > 8:
+            _sheets.clear()
+        ready = QImage(max(1, math.ceil(box.width() * scale)),
+                       max(1, math.ceil(box.height() * scale)),
+                       QImage.Format.Format_ARGB32_Premultiplied)
+        ready.fill(Qt.GlobalColor.transparent)
+        q = QPainter(ready)
+        q.setRenderHint(QPainter.RenderHint.Antialiasing)
+        q.scale(scale, scale)
+        q.translate(-box.x(), -box.y())
+        paint_sheet(q, box, skin=skin)
+        q.end()
+        _sheets[key] = ready
+    return ready
 
 
 # ═══════════════════════════════════════════════════════ hiệu ứng hiện dần
@@ -1551,9 +1578,10 @@ class CharacterStage(QWidget):
         `shatter` nứt toả từ giữa như kính vỡ. `shred` là bốn vệt vuốt song
         song chém chéo qua mặt giấy, đúng dấu móng của một con chim săn mồi.
         `bloom` là rễ bò vào từ mép, `crush` là nếp gấp quanh chỗ càng bấu.
-        `dissolve` và `erode` thì không có đường nào cả.
+        `dissolve`, `erode` và `scan` thì không có đường nào cả — tờ giấy bị
+        ăn, bị mài, hoặc bị đọc, chứ không bị bẻ.
         """
-        if self._fx_style in ("dissolve", "erode"):
+        if self._fx_style in ("dissolve", "erode", "scan"):
             return []
         return {"bloom": self._make_tendrils,
                 "crush": self._make_folds,
@@ -1662,8 +1690,26 @@ class CharacterStage(QWidget):
                 "erode": self._make_dunes,
                 "dissolve": self._make_cells,
                 "crush": self._make_slabs,
+                "scan": self._make_rows,
                 "shred": self._make_strips}.get(
                     self._fx_style, self._make_grid_shards)(box)
+
+    def _make_rows(self, box):
+        """Tờ giấy bị đọc thành từng dòng quét, không bị chia thành mảnh.
+
+        Mảnh vỡ có hướng bay và vòng xoay; dòng quét thì chỉ có một trục —
+        nó trượt ngang, rồi tắt. Và nó chỉ tắt sau khi đầu đọc chạy qua chứ
+        không tắt rải rác: thứ tự ấy mới ra một trang đang bị đọc, chứ tắt
+        lung tung thì chỉ ra một tấm mành sáo.
+
+        Mỗi dòng nhớ độ lệch nhịp so với đầu đọc, độ trượt, khoảng thời gian
+        tan, và một pha rung riêng.
+        """
+        roll = self._rolls(int(box.height()) * 19 + 7)
+        n = 46
+        h = box.height() / n
+        return [(box.y() + i * h, h, roll(0.0, 0.09), roll(-1.0, 1.0),
+                 roll(0.24, 0.40), roll(0, 6.28)) for i in range(n)]
 
     def _make_colonies(self, box):
         """Các ổ bào tử: chỗ đáp, cỡ tối đa, và lúc nào thì bắt đầu phình ra."""
@@ -1864,6 +1910,9 @@ class CharacterStage(QWidget):
             return
         if self._fx_style == "erode":
             self._paint_erode(p, box, t)
+            return
+        if self._fx_style == "scan":
+            self._paint_scan(p, box, t)
             return
         if self._fx_style == "bloom":
             self._paint_bloom(p, box, t)
@@ -2166,6 +2215,84 @@ class CharacterStage(QWidget):
             self._paint_rebuild(p, box, min(1.0, build))
             self._paint_motes(p, box, min(1.0, build))
 
+    def _paint_scan(self, p, box, t):
+        """Tờ giấy không bị phá — nó bị *đọc*, rồi bị ghi đè.
+
+        Một vệt quét chạy dọc lấy hết dữ liệu trên giấy. Đọc xong tới đâu,
+        dòng ấy mất đồng bộ tới đó: nó trượt ngang khỏi chỗ, tách thành ba
+        kênh đỏ · lục · lam như màn hình bị xé, rồi tắt. Không mảnh nào rơi,
+        không hạt nào bay — thứ duy nhất chuyển động là dòng quét. Tấm mới
+        cũng không quét một nhát mà được ghi lại từng dòng một, giật cấp
+        theo nhịp máy in dòng.
+        """
+        scale = p.transform().m11() or 1.0
+        sheet = _sheet_image(box, self._from, scale)
+        read = min(1.0, t / 0.42)              # đầu đọc đã đi tới đâu
+        # Dòng chỉ được trượt trong khoảng này. Cho nó trượt rộng thì mấy
+        # chục dải giấy văng ra kín cả cửa sổ, trông như thanh cuộn chứ
+        # không như một trang đang mất đồng bộ.
+        gap = box.width() * 0.13
+
+        p.save()
+        p.setClipRect(box.adjusted(-gap - 4, -4, gap + 4, 4))
+        for y, h, skew, lean, life, phase in self._shards:
+            # dòng nằm dưới đầu đọc thì còn nguyên vẹn; qua rồi mới mất
+            # đồng bộ, trượt ngang và nhạt dần đi
+            passed = (y - box.y()) / box.height() * 0.42 + skew
+            slip = (t - passed) / life
+            if slip >= 1.0:                    # dòng đã tan hẳn
+                continue
+            src = QRectF(0, (y - box.y()) * scale,
+                         box.width() * scale, h * scale + 1)
+            dx = 0.0
+            fade = 1.0
+            if slip > 0:
+                dx = (lean * gap * slip ** 1.5
+                      + math.sin(t * 9 + phase) * 2.0 * slip)
+                fade = 1.0 - slip ** 1.6
+            row = QRectF(box.x() + dx, y, box.width(), h + 0.6)
+
+            p.setOpacity(max(0.0, min(1.0, fade)))
+            p.drawImage(row, sheet, src)
+
+            # ba kênh cộng màu tách ra hai bên — càng trượt xa càng rõ
+            split = min(7.0, abs(dx) * 0.22)
+            if split > 0.3:
+                p.setCompositionMode(
+                    QPainter.CompositionMode.CompositionMode_Plus)
+                p.setPen(Qt.PenStyle.NoPen)
+                for tone, side in ((self._to.red, -1), (self._to.blue, 1)):
+                    p.setBrush(_fade(tone, 0.30 * min(1.0, split / 5)))
+                    p.drawRect(row.translated(side * split, 0))
+                p.setCompositionMode(
+                    QPainter.CompositionMode.CompositionMode_SourceOver)
+            p.setOpacity(1.0)
+
+            # vệt của đầu đọc: dòng nào đọc rồi cũng còn lại một gạch mảnh
+            if slip > 0:
+                p.setBrush(Qt.BrushStyle.NoBrush)
+                p.setPen(QPen(_fade(self._to.blue, 0.45), 0.8))
+                p.drawLine(QPointF(row.x(), y), QPointF(row.right(), y))
+        p.restore()
+
+        # đầu đọc: một vạch sáng chạy dọc, kéo theo cái đuôi mờ phía sau
+        if read < 1.0:
+            y = box.y() + box.height() * read
+            tail = QLinearGradient(0, y - box.height() * 0.22, 0, y)
+            tail.setColorAt(0.0, _fade(self._to.blue, 0.0))
+            tail.setColorAt(1.0, _fade(self._to.blue, 0.30))
+            p.setPen(Qt.PenStyle.NoPen)
+            p.setBrush(tail)
+            p.drawRect(QRectF(box.x(), y - box.height() * 0.22,
+                              box.width(), box.height() * 0.22))
+            p.setBrush(Qt.BrushStyle.NoBrush)
+            p.setPen(QPen(_fade(self._to.ink, 0.92), 2.0))
+            p.drawLine(QPointF(box.x(), y), QPointF(box.right(), y))
+
+        build = (t - 0.48) / 0.52
+        if build > 0:
+            self._paint_rebuild(p, box, min(1.0, build))
+
     def _paint_abrade(self, p, box, k):
         """Vệt mài: những rãnh nông chạy chéo, mờ nhưng mỗi lúc một rõ."""
         roll = self._rolls(313)
@@ -2324,7 +2451,8 @@ class CharacterStage(QWidget):
 
         Nhát quét đi theo kiểu của dạng đang tới: `shatter` mở từ giữa ra hai
         phía, `shred` quét ngang một lượt như cánh chim lướt qua mặt giấy,
-        `dissolve` thì đóng dần từ ngoài mép vào tâm.
+        `dissolve` thì đóng dần từ ngoài mép vào tâm, còn `scan` ghi xuống
+        từng dòng một từ trên đầu trang.
         """
         ease = 1 - (1 - b) ** 3
         style = self._fx_style
@@ -2333,6 +2461,7 @@ class CharacterStage(QWidget):
         doors = style == "crush"
         piling = style == "erode"
         seeding = style == "bloom"
+        raster = style == "scan"
         hole = None
         if seeding:
             # hạt nảy ở giữa rồi loang tròn ra, mép hơi méo như vòng nấm
@@ -2354,6 +2483,13 @@ class CharacterStage(QWidget):
                           box.height() * (1 - ease))
             hole.moveCenter(box.center())
             band = QRectF(box)
+        elif raster:
+            # ghi từng dòng một từ đầu trang: mép dưới không trôi mượt mà
+            # nhảy đúng một dòng, như giấy bị đẩy qua trục máy in
+            lines = 34
+            step = box.height() / lines
+            band = QRectF(box.x() - 30, box.y() - 30, box.width() + 60,
+                          math.ceil(ease * lines) * step + 30)
         elif across:
             band = QRectF(box.x(), box.y() - 30,
                           box.width() * ease, box.height() + 60)
@@ -2446,6 +2582,9 @@ class CharacterStage(QWidget):
             elif doors:
                 p.drawLine(band.topLeft(), band.bottomLeft())
                 p.drawLine(band.topRight(), band.bottomRight())
+            elif raster:
+                p.drawLine(QPointF(box.x(), band.bottom()),
+                           QPointF(box.right(), band.bottom()))
             elif across:
                 p.drawLine(band.topRight(), band.bottomRight())
             else:
