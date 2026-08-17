@@ -7,7 +7,7 @@ Spider-Man theo phong cách truyện Silver Age: giấy pulp, lưới halftone, 
 in lệch trục. Click một nhân vật đã có hồ sơ thì mở tấm hồ sơ ngay trong app.
 
 Repo: `jerrynguy/Marvel-spiderman`. Mới nhất là hồ sơ Absolute của Living
-Brain trên nhánh `claude/villain-evolution-profiles-aavzr8`.
+Brain và của Electro, trên nhánh `claude/villain-evolution-profiles-aavzr8`.
 
 ## ĐỌC CÁI NÀY TRƯỚC: việc còn dang dở là gì
 
@@ -35,7 +35,7 @@ muốn)**.
 
 ## Mười ba hồ sơ đã có
 
-Bảy người đầu có thêm dạng Absolute; sáu người sau mới chỉ có hồ sơ gốc.
+Tám người đầu có thêm dạng Absolute; năm người sau mới chỉ có hồ sơ gốc.
 
 | # | Nhân vật | Số báo | Chân dung dựng quanh cái gì | Absolute |
 |---|---|---|---|---|
@@ -46,7 +46,7 @@ Bảy người đầu có thêm dạng Absolute; sáu người sau mới chỉ c
 | 5 | Sandman | ASM #4 | nửa người rã thành cát | có |
 | 6 | Lizard | ASM #6 | áo blouse rách trên mình bò sát | có |
 | 7 | Living Brain | ASM #8 | cỗ máy đối xứng, băng giấy đục lỗ | có |
-| 8 | Electro | ASM #9 | mặt nạ hình sao giữa vụ phóng điện | chưa |
+| 8 | Electro | ASM #9 | mặt nạ hình sao giữa vụ phóng điện | có |
 | 9 | Big Man | ASM #10 | người thật bé tí dưới cái bóng khổng lồ | chưa |
 | 10 | Mysterio | ASM #13 | quả cầu thuỷ tinh không có mặt bên trong | chưa |
 | 11 | Green Goblin | ASM #14 | nhìn từ dưới lên: bom bí ngô đang rơi xuống ta | chưa |
@@ -110,7 +110,7 @@ Ba phép thử hay dùng (viết trong scratchpad, không commit):
   không, hàng lý lịch có gãy làm hai không.
 - **Vòng đời**: mở từng nhân vật, bấm `EvolveButton`, kiểm `stage.index`,
   `stage.card.s.name`, `stage._fx_style`, `stage.tabs.count()`, rồi đóng.
-  Hiện là 68 mục cho mười ba nhân vật (2 mục mỗi hồ sơ, thêm 6 mục cho mỗi
+  Hiện là 74 mục cho mười ba nhân vật (2 mục mỗi hồ sơ, thêm 6 mục cho mỗi
   dạng Absolute), phải xanh hết trước khi commit.
 
 Khi chưa nhìn ra hình bị gì, **render riêng cái bóng người** (chỉ `_figure()`,
@@ -157,6 +157,22 @@ ra tay vẫn đó, chỉ là bị lớp khác nuốt mất.
   của Living Brain có ~1.900 ô, dựng sẵn hết vào ảnh rồi mỗi khung chỉ xoá và
   viết lại 30 ô — 3,7 ms mỗi khung. Muốn xoá được một ô thì nền dưới nó phải là
   **màu phẳng**; để nền chuyển sắc thì mỗi chỗ xoá thành một vệt vuông thấy rõ.
+- **Đục lỗ trên giấy thì tô bằng màu màn phủ, đừng tô bằng màu giấy của tấm
+  mới.** Sau lưng tờ giấy là màn phủ chứ không phải tấm sắp tới. Kiểu `strike`
+  lúc đầu tô lỗ cháy bằng `self._to.paper`, mà dạng tới đây lại có tờ giấy
+  sáng, nên cả trận cháy ra một đám bong bóng xà phòng. Đây là cái bẫy chỉ lộ
+  ra khi dạng mới dùng bộ da **sáng** — sáu dạng trước đều tối nên không ai
+  vấp.
+- **Nhánh rẽ vuông góc thì ra cái cây, không ra tia sét.** Bản đầu của chân
+  dung Electro cho nhánh rẽ 40–86°: kết quả là một tế bào thần kinh rất đẹp mà
+  không phải người. Rẽ hẹp lại (20–50°) và luôn chếch về phía trước theo hướng
+  dòng chạy thì mới ra chất phóng điện.
+- **Nét đều bề dày thì tia sét thành ống neon.** Phải thuôn dần từ gốc ra
+  ngọn, vẽ từng đoạn một. Đắt, nhưng chỉ đắt lúc dựng ảnh sẵn, không đắt mỗi
+  khung hình.
+- **Muốn một đám nhánh đọc ra dáng người thì cần năm điểm neo.** Mặt nạ ở đầu
+  cộng bốn nút sáng ở hai tay hai chân. Bỏ bốn nút đi là hình lập tức quay về
+  làm một vụ phóng điện vô danh — đã thử.
 - Qt nuốt phím `Tab` cho việc chuyển tiêu điểm, nên phím tắt đổi tai hồ sơ
   dùng mũi tên trái/phải.
 - **Chữ trong hồ sơ không phải Markdown.** Viết `*nhấn mạnh*` thì tấm hồ sơ
@@ -252,8 +268,9 @@ Ba trục tạo khác biệt, khai trong `Profile`:
 | Sandman | `dust` cát bệch (**sáng**) | `erode` mài mòn | cát bồi từ đáy |
 | Lizard | `swamp` xanh rêu + lưu huỳnh | `bloom` bào tử phủ kín | nở tròn từ một hạt |
 | Living Brain | `signal` đen trung tính, mực trắng | `scan` đầu đọc chạy dọc, dòng mất đồng bộ | ghi từng dòng từ đầu trang |
+| Electro | `arc` giấy loà trên màn phủ đen kịt | `strike` sét đánh thủng, cháy dọc nhánh | loang ra dọc chính nhánh sét |
 
-Bảy cái trên đã chiếm hết các hướng dễ thấy; làm dạng thứ tám thì phải nghĩ
+Tám cái trên đã chiếm hết các hướng dễ thấy; làm dạng thứ chín thì phải nghĩ
 ra bộ da và cú chuyển cảnh mới. Nhưng nhắc lại: đó không phải việc đang cần.
 
 Bộ da `signal` và hiệu ứng `scan` của Living Brain là bộ mới nhất, và nó bẻ
@@ -269,12 +286,22 @@ hai trục mà sáu dạng kia đều chung:
   phẳng cùng một nét viền mảnh. Bỏ mảng nền và nét viền đi thì thử rồi: ra một
   đám nhiễu, không ra hình cỗ máy.
 
+Bộ da `arc` và hiệu ứng `strike` của Electro thì bẻ hai trục khác nữa:
+
+- **Giấy sáng đặt trên nền tối nhất.** `dust` cũng sáng nhưng màn phủ sáng
+  theo; `arc` thì ngược — trang giấy loà trắng nổi trên một màn phủ đen kịt,
+  đúng cảm giác nhìn một cú phóng hồ quang giữa đêm.
+- **Chân dung đảo lại tương quan sáng tối của chính hồ sơ gốc.** Ở ASM #9,
+  mặt nạ hình sao là chỗ *sáng nhất* tờ giấy. Ở bản Absolute cả trang đã cháy
+  trắng vì chính hắn, nên hắn phải là thứ *tối nhất* khung — sáng hơn giấy
+  thì không còn chỗ mà sáng nữa.
+
 ## Vị trí file
 
 ```
 spiderman.py                khung app: danh sách, bộ lọc, tìm kiếm, dòng thời gian
-theme.py                    Skin + 8 bảng màu (PULP, VOID, SKY, MESH, FORGE, DUST, SWAMP, SIGNAL)
-ui/character_modal.py       tấm hồ sơ, nút EVOLVE, tai hồ sơ, toàn bộ 7 hiệu ứng
+theme.py                    Skin + 9 bảng màu (PULP, VOID, SKY, MESH, FORGE, DUST, SWAMP, SIGNAL, ARC)
+ui/character_modal.py       tấm hồ sơ, nút EVOLVE, tai hồ sơ, toàn bộ 8 hiệu ứng
 characters/profile.py       Profile, Section, Tier
 characters/art.py           đồ nghề vẽ dùng chung (design, ribbon, fan, glow, Rolls...)
 characters/<tên>.py         hồ sơ gốc

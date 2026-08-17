@@ -25,8 +25,9 @@ from PySide6.QtCore import (Property, QEasingCurve, QParallelAnimationGroup,
                             QPoint, QPointF, QPropertyAnimation, QRectF, QSize,
                             Qt, QTimer, Signal)
 from PySide6.QtGui import (QBrush, QColor, QFontMetrics, QImage,
-                           QLinearGradient, QPainter, QPainterPath, QPen,
-                           QPixmap, QPolygonF, QRadialGradient)
+                           QLinearGradient, QPainter, QPainterPath,
+                           QPainterPathStroker, QPen, QPixmap, QPolygonF,
+                           QRadialGradient)
 from PySide6.QtWidgets import (QGraphicsOpacityEffect, QHBoxLayout, QLabel,
                                QScrollArea, QSizePolicy, QVBoxLayout, QWidget)
 
@@ -1585,8 +1586,42 @@ class CharacterStage(QWidget):
             return []
         return {"bloom": self._make_tendrils,
                 "crush": self._make_folds,
+                "strike": self._make_bolts,
                 "shred": self._make_rakes}.get(
                     self._fx_style, self._make_web)(box)
+
+    def _make_bolts(self, box):
+        """Hình phóng điện Lichtenberg: một điểm chạm, rồi nhánh đẻ ra nhánh.
+
+        Khác mạng nứt của `shatter` ở chỗ nứt kính toả thẳng đều từ tâm, còn
+        phóng điện thì rẽ nhánh có cấp: nhánh con ngắn hơn, mảnh hơn, và tự
+        nó lại đẻ tiếp. Mỗi phần tử là `(các điểm, cấp)` — cấp dùng cho cả
+        bề dày nét lẫn cỡ đốm cháy quanh nó.
+        """
+        roll = self._rolls(int(box.width()) * 13 + 71)
+        hit = QPointF(box.x() + box.width() * 0.38, box.y())
+        bolts = []
+
+        def grow(root, angle, length, depth):
+            # nhánh dài phải gấp khúc nhiều, không thì thành sợi chỉ căng
+            steps = max(4, int(length / (box.height() * 0.045)))
+            pts = [root]
+            x, y = root.x(), root.y()
+            for _ in range(steps):
+                angle += roll(-0.30, 0.30)
+                x += math.cos(angle) * length / steps
+                y += math.sin(angle) * length / steps
+                pts.append(QPointF(x, y))
+                if depth > 0 and roll(0, 1) < 3.4 / steps:
+                    side = 1.0 if roll(0, 1) > 0.5 else -1.0
+                    grow(QPointF(x, y), angle + side * roll(0.4, 0.95),
+                         length * roll(0.36, 0.58), depth - 1)
+            bolts.append((pts, depth))
+
+        for _ in range(3):
+            grow(hit, math.radians(90 + roll(-46, 46)),
+                 box.height() * roll(0.78, 1.15), 2)
+        return bolts
 
     def _make_web(self, box):
         """Mạng nứt toả từ giữa tờ giấy — dáng của kính vỡ, dùng cho shatter."""
@@ -1691,8 +1726,29 @@ class CharacterStage(QWidget):
                 "dissolve": self._make_cells,
                 "crush": self._make_slabs,
                 "scan": self._make_rows,
+                "strike": self._make_burns,
                 "shred": self._make_strips}.get(
                     self._fx_style, self._make_grid_shards)(box)
+
+    def _make_burns(self, box):
+        """Đốm cháy mọc dọc theo nhánh sét — giấy thủng từ chỗ dòng điện chạy.
+
+        Gọi sau `_make_bolts` nên đọc thẳng `self._cracks`: chỗ cháy phải nằm
+        đúng trên đường sét, chứ rắc ngẫu nhiên thì thành vết mọt chứ không
+        thành vết điện.
+        """
+        roll = self._rolls(int(box.height()) * 7 + 23)
+        span = max(box.width(), box.height())
+        burns = []
+        for pts, depth in self._cracks:
+            for q in pts[1:]:
+                if roll(0, 1) < (0.85 if depth >= 2 else 0.5):
+                    # mép lỗ méo mó: lỗ tròn vành vạnh trông ra bong bóng
+                    wobble = tuple(roll(0.72, 1.28) for _ in range(11))
+                    burns.append((q, span * roll(0.012, 0.040)
+                                  * (1 + depth * 0.45), roll(0.0, 0.34),
+                                  wobble))
+        return burns
 
     def _make_rows(self, box):
         """Tờ giấy bị đọc thành từng dòng quét, không bị chia thành mảnh.
@@ -1913,6 +1969,9 @@ class CharacterStage(QWidget):
             return
         if self._fx_style == "scan":
             self._paint_scan(p, box, t)
+            return
+        if self._fx_style == "strike":
+            self._paint_strike(p, box, t)
             return
         if self._fx_style == "bloom":
             self._paint_bloom(p, box, t)
@@ -2293,6 +2352,77 @@ class CharacterStage(QWidget):
         if build > 0:
             self._paint_rebuild(p, box, min(1.0, build))
 
+    def _paint_bolt_path(self):
+        """Gộp mọi nhánh sét thành một `QPainterPath` — dùng lại cho vùng cắt."""
+        path = QPainterPath()
+        for pts, _ in self._cracks:
+            path.moveTo(pts[0])
+            for q in pts[1:]:
+                path.lineTo(q)
+        return path
+
+    def _paint_strike(self, p, box, t):
+        """Tờ giấy không vỡ, không bị ăn — nó bị **đánh thủng**.
+
+        Sét chạm vào mép trên rồi rẽ nhánh khắp mặt giấy; giấy cháy thủng
+        đúng dọc theo nhánh, mép lỗ còn đỏ. Rồi tấm mới không quét, không
+        nở, không trôi: nó **mọc dọc theo chính những nhánh sét ấy**, loang
+        dần ra hai bên cho tới lúc phủ kín — hướng dựng thứ tám.
+        """
+        ignite = 0.28
+        p.save()
+        p.setClipRect(box)
+        paint_sheet(p, box, skin=self._from)
+
+        # Giấy cháy thủng. Lỗ phải tô bằng màu **màn phủ** chứ không phải màu
+        # giấy của tấm mới: sau lưng tờ giấy là màn phủ, và dạng tới đây có
+        # tờ giấy sáng — tô màu giấy thì ra bong bóng xà phòng chứ không ra
+        # lỗ thủng.
+        gone = QColor(self._to.scrim)
+        gone.setAlpha(255)
+        if t > ignite:
+            k = (t - ignite) / 0.44
+            for c, r, lag, wobble in self._shards:
+                grow = (k - lag) / 0.66
+                if grow <= 0:
+                    continue
+                rad = r * min(1.0, grow) ** 0.7
+                edge = QPolygonF([
+                    QPointF(c.x() + math.cos(i / 11 * math.tau) * rad * w,
+                            c.y() + math.sin(i / 11 * math.tau) * rad * w * 0.92)
+                    for i, w in enumerate(wobble)])
+                p.setPen(Qt.PenStyle.NoPen)
+                p.setBrush(gone)
+                p.drawPolygon(edge)
+                p.setBrush(Qt.BrushStyle.NoBrush)
+                p.setPen(QPen(_fade(self._to.red, 0.9), 1.3))
+                p.drawPolygon(edge)
+
+        # bản thân tia sét, vẽ dần ra từ chỗ chạm
+        reach = min(1.0, t / 0.24)
+        flicker = 0.55 + 0.45 * self._noise[int(t * 90) % 24]
+        for pts, depth in self._cracks:
+            n = max(2, int(len(pts) * reach))
+            path = QPainterPath(pts[0])
+            for q in pts[1:n]:
+                path.lineTo(q)
+            p.setBrush(Qt.BrushStyle.NoBrush)
+            for color, w, a in ((self._to.blue, 2.6 - depth * 0.5, 0.26),
+                                (self._to.red, 1.3 - depth * 0.3, 0.72),
+                                (QColor("#FFFFFF"), 0.5 - depth * 0.1, 0.92)):
+                p.setPen(QPen(_fade(color, a * flicker), max(0.22, w)))
+                p.drawPath(path)
+        p.restore()
+
+        # loé: ngắn và ám tím, khác hẳn trận cát trắng xoá của `erode`
+        blink = 1.0 - abs(t - 0.30) / 0.12
+        if blink > 0:
+            p.fillRect(self.rect(), _fade(QColor("#C9B4FF"), 0.42 * blink))
+
+        build = (t - 0.52) / 0.48
+        if build > 0:
+            self._paint_rebuild(p, box, min(1.0, build))
+
     def _paint_abrade(self, p, box, k):
         """Vệt mài: những rãnh nông chạy chéo, mờ nhưng mỗi lúc một rõ."""
         roll = self._rolls(313)
@@ -2462,7 +2592,20 @@ class CharacterStage(QWidget):
         piling = style == "erode"
         seeding = style == "bloom"
         raster = style == "scan"
+        veins = style == "strike"
         hole = None
+        vein_clip = None
+        if veins:
+            # tấm mới loang ra từ đường sét: nét càng lúc càng dày cho tới
+            # khi phủ kín. Không phải một hình khối nào cả — nó là chính cái
+            # hình phóng điện vừa đốt thủng tờ giấy cũ, béo dần lên.
+            stroker = QPainterPathStroker()
+            stroker.setWidth(max(1.0, ease ** 2.2
+                                 * math.hypot(box.width(), box.height()) * 2.0))
+            stroker.setCapStyle(Qt.PenCapStyle.RoundCap)
+            stroker.setJoinStyle(Qt.PenJoinStyle.RoundJoin)
+            vein_clip = stroker.createStroke(self._paint_bolt_path())
+            band = QRectF(box)
         if seeding:
             # hạt nảy ở giữa rồi loang tròn ra, mép hơi méo như vòng nấm
             far = math.hypot(box.width(), box.height()) / 2 * 1.05
@@ -2498,7 +2641,9 @@ class CharacterStage(QWidget):
             band = QRectF(box.x() - 30, box.center().y() - h / 2,
                           box.width() + 60, h)
         p.save()
-        if seeding:
+        if veins:
+            p.setClipPath(vein_clip)
+        elif seeding:
             disc = QPainterPath()
             disc.addEllipse(hole)
             p.setClipPath(disc)
@@ -2522,7 +2667,10 @@ class CharacterStage(QWidget):
             p.setClipPath(ring)
         else:
             p.setClipRect(band)
-        paint_sheet(p, box, alpha=0.35 + 0.65 * ease, skin=self._to)
+        # Vệt loang theo nhánh sét phải đục ngay từ đầu: nó là tờ giấy mới
+        # đang bị đùn ra dọc đường sét, chứ không phải một mảng mờ hiện dần.
+        paint_sheet(p, box, alpha=(0.80 + 0.20 * ease) if veins
+                    else (0.35 + 0.65 * ease), skin=self._to)
 
         # khung xương hiện dần theo từng đợt, rồi mờ đi khi tấm thật sắp tới
         show = min(1.0, b / 0.72)
@@ -2572,7 +2720,11 @@ class CharacterStage(QWidget):
             edge.setAlpha(int(230 * (1 - b)))
             p.setPen(QPen(edge, 1.8))
             p.setBrush(Qt.BrushStyle.NoBrush)
-            if seeding:
+            if veins:
+                # nét sáng chạy đúng trên xương sống của vệt loang
+                p.setPen(QPen(edge, 2.4))
+                p.drawPath(self._paint_bolt_path())
+            elif seeding:
                 p.drawEllipse(hole)
             elif piling:
                 p.drawLine(QPointF(box.x(), band.y()),

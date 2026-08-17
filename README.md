@@ -9,7 +9,7 @@ Nhân vật chưa có hồ sơ thì vẫn mở trang web như trước.
 
 Hồ sơ nào có dạng tiến hoá thì mọc thêm nút **EVOLVE** ở chân trang: bấm vào,
 tờ giấy cũ vỡ ra và dạng mới hiện lên ở một tai hồ sơ riêng, với chân dung tự
-chạy theo thời gian. Bảy nhân vật đang có dạng tiến hoá, và chúng cố tình
+chạy theo thời gian. Tám nhân vật đang có dạng tiến hoá, và chúng cố tình
 không giống nhau chỗ nào:
 
 | | Bảng màu | Phá tờ giấy | Dựng tấm mới | Chân dung |
@@ -21,19 +21,23 @@ không giống nhau chỗ nào:
 | **Sandman** | `dust` — cát bệch, sắt gỉ và obsidian | `erode` — mài mòn sau một đường biên răng cưa | cát bồi lên từ đáy thành đụn | bóng người dựng lại từ nhiễu, mép luôn đang lở |
 | **Lizard** | `swamp` — xanh rêu, lưu huỳnh và tím nọc | `bloom` — rễ bò vào, bào tử phình thành ổ phủ kín | nở tròn ra từ một hạt ở giữa | dáng bò rình nằm ngang, sóng chạy dọc đuôi |
 | **Living Brain** | `signal` — đen trung tính, mực trắng, lệch trục R·G·B | `scan` — đầu đọc chạy dọc, đọc tới đâu dòng ấy mất đồng bộ rồi tắt | ghi từng dòng một từ đầu trang, giật cấp | cái bóng cỗ máy cũ viết lại bằng ký tự, ô chữ lật liên tục |
+| **Electro** | `arc` — giấy loà trắng trên màn phủ đen kịt, mực tím và lam điện | `strike` — sét rẽ nhánh, giấy cháy thủng dọc theo nhánh | mọc dọc chính những nhánh sét ấy, loang dần ra | dáng người dựng bằng phóng điện, cứ hơn giây rưỡi lại phóng một cú mới |
 
 Mức độ "sống" của chân dung cũng tăng dần: ba dạng đầu có bóng người đứng yên
 và chỉ chi tiết nhỏ động đậy; Otto và Marko thì chính nhân vật cử động — Otto
 uốn tám càng, Marko thì đến cái hình cũng không cố định, mỗi khung hình một
-đường viền khác. Living Brain đi hướng khác hẳn: nó không cử động chút nào mà
-**đứng yên tuyệt đối**, chỉ có chữ trên mình nó chạy.
+đường viền khác. Hai dạng mới nhất đi hướng khác hẳn: Living Brain không cử
+động chút nào mà **đứng yên tuyệt đối**, chỉ có chữ trên mình nó chạy; còn
+Electro thì **nháy** — cả bộ nhánh thay sạch trong đúng một khung hình, giữa
+hai cú phóng chỉ còn quầng thở và tàn lửa lập loè.
 
-Ba bộ da đi ra khỏi khuôn: `dust` là bộ **sáng** duy nhất — mở ra không tối
-sầm mà loà lên, màn phủ là một trận cát trắng xoá; `swamp` là bộ duy nhất lấy
-nền là một **màu** thay vì sắc trung tính; còn `signal` thì gần như **không có
-màu** — đen trung tính tuyệt đối, mực trắng, và là bộ duy nhất có ba lớp mực
-lệch trục thay vì hai, vì đó là ba kênh R·G·B của màn hình chứ không phải bản
-in chồng sai.
+Bốn bộ da đi ra khỏi khuôn: `dust` mở ra không tối sầm mà **loà lên**, màn
+phủ là một trận cát trắng xoá; `swamp` là bộ duy nhất lấy nền là một **màu**
+thay vì sắc trung tính; `signal` thì gần như **không có màu** — đen trung tính
+tuyệt đối, mực trắng, và là bộ duy nhất có ba lớp mực lệch trục thay vì hai,
+vì đó là ba kênh R·G·B của màn hình chứ không phải bản in chồng sai; còn `arc`
+ghép ngược hẳn — **giấy sáng loà** đặt trên **màn phủ tối nhất cả dàn**, như
+một cú phóng hồ quang giữa đêm.
 
 ## Chạy
 
@@ -67,6 +71,7 @@ characters/
     living_brain.py     ASM #8 — cỗ máy của Giáo sư Petty, băng giấy đục lỗ
     living_brain_absolute.py  dạng tiến hoá của Living Brain, dựng bằng ký tự
     electro.py          ASM #9 — mặt nạ hình sao giữa một vụ phóng điện
+    electro_absolute.py    dạng tiến hoá của Electro, dáng người bằng sét
     big_man.py          ASM #10 — người thật bé tí dưới cái bóng của chính mình
     mysterio.py         ASM #13 — quả cầu thuỷ tinh, bên trong chỉ có sương
     green_goblin.py     ASM #14 — nhìn từ dưới lên, quả bom đang rơi xuống ta
@@ -164,8 +169,8 @@ khác chữ. Ba chỗ để tạo khác biệt, khai ngay trong `Profile` của 
 ```python
 ABSOLUTE = Profile(
     ...
-    skin="sky",              # pulp | void | sky | mesh | forge | dust | swamp | signal
-    evolve_fx="shred",       # shatter | shred | dissolve | crush | erode | bloom | scan
+    skin="sky",              # pulp | void | sky | mesh | forge | dust | swamp | signal | arc
+    evolve_fx="shred",       # shatter | shred | dissolve | crush | erode | bloom | scan | strike
     art=draw_absolute_vulture,   # nhận (p, rect, t) để chân dung tự chạy
 )
 ```
@@ -173,7 +178,8 @@ ABSOLUTE = Profile(
 `skin` đổi màu toàn bộ tấm hồ sơ — tên nhân vật, dải mép trên, thang bậc, nút
 bấm, tai hồ sơ đều đi theo. `evolve_fx` đổi cả cách phá tờ giấy cũ lẫn chiều
 quét dựng tấm mới (mở từ giữa · quét ngang · khép từ ngoài vào · cửa thép
-trượt lại · cát bồi từ đáy · nở tròn từ một hạt · ghi từng dòng từ đầu trang). Còn `art` là chỗ để nhân
+trượt lại · cát bồi từ đáy · nở tròn từ một hạt · ghi từng dòng từ đầu trang ·
+loang ra dọc nhánh sét). Còn `art` là chỗ để nhân
 vật có ngôn ngữ chuyển động của riêng nó. Ngoài `summary`/`powers` quen thuộc, hồ sơ dài còn có:
 
 | Trường | Việc |

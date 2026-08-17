@@ -218,9 +218,33 @@ SIGNAL = Skin(
     dot_step=4,
 )
 
+# Hồ quang: bộ da duy nhất ghép một tờ giấy **sáng loà** với một màn phủ
+# **đen kịt**. `dust` cũng sáng, nhưng sáng kiểu cát bụi ấm và màn phủ cũng
+# trắng theo; bộ này thì ngược — trang giấy cháy sáng như một cú phóng hồ
+# quang giữa đêm, nền sau lưng tối nhất cả dàn. Mực tím và lam điện, chấm
+# halftone mịn và dày nhất để mặt giấy trông như đang tích điện.
+ARC = Skin(
+    name="arc",
+    paper=QColor("#E7ECFA"), paper_hi=QColor("#F7F9FF"),
+    ink=QColor("#0E1220"), ink_soft=QColor("#59617D"),
+    red=QColor("#6D2BD9"), blue=QColor("#1E5BD6"), yellow=QColor("#29A8E0"),
+    dot=QColor(70, 96, 200, 24),
+    frame=QColor("#2A3350"),
+    scrim=QColor(4, 5, 12, 236),
+    grid=QColor(150, 190, 255, 26),
+    # lệch trục sát và gắt: đây là quầng sáng rung quanh vật, không phải hai
+    # bản in trượt khỏi nhau
+    ghosts=((QColor("#7B2BE0"), -3, -3, 118), (QColor("#24D8F0"), 3, 3, 104)),
+    accents={"edge": (QColor("#1E5BD6"), QColor("#D8E2FA")),
+             "new": (QColor("#6D2BD9"), QColor("#E4D8FA")),
+             "fix": (QColor("#29A8E0"), QColor("#D6ECFA"))},
+    dot_size=0.9,
+    dot_step=3,
+)
+
 # Tra theo tên để hồ sơ chỉ cần ghi `skin="sky"`.
 SKINS = {skin.name: skin
-         for skin in (PULP, VOID, SKY, MESH, FORGE, DUST, SWAMP, SIGNAL)}
+         for skin in (PULP, VOID, SKY, MESH, FORGE, DUST, SWAMP, SIGNAL, ARC)}
 
 
 def pick_font(candidates, fallback="DejaVu Sans"):

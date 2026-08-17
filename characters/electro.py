@@ -20,6 +20,7 @@ from PySide6.QtGui import (QColor, QImage, QPainter, QPainterPath, QPen,
 from theme import BLUE, INK, RED
 
 from .art import curve_at, curve_normal, design, fan, marks, ribbon
+from .electro_absolute import ABSOLUTE
 from .profile import Profile
 
 SPARK = QColor("#F7F1E2")     # lõi tia sét, mặt nạ, găng — chỗ sáng nhất
@@ -393,6 +394,9 @@ PROFILE = Profile(
     blurb="Đã có một tuần cả thành phố tin rằng Electro với Spider-Man là cùng "
           "một người. Chuyện đó nói về Electro thì ít, mà nói về tờ Daily "
           "Bugle thì nhiều.",
+
+    evolution=ABSOLUTE,
+    evolve_label="Evolve",
 
     art=draw_electro,
     caption="Chân dung dựng lại bằng code",
