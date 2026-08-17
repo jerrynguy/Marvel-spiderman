@@ -1579,10 +1579,11 @@ class CharacterStage(QWidget):
         `shatter` nứt toả từ giữa như kính vỡ. `shred` là bốn vệt vuốt song
         song chém chéo qua mặt giấy, đúng dấu móng của một con chim săn mồi.
         `bloom` là rễ bò vào từ mép, `crush` là nếp gấp quanh chỗ càng bấu.
-        `dissolve`, `erode` và `scan` thì không có đường nào cả — tờ giấy bị
-        ăn, bị mài, hoặc bị đọc, chứ không bị bẻ.
+        `dissolve`, `erode`, `scan` và `mirage` thì không có đường nào cả —
+        tờ giấy bị ăn, bị mài, bị đọc, hoặc hoá ra chưa từng có thật, chứ
+        không bị bẻ.
         """
-        if self._fx_style in ("dissolve", "erode", "scan"):
+        if self._fx_style in ("dissolve", "erode", "scan", "mirage"):
             return []
         return {"bloom": self._make_tendrils,
                 "crush": self._make_folds,
@@ -1727,8 +1728,27 @@ class CharacterStage(QWidget):
                 "crush": self._make_slabs,
                 "scan": self._make_rows,
                 "strike": self._make_burns,
+                "mirage": self._make_doubles,
                 "shred": self._make_strips}.get(
                     self._fx_style, self._make_grid_shards)(box)
+
+    def _make_doubles(self, box):
+        """Các bản sao của tờ giấy: chỗ đứng, độ nghiêng, cỡ, và lúc biến mất.
+
+        Không phải mảnh vỡ — mỗi cái là **nguyên một tờ giấy** y hệt tờ thật.
+        Đây là cả trò của Mysterio: không phá cái gì cả, chỉ làm người xem
+        thôi biết cái nào mới là cái thật.
+        """
+        roll = self._rolls(int(box.width()) * 37 + 11)
+        far = max(box.width(), box.height()) * 0.26
+        doubles = []
+        for i in range(6):
+            a = math.radians(i * 60 + roll(-18, 18))
+            doubles.append((math.cos(a) * far * roll(0.5, 1.15),
+                            math.sin(a) * far * roll(0.35, 0.85),
+                            roll(-9, 9), roll(0.82, 1.06),
+                            roll(0.10, 0.30), roll(0.40, 0.68)))
+        return doubles
 
     def _make_burns(self, box):
         """Đốm cháy mọc dọc theo nhánh sét — giấy thủng từ chỗ dòng điện chạy.
@@ -1972,6 +1992,9 @@ class CharacterStage(QWidget):
             return
         if self._fx_style == "strike":
             self._paint_strike(p, box, t)
+            return
+        if self._fx_style == "mirage":
+            self._paint_mirage(p, box, t)
             return
         if self._fx_style == "bloom":
             self._paint_bloom(p, box, t)
@@ -2352,6 +2375,59 @@ class CharacterStage(QWidget):
         if build > 0:
             self._paint_rebuild(p, box, min(1.0, build))
 
+    def _paint_mirage(self, p, box, t):
+        """Tờ giấy cũ không bị phá gì cả — nó chỉ **hoá ra chưa từng có thật**.
+
+        Sáu bản sao y hệt hiện ra quanh tờ thật, nghiêng ngả mỗi cái một
+        kiểu, rồi tất cả cùng trôi và tráo chỗ cho nhau tới lúc không ai biết
+        cái nào là cái ban đầu. Xong xuôi chúng lần lượt tắt như trò ảo
+        thuật, và cái còn lại thì **lật mặt sang tấm mới** — hoá ra suốt từ
+        đầu đã có một tờ khác nằm úp trong đám ấy.
+        """
+        scale = p.transform().m11() or 1.0
+        sheet = _sheet_image(box, self._from, scale)
+        ctr = box.center()
+
+        def stamp(dx, dy, spin, size, alpha):
+            p.save()
+            p.translate(ctr.x() + dx, ctr.y() + dy)
+            p.rotate(spin)
+            p.scale(size, size)
+            p.translate(-ctr.x(), -ctr.y())
+            p.setOpacity(max(0.0, min(1.0, alpha)))
+            p.drawImage(box, sheet)
+            p.setOpacity(1.0)
+            # mép giấy kẻ vàng: bản sao nào cũng tự nhận mình mới là bản thật
+            p.setBrush(Qt.BrushStyle.NoBrush)
+            p.setPen(QPen(_fade(self._to.blue, 0.5 * alpha), 1.2))
+            p.drawRect(box)
+            p.restore()
+
+        p.save()
+        for dx, dy, spin, size, lag, off in self._shards:
+            show = (t - lag) / 0.26
+            if show <= 0:
+                continue
+            gone = (t - off) / 0.16
+            if gone >= 1:
+                continue
+            # bản sao trôi ra chỗ của mình rồi đảo qua đảo lại quanh đó
+            drift = min(1.0, show) ** 0.7
+            sway = math.sin(t * 3.4 + dx * 0.05) * 10 * drift
+            stamp(dx * drift + sway, dy * drift + sway * 0.4,
+                  spin * drift, 1 + (size - 1) * drift,
+                  min(1.0, show) * (1 - max(0.0, gone)) * 0.9)
+
+        # tờ thật đứng im giữa đám bản sao, và tắt sau cùng
+        real = 1.0 - max(0.0, (t - 0.50) / 0.14)
+        if real > 0:
+            stamp(0, 0, 0, 1.0, real)
+        p.restore()
+
+        build = (t - 0.54) / 0.46
+        if build > 0:
+            self._paint_rebuild(p, box, min(1.0, build))
+
     def _paint_bolt_path(self):
         """Gộp mọi nhánh sét thành một `QPainterPath` — dùng lại cho vùng cắt."""
         path = QPainterPath()
@@ -2581,8 +2657,9 @@ class CharacterStage(QWidget):
 
         Nhát quét đi theo kiểu của dạng đang tới: `shatter` mở từ giữa ra hai
         phía, `shred` quét ngang một lượt như cánh chim lướt qua mặt giấy,
-        `dissolve` thì đóng dần từ ngoài mép vào tâm, còn `scan` ghi xuống
-        từng dòng một từ trên đầu trang.
+        `dissolve` thì đóng dần từ ngoài mép vào tâm, `scan` ghi xuống từng
+        dòng một từ trên đầu trang, còn `mirage` không quét gì cả — nó lật
+        cả tờ giấy quanh trục dọc như lật một quân bài.
         """
         ease = 1 - (1 - b) ** 3
         style = self._fx_style
@@ -2593,6 +2670,7 @@ class CharacterStage(QWidget):
         seeding = style == "bloom"
         raster = style == "scan"
         veins = style == "strike"
+        turning = style == "mirage"
         hole = None
         vein_clip = None
         if veins:
@@ -2626,6 +2704,10 @@ class CharacterStage(QWidget):
                           box.height() * (1 - ease))
             hole.moveCenter(box.center())
             band = QRectF(box)
+        elif turning:
+            # không cắt gì cả: tấm mới lật mặt lại như một quân bài, nên nó
+            # bị *bóp ngang* chứ không bị che bớt
+            band = QRectF(box)
         elif raster:
             # ghi từng dòng một từ đầu trang: mép dưới không trôi mượt mà
             # nhảy đúng một dòng, như giấy bị đẩy qua trục máy in
@@ -2641,7 +2723,12 @@ class CharacterStage(QWidget):
             band = QRectF(box.x() - 30, box.center().y() - h / 2,
                           box.width() + 60, h)
         p.save()
-        if veins:
+        if turning:
+            p.setClipRect(box.adjusted(-30, -30, 30, 30))
+            p.translate(box.center().x(), 0)
+            p.scale(max(0.02, ease), 1.0)
+            p.translate(-box.center().x(), 0)
+        elif veins:
             p.setClipPath(vein_clip)
         elif seeding:
             disc = QPainterPath()
@@ -2720,7 +2807,13 @@ class CharacterStage(QWidget):
             edge.setAlpha(int(230 * (1 - b)))
             p.setPen(QPen(edge, 1.8))
             p.setBrush(Qt.BrushStyle.NoBrush)
-            if veins:
+            if turning:
+                half = box.width() / 2 * ease
+                p.drawLine(QPointF(box.center().x() - half, box.y()),
+                           QPointF(box.center().x() - half, box.bottom()))
+                p.drawLine(QPointF(box.center().x() + half, box.y()),
+                           QPointF(box.center().x() + half, box.bottom()))
+            elif veins:
                 # nét sáng chạy đúng trên xương sống của vệt loang
                 p.setPen(QPen(edge, 2.4))
                 p.drawPath(self._paint_bolt_path())

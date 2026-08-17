@@ -24,6 +24,7 @@ from PySide6.QtGui import (QColor, QImage, QPainter, QPainterPath, QPen,
 from theme import BLUE, INK, INK_SOFT, PAPER_HI, RED
 
 from .art import H, W, Rolls, design, marks, misprint
+from .mysterio_absolute import ABSOLUTE
 from .profile import Profile
 
 DOME = QPointF(50, 38)           # tâm quả cầu
@@ -320,6 +321,9 @@ PROFILE = Profile(
     blurb="Beck đổi nghề vì muốn có người nhớ mặt mình. Rồi hắn tự úp lên đầu "
           "một quả cầu mà không ai nhìn xuyên qua được — và trở nên nổi tiếng "
           "đúng theo cái cách hắn không hề tính tới.",
+
+    evolution=ABSOLUTE,
+    evolve_label="Evolve",
 
     art=draw_mysterio,
     caption="Chân dung dựng lại bằng code",

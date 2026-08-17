@@ -7,7 +7,7 @@ Spider-Man theo phong cách truyện Silver Age: giấy pulp, lưới halftone, 
 in lệch trục. Click một nhân vật đã có hồ sơ thì mở tấm hồ sơ ngay trong app.
 
 Repo: `jerrynguy/Marvel-spiderman`. Mới nhất là hồ sơ Absolute của Living
-Brain và của Electro, trên nhánh `claude/villain-evolution-profiles-aavzr8`.
+Brain, Electro và Mysterio, trên nhánh `claude/villain-evolution-profiles-aavzr8`.
 
 ## ĐỌC CÁI NÀY TRƯỚC: việc còn dang dở là gì
 
@@ -35,7 +35,8 @@ muốn)**.
 
 ## Mười ba hồ sơ đã có
 
-Tám người đầu có thêm dạng Absolute; năm người sau mới chỉ có hồ sơ gốc.
+Chín trong mười ba người đã có dạng Absolute; bốn người còn lại mới chỉ
+có hồ sơ gốc.
 
 | # | Nhân vật | Số báo | Chân dung dựng quanh cái gì | Absolute |
 |---|---|---|---|---|
@@ -48,7 +49,7 @@ Tám người đầu có thêm dạng Absolute; năm người sau mới chỉ c�
 | 7 | Living Brain | ASM #8 | cỗ máy đối xứng, băng giấy đục lỗ | có |
 | 8 | Electro | ASM #9 | mặt nạ hình sao giữa vụ phóng điện | có |
 | 9 | Big Man | ASM #10 | người thật bé tí dưới cái bóng khổng lồ | chưa |
-| 10 | Mysterio | ASM #13 | quả cầu thuỷ tinh không có mặt bên trong | chưa |
+| 10 | Mysterio | ASM #13 | quả cầu thuỷ tinh không có mặt bên trong | có |
 | 11 | Green Goblin | ASM #14 | nhìn từ dưới lên: bom bí ngô đang rơi xuống ta | chưa |
 | 12 | Kraven the Hunter | ASM #15 | mặt nhìn qua khe rách giữa tán lá | chưa |
 | 13 | Beetle | Strange Tales #123 | bản vẽ chế tạo, bộ giáp tháo rời và rỗng | chưa |
@@ -110,7 +111,7 @@ Ba phép thử hay dùng (viết trong scratchpad, không commit):
   không, hàng lý lịch có gãy làm hai không.
 - **Vòng đời**: mở từng nhân vật, bấm `EvolveButton`, kiểm `stage.index`,
   `stage.card.s.name`, `stage._fx_style`, `stage.tabs.count()`, rồi đóng.
-  Hiện là 74 mục cho mười ba nhân vật (2 mục mỗi hồ sơ, thêm 6 mục cho mỗi
+  Hiện là 80 mục cho mười ba nhân vật (2 mục mỗi hồ sơ, thêm 6 mục cho mỗi
   dạng Absolute), phải xanh hết trước khi commit.
 
 Khi chưa nhìn ra hình bị gì, **render riêng cái bóng người** (chỉ `_figure()`,
@@ -173,6 +174,17 @@ ra tay vẫn đó, chỉ là bị lớp khác nuốt mất.
 - **Muốn một đám nhánh đọc ra dáng người thì cần năm điểm neo.** Mặt nạ ở đầu
   cộng bốn nút sáng ở hai tay hai chân. Bỏ bốn nút đi là hình lập tức quay về
   làm một vụ phóng điện vô danh — đã thử.
+- **`str.replace` trong script sửa file thì thay *mọi* chỗ khớp.** Chèn một
+  nhánh mới vào `_paint_rebuild` bằng cách thay `elif raster:` đã đụng luôn
+  cái `elif raster:` thứ hai ở khúc vẽ nét sáng, và file gãy cú pháp ngay.
+  Sửa nhiều chỗ giống nhau thì kẹp thêm dòng trên dưới cho khớp đúng một chỗ.
+- **Bóng người mà hợp hết mọi mảng vào một path thì mất luôn nhân dạng.**
+  Mysterio hợp cả cổ áo dựng vào áo choàng: kết quả là một cái chụp đèn có
+  quả cầu trên đỉnh. Tách cổ áo ra vẽ đè lên, cho nó tông riêng và viền
+  riêng, thì nhận ra Beck ngay.
+- **Thứ tự vẽ các lớp sân khấu chính là nội dung.** Chùm đèn chân phải nằm
+  *sau* tấm phông; vẽ sau thì ánh sáng phủ lên mặt phông và cả người hoá ra
+  trong suốt. Cạnh ván cũng phải sáng hơn nền mới đọc ra là bề dày.
 - Qt nuốt phím `Tab` cho việc chuyển tiêu điểm, nên phím tắt đổi tai hồ sơ
   dùng mũi tên trái/phải.
 - **Chữ trong hồ sơ không phải Markdown.** Viết `*nhấn mạnh*` thì tấm hồ sơ
@@ -269,8 +281,9 @@ Ba trục tạo khác biệt, khai trong `Profile`:
 | Lizard | `swamp` xanh rêu + lưu huỳnh | `bloom` bào tử phủ kín | nở tròn từ một hạt |
 | Living Brain | `signal` đen trung tính, mực trắng | `scan` đầu đọc chạy dọc, dòng mất đồng bộ | ghi từng dòng từ đầu trang |
 | Electro | `arc` giấy loà trên màn phủ đen kịt | `strike` sét đánh thủng, cháy dọc nhánh | loang ra dọc chính nhánh sét |
+| Mysterio | `stage` nhung rượu + vàng kim | `mirage` giấy nhân bản rồi tráo chỗ | lật cả tờ như lật quân bài |
 
-Tám cái trên đã chiếm hết các hướng dễ thấy; làm dạng thứ chín thì phải nghĩ
+Chín cái trên đã chiếm hết các hướng dễ thấy; làm dạng thứ mười thì phải nghĩ
 ra bộ da và cú chuyển cảnh mới. Nhưng nhắc lại: đó không phải việc đang cần.
 
 Bộ da `signal` và hiệu ứng `scan` của Living Brain là bộ mới nhất, và nó bẻ
@@ -296,12 +309,23 @@ Bộ da `arc` và hiệu ứng `strike` của Electro thì bẻ hai trục khác
   trắng vì chính hắn, nên hắn phải là thứ *tối nhất* khung — sáng hơn giấy
   thì không còn chỗ mà sáng nữa.
 
+Bộ `stage` và hiệu ứng `mirage` của Mysterio bẻ thêm hai trục nữa:
+
+- **Nền đỏ.** Chín bộ kia đều nền trung tính, lạnh, hoặc xanh; đây là bộ duy
+  nhất lấy nhung rượu làm nền, vàng kim làm viền. Hai lớp mực lệch trục cũng
+  trượt xa nhất cả dàn (±16 thay vì ±3…11) — không phải in sai, mà là hai
+  diễn viên đóng thế đứng sau tờ giấy.
+- **Tấm mới không bị che bớt mà bị *bóp ngang*.** Tám hướng dựng kia đều là
+  một vùng cắt lớn dần; `mirage` thì không cắt gì cả, nó nén cả tờ giấy quanh
+  trục dọc rồi mở ra, đúng động tác lật một quân bài. Muốn làm kiểu này thì
+  phải biến hình cái painter chứ đừng tìm cách cắt.
+
 ## Vị trí file
 
 ```
 spiderman.py                khung app: danh sách, bộ lọc, tìm kiếm, dòng thời gian
-theme.py                    Skin + 9 bảng màu (PULP, VOID, SKY, MESH, FORGE, DUST, SWAMP, SIGNAL, ARC)
-ui/character_modal.py       tấm hồ sơ, nút EVOLVE, tai hồ sơ, toàn bộ 8 hiệu ứng
+theme.py                    Skin + 10 bảng màu (thêm SIGNAL, ARC, STAGE)
+ui/character_modal.py       tấm hồ sơ, nút EVOLVE, tai hồ sơ, toàn bộ 9 hiệu ứng
 characters/profile.py       Profile, Section, Tier
 characters/art.py           đồ nghề vẽ dùng chung (design, ribbon, fan, glow, Rolls...)
 characters/<tên>.py         hồ sơ gốc

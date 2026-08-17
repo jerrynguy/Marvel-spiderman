@@ -242,9 +242,32 @@ ARC = Skin(
     dot_step=3,
 )
 
+# Sân khấu: nền nhung rượu, mực giấy tờ chương trình, đèn hồng limelight và
+# viền vàng kim. Tám bộ kia đều lấy nền trung tính hoặc lạnh; đây là bộ duy
+# nhất lấy nền **đỏ**. Và hai lớp mực lệch trục thì trượt xa nhất cả dàn —
+# không phải in sai, mà là hai diễn viên đóng thế đứng sau lưng tờ giấy.
+STAGE = Skin(
+    name="stage",
+    paper=QColor("#1B0A12"), paper_hi=QColor("#27101B"),
+    ink=QColor("#F7EADB"), ink_soft=QColor("#B08E93"),
+    red=QColor("#FF5470"), blue=QColor("#E9B44C"), yellow=QColor("#6FD0E8"),
+    dot=QColor(255, 170, 190, 18),
+    frame=QColor("#6B3348"),
+    scrim=QColor(12, 3, 8, 228),
+    grid=QColor(255, 180, 200, 22),
+    ghosts=((QColor("#FF5470"), -16, 6, 60), (QColor("#E9B44C"), 16, -6, 56)),
+    accents={"edge": (QColor("#E9B44C"), QColor("#2E1A0C")),
+             "new": (QColor("#FF5470"), QColor("#33101A")),
+             "fix": (QColor("#6FD0E8"), QColor("#0E2630"))},
+    dark=True,
+    dot_size=1.6,
+    dot_step=6,
+)
+
 # Tra theo tên để hồ sơ chỉ cần ghi `skin="sky"`.
 SKINS = {skin.name: skin
-         for skin in (PULP, VOID, SKY, MESH, FORGE, DUST, SWAMP, SIGNAL, ARC)}
+         for skin in (PULP, VOID, SKY, MESH, FORGE, DUST, SWAMP, SIGNAL, ARC,
+                      STAGE)}
 
 
 def pick_font(candidates, fallback="DejaVu Sans"):
