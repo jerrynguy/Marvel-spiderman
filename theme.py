@@ -286,10 +286,35 @@ SMOG = Skin(
     dot_step=5,
 )
 
+# Da thú: bộ này khác mười bộ kia ở **chất liệu** chứ không ở sắc độ — thang
+# sáng–tối đã hết chỗ từ `smog`. Hai chỗ khác:
+#   · chấm halftone to và thưa nhất cả dàn (3,4 trên bước 9). To tới mức thôi
+#     đọc ra là hạt in mà thành đốm trên một tấm da.
+#   · **một** lớp mực lệch trục duy nhất, và không màu mè gì cả. Chín bộ kia
+#     hai lớp, `signal` ba lớp; ở đây chỉ có một cái bóng sẫm trượt sau tờ
+#     giấy — không phải in sai, mà là thứ đang đi sau lưng ta.
+PELT = Skin(
+    name="pelt",
+    paper=QColor("#1A0F0C"), paper_hi=QColor("#241512"),
+    ink=QColor("#F0E6D0"), ink_soft=QColor("#9A8874"),
+    red=QColor("#C4382C"), blue=QColor("#6FD9A8"), yellow=QColor("#E8C878"),
+    dot=QColor(240, 230, 205, 16),
+    frame=QColor("#4A3226"),
+    scrim=QColor(8, 5, 4, 232),
+    grid=QColor(200, 220, 190, 20),
+    ghosts=((QColor("#080504"), 12, 12, 170),),
+    accents={"edge": (QColor("#6FD9A8"), QColor("#0C2418")),
+             "new": (QColor("#C4382C"), QColor("#2A100C")),
+             "fix": (QColor("#E8C878"), QColor("#2A2210"))},
+    dark=True,
+    dot_size=3.4,
+    dot_step=9,
+)
+
 # Tra theo tên để hồ sơ chỉ cần ghi `skin="sky"`.
 SKINS = {skin.name: skin
          for skin in (PULP, VOID, SKY, MESH, FORGE, DUST, SWAMP, SIGNAL, ARC,
-                      STAGE, SMOG)}
+                      STAGE, SMOG, PELT)}
 
 
 def pick_font(candidates, fallback="DejaVu Sans"):

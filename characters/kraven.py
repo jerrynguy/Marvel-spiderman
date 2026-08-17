@@ -28,6 +28,7 @@ from PySide6.QtGui import QColor, QImage, QPainter, QPainterPath, QPen
 from theme import INK, PAPER, PAPER_HI
 
 from .art import H, W, Rolls, design, marks, misprint
+from .kraven_absolute import ABSOLUTE
 from .profile import Profile
 
 HEAD = QPointF(48, 42)
@@ -312,6 +313,9 @@ PROFILE = Profile(
           "trong danh sách này — và cũng là chỗ giết hắn. Săn xong con mồi "
           "cuối cùng thì một người thợ săn chẳng còn lý do gì để dậy vào sáng "
           "hôm sau.",
+
+    evolution=ABSOLUTE,
+    evolve_label="Evolve",
 
     art=draw_kraven,
     caption="Chân dung dựng lại bằng code",

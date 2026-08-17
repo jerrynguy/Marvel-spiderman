@@ -7,7 +7,7 @@ Spider-Man theo phong cách truyện Silver Age: giấy pulp, lưới halftone, 
 in lệch trục. Click một nhân vật đã có hồ sơ thì mở tấm hồ sơ ngay trong app.
 
 Repo: `jerrynguy/Marvel-spiderman`. Mới nhất là hồ sơ Absolute của Living
-Brain, Electro, Mysterio và Green Goblin, trên nhánh
+Brain, Electro, Mysterio, Green Goblin và Kraven, trên nhánh
 `claude/villain-evolution-profiles-aavzr8`.
 
 ## ĐỌC CÁI NÀY TRƯỚC: việc còn dang dở là gì
@@ -36,8 +36,8 @@ muốn)**.
 
 ## Mười ba hồ sơ đã có
 
-Mười trong mười ba người đã có dạng Absolute; ba người còn lại mới chỉ
-có hồ sơ gốc.
+Mười một trong mười ba người đã có dạng Absolute; còn Big Man và Beetle
+thì mới chỉ có hồ sơ gốc.
 
 | # | Nhân vật | Số báo | Chân dung dựng quanh cái gì | Absolute |
 |---|---|---|---|---|
@@ -52,7 +52,7 @@ có hồ sơ gốc.
 | 9 | Big Man | ASM #10 | người thật bé tí dưới cái bóng khổng lồ | chưa |
 | 10 | Mysterio | ASM #13 | quả cầu thuỷ tinh không có mặt bên trong | có |
 | 11 | Green Goblin | ASM #14 | nhìn từ dưới lên: bom bí ngô đang rơi xuống ta | có |
-| 12 | Kraven the Hunter | ASM #15 | mặt nhìn qua khe rách giữa tán lá | chưa |
+| 12 | Kraven the Hunter | ASM #15 | mặt nhìn qua khe rách giữa tán lá | có |
 | 13 | Beetle | Strange Tales #123 | bản vẽ chế tạo, bộ giáp tháo rời và rỗng | chưa |
 
 ## Nguyên tắc vẽ chân dung — quan trọng nhất
@@ -112,7 +112,7 @@ Ba phép thử hay dùng (viết trong scratchpad, không commit):
   không, hàng lý lịch có gãy làm hai không.
 - **Vòng đời**: mở từng nhân vật, bấm `EvolveButton`, kiểm `stage.index`,
   `stage.card.s.name`, `stage._fx_style`, `stage.tabs.count()`, rồi đóng.
-  Hiện là 86 mục cho mười ba nhân vật (2 mục mỗi hồ sơ, thêm 6 mục cho mỗi
+  Hiện là 92 mục cho mười ba nhân vật (2 mục mỗi hồ sơ, thêm 6 mục cho mỗi
   dạng Absolute), phải xanh hết trước khi commit.
 
 Khi chưa nhìn ra hình bị gì, **render riêng cái bóng người** (chỉ `_figure()`,
@@ -299,10 +299,11 @@ Ba trục tạo khác biệt, khai trong `Profile`:
 | Electro | `arc` giấy loà trên màn phủ đen kịt | `strike` sét đánh thủng, cháy dọc nhánh | loang ra dọc chính nhánh sét |
 | Mysterio | `stage` nhung rượu + vàng kim | `mirage` giấy nhân bản rồi tráo chỗ | lật cả tờ như lật quân bài |
 | Green Goblin | `smog` khói hoá chất, nền trung tính giữa | `press` khuôn dập thành lưới phôi bí ngô | dập lại từng ô theo thứ tự đọc |
+| Kraven | `pelt` chấm to như đốm da thú, một lớp mực | `stalk` rình rồi vồ đúng một cú | đi từ trong tối tới chỗ ta |
 
-Mười cái trên đã chiếm hết các hướng dễ thấy; làm dạng thứ mười một thì phải
-nghĩ ra bộ da và cú chuyển cảnh mới. Nhưng nhắc lại: đó không phải việc đang
-cần.
+Mười một cái trên đã chiếm hết các hướng dễ thấy; làm dạng thứ mười hai thì
+phải nghĩ ra bộ da và cú chuyển cảnh mới. Nhưng nhắc lại: đó không phải việc
+đang cần.
 
 Bộ da `signal` và hiệu ứng `scan` của Living Brain là bộ mới nhất, và nó bẻ
 hai trục mà sáu dạng kia đều chung:
@@ -346,12 +347,24 @@ Bộ `smog` của Green Goblin bẻ nốt cái trục cuối còn lại:
   thì thang sáng–tối coi như hết chỗ: dạng thứ mười một phải tìm trục khác
   (chất liệu, độ nhám, số lớp mực), đừng tìm thêm sắc độ.
 
+`pelt` của Kraven là bộ đầu tiên đi theo lời dặn ấy, và `stalk` thì mở thêm
+một trục hoàn toàn khác:
+
+- **Khác ở chất liệu, không ở màu.** Chấm halftone 3,4 trên bước 9 — to và
+  thưa tới mức thôi đọc ra là hạt in mà thành đốm trên da thú; và chỉ **một**
+  lớp `ghosts` không màu, tức một cái bóng đi sau lưng tờ giấy. Mười bộ kia
+  hai lớp, `signal` ba lớp.
+- **Khác ở nhịp, không ở hình.** Mười kiểu chuyển cảnh kia đều là một quá
+  trình chạy đều từ 0 tới 1. `stalk` thì để hơn nửa thời gian **không xảy ra
+  gì cả** — chỉ mấy cặp mắt mở ra và tờ giấy giật mình hai lần — rồi dồn hết
+  vào một cú vồ. Trục "nhịp" này vẫn còn chỗ cho vài kiểu nữa.
+
 ## Vị trí file
 
 ```
 spiderman.py                khung app: danh sách, bộ lọc, tìm kiếm, dòng thời gian
-theme.py                    Skin + 11 bảng màu (thêm SIGNAL, ARC, STAGE, SMOG)
-ui/character_modal.py       tấm hồ sơ, nút EVOLVE, tai hồ sơ, toàn bộ 10 hiệu ứng
+theme.py                    Skin + 12 bảng màu (thêm SIGNAL, ARC, STAGE, SMOG, PELT)
+ui/character_modal.py       tấm hồ sơ, nút EVOLVE, tai hồ sơ, toàn bộ 11 hiệu ứng
 characters/profile.py       Profile, Section, Tier
 characters/art.py           đồ nghề vẽ dùng chung (design, ribbon, fan, glow, Rolls...)
 characters/<tên>.py         hồ sơ gốc
