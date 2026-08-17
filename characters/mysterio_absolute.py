@@ -510,7 +510,7 @@ ABSOLUTE = Profile(
                  "Hàng tỷ hạt siêu nhỏ rải xuống bằng tên lửa hành trình, "
                  "mỗi hạt là một máy chiếu laser tí hon kèm loa, bộ tổng hợp "
                  "mùi và bộ phát vi sóng. Ghép lại, chúng dựng ra những khối "
-                 "ảo giác **sờ được** nhờ sóng siêu âm, và lơ lửng nhiều "
+                 "ảo giác sờ vào thấy có thật nhờ sóng siêu âm, và lơ lửng nhiều "
                  "tuần liền. Cả một thành phố thành sân khấu riêng, còn "
                  "người trong đó thì không biết mình đang ở trong cảnh nào."),
                 ("Động cơ Sợ hãi",
@@ -541,7 +541,7 @@ ABSOLUTE = Profile(
                  "khi Peter kiệt sức thần kinh. Mysterio không cần ra đòn "
                  "nào: chính năng lực của Người Nhện thành hình phạt."),
                 ("Nhà hát Vô hiểm",
-                 "Ngược lại hoàn toàn: hắn dựng một khoảng *an toàn giả* — "
+                 "Ngược lại hoàn toàn: hắn dựng một khoảng an toàn giả — "
                  "một con phố vắng, một sân thượng yên tĩnh. Giác quan nhện "
                  "chỉ báo khi có nguy hiểm thật, nên khi nó im, Peter tin. "
                  "Đòn thật được giấu trong lớp ảo giác nền và tới từ đúng "

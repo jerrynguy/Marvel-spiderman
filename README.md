@@ -9,7 +9,7 @@ Nhân vật chưa có hồ sơ thì vẫn mở trang web như trước.
 
 Hồ sơ nào có dạng tiến hoá thì mọc thêm nút **EVOLVE** ở chân trang: bấm vào,
 tờ giấy cũ vỡ ra và dạng mới hiện lên ở một tai hồ sơ riêng, với chân dung tự
-chạy theo thời gian. Chín nhân vật đang có dạng tiến hoá, và chúng cố tình
+chạy theo thời gian. Mười nhân vật đang có dạng tiến hoá, và chúng cố tình
 không giống nhau chỗ nào:
 
 | | Bảng màu | Phá tờ giấy | Dựng tấm mới | Chân dung |
@@ -23,6 +23,7 @@ không giống nhau chỗ nào:
 | **Living Brain** | `signal` — đen trung tính, mực trắng, lệch trục R·G·B | `scan` — đầu đọc chạy dọc, đọc tới đâu dòng ấy mất đồng bộ rồi tắt | ghi từng dòng một từ đầu trang, giật cấp | cái bóng cỗ máy cũ viết lại bằng ký tự, ô chữ lật liên tục |
 | **Electro** | `arc` — giấy loà trắng trên màn phủ đen kịt, mực tím và lam điện | `strike` — sét rẽ nhánh, giấy cháy thủng dọc theo nhánh | mọc dọc chính những nhánh sét ấy, loang dần ra | dáng người dựng bằng phóng điện, cứ hơn giây rưỡi lại phóng một cú mới |
 | **Mysterio** | `stage` — nhung rượu, vàng kim và đèn hồng limelight | `mirage` — giấy nhân thành sáu bản y hệt rồi tráo chỗ, không phá gì cả | lật cả tờ giấy quanh trục dọc như lật quân bài | tấm phông cắt có nẹp chống, quả cầu chứa cả một thế giới dàn dựng |
+| **Green Goblin** | `smog` — khói hoá chất ố vàng ôliu, lục Goblin và tím Osborn | `press` — khuôn dập cả trang thành lưới phôi bom bí ngô | dập lại từng ô một theo thứ tự đọc | Trái Đất chính là quả bom bí ngô, sáng từ trong ra qua chỗ khoét |
 
 Mức độ "sống" của chân dung cũng tăng dần: ba dạng đầu có bóng người đứng yên
 và chỉ chi tiết nhỏ động đậy; Otto và Marko thì chính nhân vật cử động — Otto
@@ -32,7 +33,7 @@ uốn tám càng, Marko thì đến cái hình cũng không cố định, mỗi 
 Electro thì **nháy** — cả bộ nhánh thay sạch trong đúng một khung hình, giữa
 hai cú phóng chỉ còn quầng thở và tàn lửa lập loè.
 
-Năm bộ da đi ra khỏi khuôn: `dust` mở ra không tối sầm mà **loà lên**, màn
+Sáu bộ da đi ra khỏi khuôn: `dust` mở ra không tối sầm mà **loà lên**, màn
 phủ là một trận cát trắng xoá; `swamp` là bộ duy nhất lấy nền là một **màu**
 thay vì sắc trung tính; `signal` thì gần như **không có màu** — đen trung tính
 tuyệt đối, mực trắng, và là bộ duy nhất có ba lớp mực lệch trục thay vì hai,
@@ -40,7 +41,10 @@ vì đó là ba kênh R·G·B của màn hình chứ không phải bản in ch�
 ghép ngược hẳn — **giấy sáng loà** đặt trên **màn phủ tối nhất cả dàn**, như
 một cú phóng hồ quang giữa đêm; và `stage` là bộ duy nhất lấy nền **đỏ**,
 nhung rượu với vàng kim, hai lớp mực lệch trục trượt xa nhất cả dàn vì đó
-không phải bản in sai mà là hai diễn viên đóng thế đứng sau tờ giấy.
+không phải bản in sai mà là hai diễn viên đóng thế đứng sau tờ giấy. Còn
+`smog` thì bỏ hẳn cái thang sáng–tối: nó lấy đúng khoảng **giữa**, một tờ
+giấy ám khói hoá chất, và mở hồ sơ ra thì chìm vào hơi độc chứ không tối sầm
+cũng không loà lên.
 
 ## Chạy
 
@@ -79,6 +83,7 @@ characters/
     mysterio.py         ASM #13 — quả cầu thuỷ tinh, bên trong chỉ có sương
     mysterio_absolute.py   dạng tiến hoá của Mysterio, tấm phông trên sân khấu
     green_goblin.py     ASM #14 — nhìn từ dưới lên, quả bom đang rơi xuống ta
+    green_goblin_absolute.py  dạng tiến hoá của Goblin, Trái Đất là quả bom
     kraven.py           ASM #15 — mặt hắn nhìn qua một khe rách giữa tán lá
     beetle.py           Strange Tales #123 — bản vẽ chế tạo, bộ giáp tháo rời
 assets/characters/      nơi thả ảnh nhân vật
@@ -174,9 +179,9 @@ khác chữ. Ba chỗ để tạo khác biệt, khai ngay trong `Profile` của 
 ABSOLUTE = Profile(
     ...
     skin="sky",              # pulp | void | sky | mesh | forge | dust | swamp
-                             #   | signal | arc | stage
+                             #   | signal | arc | stage | smog
     evolve_fx="shred",       # shatter | shred | dissolve | crush | erode
-                             #   | bloom | scan | strike | mirage
+                             #   | bloom | scan | strike | mirage | press
     art=draw_absolute_vulture,   # nhận (p, rect, t) để chân dung tự chạy
 )
 ```
@@ -185,7 +190,7 @@ ABSOLUTE = Profile(
 bấm, tai hồ sơ đều đi theo. `evolve_fx` đổi cả cách phá tờ giấy cũ lẫn chiều
 quét dựng tấm mới (mở từ giữa · quét ngang · khép từ ngoài vào · cửa thép
 trượt lại · cát bồi từ đáy · nở tròn từ một hạt · ghi từng dòng từ đầu trang ·
-loang ra dọc nhánh sét · lật cả tờ như lật quân bài). Còn `art` là chỗ để nhân
+loang ra dọc nhánh sét · lật cả tờ như lật quân bài · dập lại từng ô). Còn `art` là chỗ để nhân
 vật có ngôn ngữ chuyển động của riêng nó. Ngoài `summary`/`powers` quen thuộc, hồ sơ dài còn có:
 
 | Trường | Việc |

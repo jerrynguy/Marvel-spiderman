@@ -28,6 +28,7 @@ from PySide6.QtGui import (QColor, QImage, QPainter, QPainterPath, QPen,
 from theme import INK, PAPER_HI
 
 from .art import H, W, Rolls, design, marks, mirrored, misprint
+from .green_goblin_absolute import ABSOLUTE
 from .profile import Profile
 
 BOMB = QPointF(50, 86)           # tâm quả bom, nằm thấp và gần người xem
@@ -325,6 +326,9 @@ PROFILE = Profile(
           "Man. Norman Osborn là kẻ duy nhất hiểu rằng bộ đồ ấy không phải chỗ "
           "yếu nhất — người mặc nó mới là, và cách hạ người mặc nó là lấy đi "
           "những người khiến anh ta còn muốn mặc.",
+
+    evolution=ABSOLUTE,
+    evolve_label="Evolve",
 
     art=draw_green_goblin,
     caption="Chân dung dựng lại bằng code",

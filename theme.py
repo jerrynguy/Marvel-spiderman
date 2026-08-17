@@ -264,10 +264,32 @@ STAGE = Skin(
     dot_step=6,
 )
 
+# Khói độc: chín bộ kia bộ nào cũng hoặc gần đen hoặc gần trắng, còn bộ này
+# lấy đúng khoảng **giữa** — một tờ giấy ám màu khói hoá chất, ố vàng ôliu,
+# không sáng cũng không tối. Màn phủ cũng vậy: mở hồ sơ ra không tối sầm cũng
+# không loà lên mà chìm vào một đám hơi độc. Mực đen công nghiệp, nhãn vàng
+# cảnh báo, lục Goblin và tím Osborn.
+SMOG = Skin(
+    name="smog",
+    paper=QColor("#7C7752"), paper_hi=QColor("#8C8760"),
+    ink=QColor("#14140C"), ink_soft=QColor("#403D28"),
+    red=QColor("#7B2FD6"), blue=QColor("#4FBF2A"), yellow=QColor("#F2C21A"),
+    dot=QColor(20, 20, 12, 40),
+    frame=QColor("#2E2C1A"),
+    scrim=QColor(74, 80, 44, 230),
+    grid=QColor(28, 30, 16, 40),
+    ghosts=((QColor("#4FBF2A"), -6, 5, 96), (QColor("#7B2FD6"), 6, -5, 104)),
+    accents={"edge": (QColor("#4FBF2A"), QColor("#CFD9A8")),
+             "new": (QColor("#7B2FD6"), QColor("#CFC0E4")),
+             "fix": (QColor("#F2C21A"), QColor("#E4DCA8"))},
+    dot_size=1.8,
+    dot_step=5,
+)
+
 # Tra theo tên để hồ sơ chỉ cần ghi `skin="sky"`.
 SKINS = {skin.name: skin
          for skin in (PULP, VOID, SKY, MESH, FORGE, DUST, SWAMP, SIGNAL, ARC,
-                      STAGE)}
+                      STAGE, SMOG)}
 
 
 def pick_font(candidates, fallback="DejaVu Sans"):

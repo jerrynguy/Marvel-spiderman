@@ -7,7 +7,8 @@ Spider-Man theo phong cách truyện Silver Age: giấy pulp, lưới halftone, 
 in lệch trục. Click một nhân vật đã có hồ sơ thì mở tấm hồ sơ ngay trong app.
 
 Repo: `jerrynguy/Marvel-spiderman`. Mới nhất là hồ sơ Absolute của Living
-Brain, Electro và Mysterio, trên nhánh `claude/villain-evolution-profiles-aavzr8`.
+Brain, Electro, Mysterio và Green Goblin, trên nhánh
+`claude/villain-evolution-profiles-aavzr8`.
 
 ## ĐỌC CÁI NÀY TRƯỚC: việc còn dang dở là gì
 
@@ -35,7 +36,7 @@ muốn)**.
 
 ## Mười ba hồ sơ đã có
 
-Chín trong mười ba người đã có dạng Absolute; bốn người còn lại mới chỉ
+Mười trong mười ba người đã có dạng Absolute; ba người còn lại mới chỉ
 có hồ sơ gốc.
 
 | # | Nhân vật | Số báo | Chân dung dựng quanh cái gì | Absolute |
@@ -50,7 +51,7 @@ có hồ sơ gốc.
 | 8 | Electro | ASM #9 | mặt nạ hình sao giữa vụ phóng điện | có |
 | 9 | Big Man | ASM #10 | người thật bé tí dưới cái bóng khổng lồ | chưa |
 | 10 | Mysterio | ASM #13 | quả cầu thuỷ tinh không có mặt bên trong | có |
-| 11 | Green Goblin | ASM #14 | nhìn từ dưới lên: bom bí ngô đang rơi xuống ta | chưa |
+| 11 | Green Goblin | ASM #14 | nhìn từ dưới lên: bom bí ngô đang rơi xuống ta | có |
 | 12 | Kraven the Hunter | ASM #15 | mặt nhìn qua khe rách giữa tán lá | chưa |
 | 13 | Beetle | Strange Tales #123 | bản vẽ chế tạo, bộ giáp tháo rời và rỗng | chưa |
 
@@ -111,7 +112,7 @@ Ba phép thử hay dùng (viết trong scratchpad, không commit):
   không, hàng lý lịch có gãy làm hai không.
 - **Vòng đời**: mở từng nhân vật, bấm `EvolveButton`, kiểm `stage.index`,
   `stage.card.s.name`, `stage._fx_style`, `stage.tabs.count()`, rồi đóng.
-  Hiện là 80 mục cho mười ba nhân vật (2 mục mỗi hồ sơ, thêm 6 mục cho mỗi
+  Hiện là 86 mục cho mười ba nhân vật (2 mục mỗi hồ sơ, thêm 6 mục cho mỗi
   dạng Absolute), phải xanh hết trước khi commit.
 
 Khi chưa nhìn ra hình bị gì, **render riêng cái bóng người** (chỉ `_figure()`,
@@ -185,6 +186,21 @@ ra tay vẫn đó, chỉ là bị lớp khác nuốt mất.
 - **Thứ tự vẽ các lớp sân khấu chính là nội dung.** Chùm đèn chân phải nằm
   *sau* tấm phông; vẽ sau thì ánh sáng phủ lên mặt phông và cả người hoá ra
   trong suốt. Cạnh ván cũng phải sáng hơn nền mới đọc ra là bề dày.
+- **Dấu sao markdown trong chữ hồ sơ: đã dính lần thứ ba.** Mysterio và
+  Green Goblin đều lọt `*nhấn mạnh*` vào `intro=` và chỉ lộ ra khi chụp tấm
+  hồ sơ. Đừng tin mắt mình nữa, chạy hẳn phép thử này trước mỗi lần commit:
+
+  ```bash
+  python3 - <<'PY'
+  import pathlib
+  for p in pathlib.Path("characters").glob("*.py"):
+      s = p.read_text()
+      if "Profile(" not in s: continue
+      for line in s[s.index("= Profile("):].splitlines():
+          if "*" in line and not line.strip().startswith("#"):
+              print(p.name, line.strip())
+  PY
+  ```
 - Qt nuốt phím `Tab` cho việc chuyển tiêu điểm, nên phím tắt đổi tai hồ sơ
   dùng mũi tên trái/phải.
 - **Chữ trong hồ sơ không phải Markdown.** Viết `*nhấn mạnh*` thì tấm hồ sơ
@@ -282,9 +298,11 @@ Ba trục tạo khác biệt, khai trong `Profile`:
 | Living Brain | `signal` đen trung tính, mực trắng | `scan` đầu đọc chạy dọc, dòng mất đồng bộ | ghi từng dòng từ đầu trang |
 | Electro | `arc` giấy loà trên màn phủ đen kịt | `strike` sét đánh thủng, cháy dọc nhánh | loang ra dọc chính nhánh sét |
 | Mysterio | `stage` nhung rượu + vàng kim | `mirage` giấy nhân bản rồi tráo chỗ | lật cả tờ như lật quân bài |
+| Green Goblin | `smog` khói hoá chất, nền trung tính giữa | `press` khuôn dập thành lưới phôi bí ngô | dập lại từng ô theo thứ tự đọc |
 
-Chín cái trên đã chiếm hết các hướng dễ thấy; làm dạng thứ mười thì phải nghĩ
-ra bộ da và cú chuyển cảnh mới. Nhưng nhắc lại: đó không phải việc đang cần.
+Mười cái trên đã chiếm hết các hướng dễ thấy; làm dạng thứ mười một thì phải
+nghĩ ra bộ da và cú chuyển cảnh mới. Nhưng nhắc lại: đó không phải việc đang
+cần.
 
 Bộ da `signal` và hiệu ứng `scan` của Living Brain là bộ mới nhất, và nó bẻ
 hai trục mà sáu dạng kia đều chung:
@@ -320,12 +338,20 @@ Bộ `stage` và hiệu ứng `mirage` của Mysterio bẻ thêm hai trục nữ
   trục dọc rồi mở ra, đúng động tác lật một quân bài. Muốn làm kiểu này thì
   phải biến hình cái painter chứ đừng tìm cách cắt.
 
+Bộ `smog` của Green Goblin bẻ nốt cái trục cuối còn lại:
+
+- **Nền trung tính giữa.** Mười bộ kia bộ nào cũng hoặc gần đen hoặc gần
+  trắng; bộ này ở đúng khoảng giữa — giấy ám khói hoá chất, ố vàng ôliu — và
+  màn phủ cũng là hơi độc chứ không phải bóng tối hay ánh sáng. Sau bộ này
+  thì thang sáng–tối coi như hết chỗ: dạng thứ mười một phải tìm trục khác
+  (chất liệu, độ nhám, số lớp mực), đừng tìm thêm sắc độ.
+
 ## Vị trí file
 
 ```
 spiderman.py                khung app: danh sách, bộ lọc, tìm kiếm, dòng thời gian
-theme.py                    Skin + 10 bảng màu (thêm SIGNAL, ARC, STAGE)
-ui/character_modal.py       tấm hồ sơ, nút EVOLVE, tai hồ sơ, toàn bộ 9 hiệu ứng
+theme.py                    Skin + 11 bảng màu (thêm SIGNAL, ARC, STAGE, SMOG)
+ui/character_modal.py       tấm hồ sơ, nút EVOLVE, tai hồ sơ, toàn bộ 10 hiệu ứng
 characters/profile.py       Profile, Section, Tier
 characters/art.py           đồ nghề vẽ dùng chung (design, ribbon, fan, glow, Rolls...)
 characters/<tên>.py         hồ sơ gốc
