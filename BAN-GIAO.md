@@ -6,30 +6,31 @@ App PySide6 (`python3 spiderman.py`) hiện dòng thời gian 91 ác nhân
 Spider-Man theo phong cách truyện Silver Age: giấy pulp, lưới halftone, mực
 in lệch trục. Click một nhân vật đã có hồ sơ thì mở tấm hồ sơ ngay trong app.
 
-Repo: `jerrynguy/Marvel-spiderman`. Mới nhất là hồ sơ gốc của Scorpion
-(ASM #20), Molten Man (ASM #28) và Boomerang (Tales to Astonish #81), cả ba
-trên nhánh `claude/scorpion-profile-1965-bn8mzo`; trước đó là năm dạng
-Absolute của Living Brain, Electro, Mysterio, Green Goblin và Kraven.
+Repo: `jerrynguy/Marvel-spiderman`. Mới nhất là bốn hồ sơ gốc trên nhánh
+`claude/scorpion-profile-1965-bn8mzo`: Scorpion (ASM #20), Molten Man
+(ASM #28), Boomerang (Tales to Astonish #81) và Rhino (ASM #41); trước đó là
+năm dạng Absolute của Living Brain, Electro, Mysterio, Green Goblin và
+Kraven.
 
 ## ĐỌC CÁI NÀY TRƯỚC: việc còn dang dở là gì
 
-**Mới 16 trên 91 nhân vật có hồ sơ trong app. 75 người còn lại click vào là
+**Mới 17 trên 91 nhân vật có hồ sơ trong app. 74 người còn lại click vào là
 mở trình duyệt ra Wikipedia** — xem `on_click()` trong `spiderman.py`:
 
 ```python
 profile = characters.get(name)
 if profile is None:
-    self.open_web(url_for(name, self.source.currentText()))   # 75 người rơi vào đây
+    self.open_web(url_for(name, self.source.currentText()))   # 74 người rơi vào đây
     return
-self.open_profile(profile, self.sender())                      # chỉ 16 người
+self.open_profile(profile, self.sender())                      # chỉ 17 người
 ```
 
 Đó là khoảng trống chính của project, và cũng là việc đang chạy: **viết hồ sơ
-gốc cho những nhân vật chưa có**, đi tuần tự theo dòng thời gian. Mười sáu
+gốc cho những nhân vật chưa có**, đi tuần tự theo dòng thời gian. Mười bảy
 người đã xong. Mấy chỗ còn hở: **Smythe / Spider-Slayers** (ASM #25,
 06/1965), **Crime Master** (ASM #26, 07/1965), **Looter** (ASM #36, 05/1966),
-**Robot Master / Gaunt** (ASM #37, 06/1966), rồi **Rhino** (ASM #41, 10/1966)
-và cả năm 1967 trở đi.
+**Robot Master / Gaunt** (ASM #37, 06/1966), rồi **Shocker** (ASM #46,
+03/1967), **Kingpin** (ASM #50, 07/1967) và cả 1968 trở đi.
 
 Hệ "dạng tiến hoá Absolute" bên dưới **đã xong và không cần làm thêm gì**.
 Đừng đề xuất gắn Absolute cho ai đó chưa có hồ sơ gốc: Absolute treo dưới
@@ -37,10 +38,10 @@ Hệ "dạng tiến hoá Absolute" bên dưới **đã xong và không cần là
 chỗ mà treo. Trình tự bắt buộc là **hồ sơ gốc trước, Absolute sau (nếu
 muốn)**.
 
-## Mười sáu hồ sơ đã có
+## Mười bảy hồ sơ đã có
 
-Mười một trong mười sáu người đã có dạng Absolute; còn Big Man, Beetle,
-Scorpion, Molten Man và Boomerang thì mới chỉ có hồ sơ gốc.
+Mười một trong mười bảy người đã có dạng Absolute; còn Big Man, Beetle,
+Scorpion, Molten Man, Boomerang và Rhino thì mới chỉ có hồ sơ gốc.
 
 | # | Nhân vật | Số báo | Chân dung dựng quanh cái gì | Absolute |
 |---|---|---|---|---|
@@ -60,10 +61,11 @@ Scorpion, Molten Man và Boomerang thì mới chỉ có hồ sơ gốc.
 | 14 | Scorpion | ASM #20 | cái đuôi in chồng bốn lần, mũi kim chúc xuống đầu hắn | chưa |
 | 15 | Molten Man | ASM #28 | người tô mực vàng, dòng kẻ của trang giấy oằn vì nóng | chưa |
 | 16 | Boomerang | Tales to Astonish #81 | nhìn chếch từ trên cao, trọn vòng bay vắt qua người | chưa |
+| 17 | Rhino | ASM #41 | cận cảnh tràn khỏi cả bốn mép, da khắc bằng chấm đục | chưa |
 
 ## Nguyên tắc vẽ chân dung — quan trọng nhất
 
-**Mỗi chân dung phải khác hẳn mười lăm cái kia.** Không chỉ khác nội dung mà khác
+**Mỗi chân dung phải khác hẳn mười sáu cái kia.** Không chỉ khác nội dung mà khác
 cả cách dựng hình. Sáu hồ sơ đầu đều theo một lối: bóng đen đặc trên nền
 giấy, `misprint()` lo phần mực lệch trục. Ba hồ sơ sau cố tình bẻ lối đó:
 
@@ -76,7 +78,7 @@ giấy, `misprint()` lo phần mực lệch trục. Ba hồ sơ sau cố tình b
   kèm bóng in lệch trục (nó vốn không có thật), người thật tô đen đặc kèm đủ
   hai lớp mực lệch.
 
-Bảy hồ sơ mới nhất bẻ tiếp bảy trục khác:
+Tám hồ sơ mới nhất bẻ tiếp tám trục khác:
 
 - **Mysterio** cho một quả cầu thuỷ tinh mà bên trong không có gì ngoài
   sương — không giấu mặt như Chameleon, mà là không có mặt để giấu.
@@ -103,6 +105,12 @@ Bảy hồ sơ mới nhất bẻ tiếp bảy trục khác:
   bay của cái boomerang là một vòng nằm ngang — hạ mắt xuống ngang tầm người
   thì cả vòng dẹp thành một vạch. Nửa gần của vòng vẽ đè lên chân hắn, nửa
   xa bị hắn che: đúng một chỗ chồng lấp ấy làm nên chiều sâu của cả bức.
+- **Rhino** bẻ hai trục cùng lúc: **khuôn khổ** và **chất liệu**. Mười sáu
+  người kia đều đứng gọn trong khung, hắn thì tràn ra cả bốn mép, sừng cắt
+  qua cạnh trên, và hai dấu canh trục ở đáy bị chính hắn đè lên — bản in vẽ
+  trước, hắn đi qua sau. Da thì không tô mực phẳng mà **đục thủng bằng chấm
+  màu giấy**, dày thưa theo hướng sáng; hai cái sừng trừ ra khỏi vùng chấm
+  nên nhẵn, và chính chỗ tương phản nhẵn/sần ấy làm ra chất da.
 
 Khi làm người kế tiếp, hãy hỏi trước: hình này có thể là hình của ai khác
 trong danh sách không? Nếu có thì nghĩ lại.

@@ -94,11 +94,12 @@ characters/
     scorpion.py         ASM #20 — cú quật của cái đuôi, in chồng bốn lần
     molten_man.py       ASM #28 — người bằng mực vàng, dòng kẻ giấy oằn vì nóng
     boomerang.py        Tales to Astonish #81 — nhìn chếch từ trên, cả vòng bay
+    rhino.py            ASM #41 — cận cảnh tràn khỏi khung, da khắc bằng chấm
 assets/characters/      nơi thả ảnh nhân vật
 BAN-GIAO.md             đang làm tới đâu, mấy cái bẫy đã gặp, cách kiểm chứng
 ```
 
-Mới 16 trên 91 nhân vật có hồ sơ trong app; 75 người còn lại click vào vẫn mở
+Mới 17 trên 91 nhân vật có hồ sơ trong app; 74 người còn lại click vào vẫn mở
 trang web. Việc đang chạy là viết hồ sơ gốc cho họ, đi tuần tự theo dòng thời
 gian — chi tiết trong [`BAN-GIAO.md`](BAN-GIAO.md).
 
