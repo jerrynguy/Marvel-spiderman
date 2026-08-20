@@ -6,30 +6,29 @@ App PySide6 (`python3 spiderman.py`) hiện dòng thời gian 91 ác nhân
 Spider-Man theo phong cách truyện Silver Age: giấy pulp, lưới halftone, mực
 in lệch trục. Click một nhân vật đã có hồ sơ thì mở tấm hồ sơ ngay trong app.
 
-Repo: `jerrynguy/Marvel-spiderman`. Mới nhất là năm hồ sơ gốc: Scorpion
+Repo: `jerrynguy/Marvel-spiderman`. Mới nhất là sáu hồ sơ gốc: Scorpion
 (ASM #20), Molten Man (ASM #28), Boomerang (Tales to Astonish #81), Rhino
-(ASM #41) và Shocker (ASM #46); trước đó là năm dạng Absolute của Living
-Brain, Electro, Mysterio, Green Goblin và Kraven.
+(ASM #41), Shocker (ASM #46) và Kingpin (ASM #50); trước đó là năm dạng
+Absolute của Living Brain, Electro, Mysterio, Green Goblin và Kraven.
 
 ## ĐỌC CÁI NÀY TRƯỚC: việc còn dang dở là gì
 
-**Mới 18 trên 91 nhân vật có hồ sơ trong app. 73 người còn lại click vào là
+**Mới 19 trên 91 nhân vật có hồ sơ trong app. 72 người còn lại click vào là
 mở trình duyệt ra Wikipedia** — xem `on_click()` trong `spiderman.py`:
 
 ```python
 profile = characters.get(name)
 if profile is None:
-    self.open_web(url_for(name, self.source.currentText()))   # 73 người rơi vào đây
+    self.open_web(url_for(name, self.source.currentText()))   # 72 người rơi vào đây
     return
-self.open_profile(profile, self.sender())                      # chỉ 18 người
+self.open_profile(profile, self.sender())                      # chỉ 19 người
 ```
 
 Đó là khoảng trống chính của project, và cũng là việc đang chạy: **viết hồ sơ
-gốc cho những nhân vật chưa có**, đi tuần tự theo dòng thời gian. Mười tám
+gốc cho những nhân vật chưa có**, đi tuần tự theo dòng thời gian. Mười chín
 người đã xong. Mấy chỗ còn hở: **Smythe / Spider-Slayers** (ASM #25,
 06/1965), **Crime Master** (ASM #26, 07/1965), **Looter** (ASM #36, 05/1966),
-**Robot Master / Gaunt** (ASM #37, 06/1966), rồi **Kingpin** (ASM #50,
-07/1967) và cả 1968 trở đi.
+**Robot Master / Gaunt** (ASM #37, 06/1966), rồi cả 1968 trở đi.
 
 Hệ "dạng tiến hoá Absolute" bên dưới **đã xong và không cần làm thêm gì**.
 Đừng đề xuất gắn Absolute cho ai đó chưa có hồ sơ gốc: Absolute treo dưới
@@ -37,10 +36,11 @@ Hệ "dạng tiến hoá Absolute" bên dưới **đã xong và không cần là
 chỗ mà treo. Trình tự bắt buộc là **hồ sơ gốc trước, Absolute sau (nếu
 muốn)**.
 
-## Mười tám hồ sơ đã có
+## Mười chín hồ sơ đã có
 
-Mười một trong mười tám người đã có dạng Absolute; bảy người mới chỉ có hồ
-sơ gốc: Big Man, Beetle, Scorpion, Molten Man, Boomerang, Rhino và Shocker.
+Mười một trong mười chín người đã có dạng Absolute; tám người mới chỉ có hồ
+sơ gốc: Big Man, Beetle, Scorpion, Molten Man, Boomerang, Rhino, Shocker và
+Kingpin.
 
 | # | Nhân vật | Số báo | Chân dung dựng quanh cái gì | Absolute |
 |---|---|---|---|---|
@@ -62,10 +62,11 @@ sơ gốc: Big Man, Beetle, Scorpion, Molten Man, Boomerang, Rhino và Shocker.
 | 16 | Boomerang | Tales to Astonish #81 | nhìn chếch từ trên cao, trọn vòng bay vắt qua người | chưa |
 | 17 | Rhino | ASM #41 | cận cảnh tràn khỏi cả bốn mép, da khắc bằng chấm đục | chưa |
 | 18 | Shocker | ASM #46 | cả bản in bị rung: hình xẻ thành dải ngang, mỗi dải trượt | chưa |
+| 19 | Kingpin | ASM #50 | đọc được hai lần: một người mặc vest trắng, một toà cao ốc | chưa |
 
 ## Nguyên tắc vẽ chân dung — quan trọng nhất
 
-**Mỗi chân dung phải khác hẳn mười bảy cái kia.** Không chỉ khác nội dung mà khác
+**Mỗi chân dung phải khác hẳn mười tám cái kia.** Không chỉ khác nội dung mà khác
 cả cách dựng hình. Sáu hồ sơ đầu đều theo một lối: bóng đen đặc trên nền
 giấy, `misprint()` lo phần mực lệch trục. Ba hồ sơ sau cố tình bẻ lối đó:
 
@@ -78,7 +79,7 @@ giấy, `misprint()` lo phần mực lệch trục. Ba hồ sơ sau cố tình b
   kèm bóng in lệch trục (nó vốn không có thật), người thật tô đen đặc kèm đủ
   hai lớp mực lệch.
 
-Chín hồ sơ mới nhất bẻ tiếp chín trục khác:
+Mười hồ sơ mới nhất bẻ tiếp mười trục khác:
 
 - **Mysterio** cho một quả cầu thuỷ tinh mà bên trong không có gì ngoài
   sương — không giấu mặt như Chameleon, mà là không có mặt để giấu.
@@ -116,6 +117,11 @@ Chín hồ sơ mới nhất bẻ tiếp chín trục khác:
   dải theo một sóng sin tắt dần từ cái găng ra. Hai bản nhuộm đỏ và lam đặt
   lệch thêm nên dải nào xô mạnh mới hiện viền màu. Hắn phát ra rung, nên thứ
   phải rung là chính cái ảnh.
+- **Kingpin** cho một đường bao **đọc được hai lần**: vai là tầng giật cấp,
+  hàng khuy là cột cửa sổ, sọc vest là dãy cửa sổ đêm — người và toà nhà
+  cùng lúc, cả hai đều đúng. Hắn là kẻ duy nhất trong danh sách không mặc đồ
+  hoá trang, nên thứ phải vẽ không phải bộ đồ mà là cái thành phố hắn sở
+  hữu: nhà thấp tô đen ở đáy, ba cái bóng người bé xíu làm thước đo.
 
 Khi làm người kế tiếp, hãy hỏi trước: hình này có thể là hình của ai khác
 trong danh sách không? Nếu có thì nghĩ lại.
@@ -272,6 +278,13 @@ ra tay vẫn đó, chỉ là bị lớp khác nuốt mất.
   trong nửa ấy, thành một khúc dồi đỏ. Cách đúng là `figure.subtracted(
   figure.translated(-6, -2))` — bóng người trừ đi chính nó đã dịch chỗ, ra
   một dải men theo đường bao, dày đều, tự vòng quanh cả tay lẫn đầu.
+- **Nét cong trên mặt là ra mặt cười, gần như luôn luôn.** Kingpin dính hai
+  vòng: mép cong lên ra nụ cười, rồi thêm hai nếp nọng vòng từ cánh mũi
+  xuống hàm thì thành mặt nạ Guy Fawkes. Mặt của kẻ lạnh lùng thì kẻ mép
+  đúng một vạch thẳng, mày thẳng chúc vào giữa, và đừng thêm nét nào nữa.
+  Cùng loại bẫy: cái gậy có núm tròn cộng một chấm đỏ ở đầu đọc ra **cột
+  đèn giao thông** — bỏ chấm đỏ, kéo gậy sát vào người, thêm hai khía ngón
+  thì mới ra bàn tay đang nắm.
 - **Hiệu ứng ở tầng ảnh thì phải quy đổi đơn vị.** Dải rung của Shocker dày
   2,4 đơn vị khung 100×120, nhưng `_shake()` làm việc trên điểm ảnh. Phải
   lấy `min(rect.w/W, rect.h/H) * scale` làm hệ số quy đổi, đừng lấy thẳng
