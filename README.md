@@ -92,11 +92,12 @@ characters/
     kraven_absolute.py     dạng tiến hoá của Kraven, nhìn từ sau vai thợ săn
     beetle.py           Strange Tales #123 — bản vẽ chế tạo, bộ giáp tháo rời
     scorpion.py         ASM #20 — cú quật của cái đuôi, in chồng bốn lần
+    molten_man.py       ASM #28 — người bằng mực vàng, dòng kẻ giấy oằn vì nóng
 assets/characters/      nơi thả ảnh nhân vật
 BAN-GIAO.md             đang làm tới đâu, mấy cái bẫy đã gặp, cách kiểm chứng
 ```
 
-Mới 14 trên 91 nhân vật có hồ sơ trong app; 77 người còn lại click vào vẫn mở
+Mới 15 trên 91 nhân vật có hồ sơ trong app; 76 người còn lại click vào vẫn mở
 trang web. Việc đang chạy là viết hồ sơ gốc cho họ, đi tuần tự theo dòng thời
 gian — chi tiết trong [`BAN-GIAO.md`](BAN-GIAO.md).
 
