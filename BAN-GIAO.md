@@ -6,29 +6,31 @@ App PySide6 (`python3 spiderman.py`) hiện dòng thời gian 91 ác nhân
 Spider-Man theo phong cách truyện Silver Age: giấy pulp, lưới halftone, mực
 in lệch trục. Click một nhân vật đã có hồ sơ thì mở tấm hồ sơ ngay trong app.
 
-Repo: `jerrynguy/Marvel-spiderman`. Mới nhất là sáu hồ sơ gốc: Scorpion
+Repo: `jerrynguy/Marvel-spiderman`. Mới nhất là bảy hồ sơ gốc: Scorpion
 (ASM #20), Molten Man (ASM #28), Boomerang (Tales to Astonish #81), Rhino
-(ASM #41), Shocker (ASM #46) và Kingpin (ASM #50); trước đó là năm dạng
-Absolute của Living Brain, Electro, Mysterio, Green Goblin và Kraven.
+(ASM #41), Shocker (ASM #46), Kingpin (ASM #50) và Prowler (ASM #78); trước
+đó là năm dạng Absolute của Living Brain, Electro, Mysterio, Green Goblin và
+Kraven.
 
 ## ĐỌC CÁI NÀY TRƯỚC: việc còn dang dở là gì
 
-**Mới 19 trên 91 nhân vật có hồ sơ trong app. 72 người còn lại click vào là
+**Mới 20 trên 91 nhân vật có hồ sơ trong app. 71 người còn lại click vào là
 mở trình duyệt ra Wikipedia** — xem `on_click()` trong `spiderman.py`:
 
 ```python
 profile = characters.get(name)
 if profile is None:
-    self.open_web(url_for(name, self.source.currentText()))   # 72 người rơi vào đây
+    self.open_web(url_for(name, self.source.currentText()))   # 71 người rơi vào đây
     return
-self.open_profile(profile, self.sender())                      # chỉ 19 người
+self.open_profile(profile, self.sender())                      # chỉ 20 người
 ```
 
 Đó là khoảng trống chính của project, và cũng là việc đang chạy: **viết hồ sơ
-gốc cho những nhân vật chưa có**, đi tuần tự theo dòng thời gian. Mười chín
+gốc cho những nhân vật chưa có**, đi tuần tự theo dòng thời gian. Hai mươi
 người đã xong. Mấy chỗ còn hở: **Smythe / Spider-Slayers** (ASM #25,
 06/1965), **Crime Master** (ASM #26, 07/1965), **Looter** (ASM #36, 05/1966),
-**Robot Master / Gaunt** (ASM #37, 06/1966), rồi cả 1968 trở đi.
+**Robot Master / Gaunt** (ASM #37, 06/1966), cả năm 1968, rồi **Man Mountain
+Marko** và **Silvermane** (ASM #73, 06/1969), sau đó là 1970 trở đi.
 
 Hệ "dạng tiến hoá Absolute" bên dưới **đã xong và không cần làm thêm gì**.
 Đừng đề xuất gắn Absolute cho ai đó chưa có hồ sơ gốc: Absolute treo dưới
@@ -36,11 +38,11 @@ Hệ "dạng tiến hoá Absolute" bên dưới **đã xong và không cần là
 chỗ mà treo. Trình tự bắt buộc là **hồ sơ gốc trước, Absolute sau (nếu
 muốn)**.
 
-## Mười chín hồ sơ đã có
+## Hai mươi hồ sơ đã có
 
-Mười một trong mười chín người đã có dạng Absolute; tám người mới chỉ có hồ
-sơ gốc: Big Man, Beetle, Scorpion, Molten Man, Boomerang, Rhino, Shocker và
-Kingpin.
+Mười một trong hai mươi người đã có dạng Absolute; chín người mới chỉ có hồ
+sơ gốc: Big Man, Beetle, Scorpion, Molten Man, Boomerang, Rhino, Shocker,
+Kingpin và Prowler.
 
 | # | Nhân vật | Số báo | Chân dung dựng quanh cái gì | Absolute |
 |---|---|---|---|---|
@@ -63,10 +65,11 @@ Kingpin.
 | 17 | Rhino | ASM #41 | cận cảnh tràn khỏi cả bốn mép, da khắc bằng chấm đục | chưa |
 | 18 | Shocker | ASM #46 | cả bản in bị rung: hình xẻ thành dải ngang, mỗi dải trượt | chưa |
 | 19 | Kingpin | ASM #50 | đọc được hai lần: một người mặc vest trắng, một toà cao ốc | chưa |
+| 20 | Prowler | ASM #78 | cả tờ giấy là ô cửa kính, hắn ngồi ở phía bên kia | chưa |
 
 ## Nguyên tắc vẽ chân dung — quan trọng nhất
 
-**Mỗi chân dung phải khác hẳn mười tám cái kia.** Không chỉ khác nội dung mà khác
+**Mỗi chân dung phải khác hẳn mười chín cái kia.** Không chỉ khác nội dung mà khác
 cả cách dựng hình. Sáu hồ sơ đầu đều theo một lối: bóng đen đặc trên nền
 giấy, `misprint()` lo phần mực lệch trục. Ba hồ sơ sau cố tình bẻ lối đó:
 
@@ -79,7 +82,7 @@ giấy, `misprint()` lo phần mực lệch trục. Ba hồ sơ sau cố tình b
   kèm bóng in lệch trục (nó vốn không có thật), người thật tô đen đặc kèm đủ
   hai lớp mực lệch.
 
-Mười hồ sơ mới nhất bẻ tiếp mười trục khác:
+Mười một hồ sơ mới nhất bẻ tiếp mười một trục khác:
 
 - **Mysterio** cho một quả cầu thuỷ tinh mà bên trong không có gì ngoài
   sương — không giấu mặt như Chameleon, mà là không có mặt để giấu.
@@ -122,6 +125,11 @@ Mười hồ sơ mới nhất bẻ tiếp mười trục khác:
   cùng lúc, cả hai đều đúng. Hắn là kẻ duy nhất trong danh sách không mặc đồ
   hoá trang, nên thứ phải vẽ không phải bộ đồ mà là cái thành phố hắn sở
   hữu: nhà thấp tô đen ở đáy, ba cái bóng người bé xíu làm thước đo.
+- **Prowler** dựng một **vật cản ở lớp gần nhất**: cả tờ giấy là một ô cửa
+  kính, nhân vật ở phía bên kia. Nẹp cửa, hai thanh chia ô và vệt phản sáng
+  đều vẽ sau cùng, đè lên cả người hắn — chỉ chừng ấy là mắt hiểu có một tấm
+  kính ở giữa. Mặt kính mang đủ dấu vết một ca làm của nghề cũ: bụi, một vệt
+  gạt sạch hình vòng cung, nước chảy từ mép vệt, và một vết bàn tay.
 
 Khi làm người kế tiếp, hãy hỏi trước: hình này có thể là hình của ai khác
 trong danh sách không? Nếu có thì nghĩ lại.
@@ -278,6 +286,10 @@ ra tay vẫn đó, chỉ là bị lớp khác nuốt mất.
   trong nửa ấy, thành một khúc dồi đỏ. Cách đúng là `figure.subtracted(
   figure.translated(-6, -2))` — bóng người trừ đi chính nó đã dịch chỗ, ra
   một dải men theo đường bao, dày đều, tự vòng quanh cả tay lẫn đầu.
+- **Mắt trên mặt nạ: hai vệt hẹp, đừng gì khác.** Prowler đi qua ba bản mới
+  yên: một dải sáng vắt ngang cả mặt ra cái miệng cười; đổi thành hai vòng
+  tròn có con ngươi thì ra mắt nhân vật hoạt hình; thêm một nét cong dưới
+  hai mắt là thành mặt cười hẳn. Hai vệt hẹp, xếch, không có gì bên dưới.
 - **Nét cong trên mặt là ra mặt cười, gần như luôn luôn.** Kingpin dính hai
   vòng: mép cong lên ra nụ cười, rồi thêm hai nếp nọng vòng từ cánh mũi
   xuống hàm thì thành mặt nạ Guy Fawkes. Mặt của kẻ lạnh lùng thì kẻ mép

@@ -97,11 +97,12 @@ characters/
     rhino.py            ASM #41 — cận cảnh tràn khỏi khung, da khắc bằng chấm
     shocker.py          ASM #46 — cả bản in bị rung, hình xẻ thành dải ngang
     kingpin.py          ASM #50 — đọc được hai lần: một người, một toà cao ốc
+    prowler.py          ASM #78 — cả tờ giấy là ô cửa kính, hắn ở phía bên kia
 assets/characters/      nơi thả ảnh nhân vật
 BAN-GIAO.md             đang làm tới đâu, mấy cái bẫy đã gặp, cách kiểm chứng
 ```
 
-Mới 19 trên 91 nhân vật có hồ sơ trong app; 72 người còn lại click vào vẫn mở
+Mới 20 trên 91 nhân vật có hồ sơ trong app; 71 người còn lại click vào vẫn mở
 trang web. Việc đang chạy là viết hồ sơ gốc cho họ, đi tuần tự theo dòng thời
 gian — chi tiết trong [`BAN-GIAO.md`](BAN-GIAO.md).
 
