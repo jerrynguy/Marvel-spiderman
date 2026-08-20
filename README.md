@@ -93,11 +93,12 @@ characters/
     beetle.py           Strange Tales #123 — bản vẽ chế tạo, bộ giáp tháo rời
     scorpion.py         ASM #20 — cú quật của cái đuôi, in chồng bốn lần
     molten_man.py       ASM #28 — người bằng mực vàng, dòng kẻ giấy oằn vì nóng
+    boomerang.py        Tales to Astonish #81 — nhìn chếch từ trên, cả vòng bay
 assets/characters/      nơi thả ảnh nhân vật
 BAN-GIAO.md             đang làm tới đâu, mấy cái bẫy đã gặp, cách kiểm chứng
 ```
 
-Mới 15 trên 91 nhân vật có hồ sơ trong app; 76 người còn lại click vào vẫn mở
+Mới 16 trên 91 nhân vật có hồ sơ trong app; 75 người còn lại click vào vẫn mở
 trang web. Việc đang chạy là viết hồ sơ gốc cho họ, đi tuần tự theo dòng thời
 gian — chi tiết trong [`BAN-GIAO.md`](BAN-GIAO.md).
 

@@ -7,28 +7,29 @@ Spider-Man theo phong cách truyện Silver Age: giấy pulp, lưới halftone, 
 in lệch trục. Click một nhân vật đã có hồ sơ thì mở tấm hồ sơ ngay trong app.
 
 Repo: `jerrynguy/Marvel-spiderman`. Mới nhất là hồ sơ gốc của Scorpion
-(ASM #20) và Molten Man (ASM #28), cả hai trên nhánh
-`claude/scorpion-profile-1965-bn8mzo`; trước đó là năm dạng Absolute của
-Living Brain, Electro, Mysterio, Green Goblin và Kraven.
+(ASM #20), Molten Man (ASM #28) và Boomerang (Tales to Astonish #81), cả ba
+trên nhánh `claude/scorpion-profile-1965-bn8mzo`; trước đó là năm dạng
+Absolute của Living Brain, Electro, Mysterio, Green Goblin và Kraven.
 
 ## ĐỌC CÁI NÀY TRƯỚC: việc còn dang dở là gì
 
-**Mới 15 trên 91 nhân vật có hồ sơ trong app. 76 người còn lại click vào là
+**Mới 16 trên 91 nhân vật có hồ sơ trong app. 75 người còn lại click vào là
 mở trình duyệt ra Wikipedia** — xem `on_click()` trong `spiderman.py`:
 
 ```python
 profile = characters.get(name)
 if profile is None:
-    self.open_web(url_for(name, self.source.currentText()))   # 76 người rơi vào đây
+    self.open_web(url_for(name, self.source.currentText()))   # 75 người rơi vào đây
     return
-self.open_profile(profile, self.sender())                      # chỉ 15 người
+self.open_profile(profile, self.sender())                      # chỉ 16 người
 ```
 
 Đó là khoảng trống chính của project, và cũng là việc đang chạy: **viết hồ sơ
-gốc cho những nhân vật chưa có**, đi tuần tự theo dòng thời gian. Mười lăm
-người đã xong; còn hở lại hai cái tên giữa năm 1965 là **Smythe /
-Spider-Slayers** (ASM #25, 06/1965) và **Crime Master** (ASM #26, 07/1965),
-rồi đi tiếp sang 1966.
+gốc cho những nhân vật chưa có**, đi tuần tự theo dòng thời gian. Mười sáu
+người đã xong. Mấy chỗ còn hở: **Smythe / Spider-Slayers** (ASM #25,
+06/1965), **Crime Master** (ASM #26, 07/1965), **Looter** (ASM #36, 05/1966),
+**Robot Master / Gaunt** (ASM #37, 06/1966), rồi **Rhino** (ASM #41, 10/1966)
+và cả năm 1967 trở đi.
 
 Hệ "dạng tiến hoá Absolute" bên dưới **đã xong và không cần làm thêm gì**.
 Đừng đề xuất gắn Absolute cho ai đó chưa có hồ sơ gốc: Absolute treo dưới
@@ -36,10 +37,10 @@ Hệ "dạng tiến hoá Absolute" bên dưới **đã xong và không cần là
 chỗ mà treo. Trình tự bắt buộc là **hồ sơ gốc trước, Absolute sau (nếu
 muốn)**.
 
-## Mười lăm hồ sơ đã có
+## Mười sáu hồ sơ đã có
 
-Mười một trong mười lăm người đã có dạng Absolute; còn Big Man, Beetle,
-Scorpion và Molten Man thì mới chỉ có hồ sơ gốc.
+Mười một trong mười sáu người đã có dạng Absolute; còn Big Man, Beetle,
+Scorpion, Molten Man và Boomerang thì mới chỉ có hồ sơ gốc.
 
 | # | Nhân vật | Số báo | Chân dung dựng quanh cái gì | Absolute |
 |---|---|---|---|---|
@@ -58,10 +59,11 @@ Scorpion và Molten Man thì mới chỉ có hồ sơ gốc.
 | 13 | Beetle | Strange Tales #123 | bản vẽ chế tạo, bộ giáp tháo rời và rỗng | chưa |
 | 14 | Scorpion | ASM #20 | cái đuôi in chồng bốn lần, mũi kim chúc xuống đầu hắn | chưa |
 | 15 | Molten Man | ASM #28 | người tô mực vàng, dòng kẻ của trang giấy oằn vì nóng | chưa |
+| 16 | Boomerang | Tales to Astonish #81 | nhìn chếch từ trên cao, trọn vòng bay vắt qua người | chưa |
 
 ## Nguyên tắc vẽ chân dung — quan trọng nhất
 
-**Mỗi chân dung phải khác hẳn mười bốn cái kia.** Không chỉ khác nội dung mà khác
+**Mỗi chân dung phải khác hẳn mười lăm cái kia.** Không chỉ khác nội dung mà khác
 cả cách dựng hình. Sáu hồ sơ đầu đều theo một lối: bóng đen đặc trên nền
 giấy, `misprint()` lo phần mực lệch trục. Ba hồ sơ sau cố tình bẻ lối đó:
 
@@ -74,7 +76,7 @@ giấy, `misprint()` lo phần mực lệch trục. Ba hồ sơ sau cố tình b
   kèm bóng in lệch trục (nó vốn không có thật), người thật tô đen đặc kèm đủ
   hai lớp mực lệch.
 
-Sáu hồ sơ mới nhất bẻ tiếp sáu trục khác:
+Bảy hồ sơ mới nhất bẻ tiếp bảy trục khác:
 
 - **Mysterio** cho một quả cầu thuỷ tinh mà bên trong không có gì ngoài
   sương — không giấu mặt như Chameleon, mà là không có mặt để giấu.
@@ -97,6 +99,10 @@ Sáu hồ sơ mới nhất bẻ tiếp sáu trục khác:
   vùng sát người, và dấu canh trục gần hắn nhất thì chảy nhão rồi nhỏ giọt.
   Hắn cũng là bóng người duy nhất **tô bằng mực vàng**: mười bốn người kia là
   mảng đen với chi tiết sáng, hắn là mảng sáng với chi tiết đen.
+- **Boomerang** bẻ trục **góc nhìn**: nhìn chếch từ trên cao xuống, vì đường
+  bay của cái boomerang là một vòng nằm ngang — hạ mắt xuống ngang tầm người
+  thì cả vòng dẹp thành một vạch. Nửa gần của vòng vẽ đè lên chân hắn, nửa
+  xa bị hắn che: đúng một chỗ chồng lấp ấy làm nên chiều sâu của cả bức.
 
 Khi làm người kế tiếp, hãy hỏi trước: hình này có thể là hình của ai khác
 trong danh sách không? Nếu có thì nghĩ lại.
@@ -253,6 +259,12 @@ ra tay vẫn đó, chỉ là bị lớp khác nuốt mất.
   trong nửa ấy, thành một khúc dồi đỏ. Cách đúng là `figure.subtracted(
   figure.translated(-6, -2))` — bóng người trừ đi chính nó đã dịch chỗ, ra
   một dải men theo đường bao, dày đều, tự vòng quanh cả tay lẫn đầu.
+- **Nhìn thẳng đứng từ trên xuống thì con người biến mất.** Bản đầu của
+  Boomerang vẽ đúng kiểu sơ đồ đường bay thật: camera treo thẳng trên đầu.
+  Bốn vòng đều ra một con bọ nằm ngửa — từ góc ấy người chỉ còn đỉnh đầu với
+  hai vai, không còn mặt, không còn dáng. Muốn cả mặt đất lẫn con người thì
+  hạ xuống góc chếch, và để **bóng đổ** với **chỗ chồng lấp** lo phần chiều
+  sâu.
 - **Gai nhọn trên đỉnh mũ đọc ra tai mèo.** Muốn phá cái vòng tròn của một
   cái đầu thì dùng gờ thấp và dài vuốt ngược ra sau, đừng dùng chóp tam giác.
 - **`misprint()` chỉ hợp với hình cỡ vừa.** Nó đẻ ra hai bản lệch 2–3 đơn vị;
