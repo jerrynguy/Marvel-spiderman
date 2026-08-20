@@ -6,27 +6,28 @@ App PySide6 (`python3 spiderman.py`) hiện dòng thời gian 91 ác nhân
 Spider-Man theo phong cách truyện Silver Age: giấy pulp, lưới halftone, mực
 in lệch trục. Click một nhân vật đã có hồ sơ thì mở tấm hồ sơ ngay trong app.
 
-Repo: `jerrynguy/Marvel-spiderman`. Mới nhất là hồ sơ Absolute của Living
-Brain, Electro, Mysterio, Green Goblin và Kraven, trên nhánh
-`claude/villain-evolution-profiles-aavzr8`.
+Repo: `jerrynguy/Marvel-spiderman`. Mới nhất là hồ sơ gốc của Scorpion
+(ASM #20, 01/1965) trên nhánh `claude/scorpion-profile-1965-bn8mzo`; trước đó
+là năm dạng Absolute của Living Brain, Electro, Mysterio, Green Goblin và
+Kraven.
 
 ## ĐỌC CÁI NÀY TRƯỚC: việc còn dang dở là gì
 
-**Mới 13 trên 91 nhân vật có hồ sơ trong app. 78 người còn lại click vào là
+**Mới 14 trên 91 nhân vật có hồ sơ trong app. 77 người còn lại click vào là
 mở trình duyệt ra Wikipedia** — xem `on_click()` trong `spiderman.py`:
 
 ```python
 profile = characters.get(name)
 if profile is None:
-    self.open_web(url_for(name, self.source.currentText()))   # 78 người rơi vào đây
+    self.open_web(url_for(name, self.source.currentText()))   # 77 người rơi vào đây
     return
-self.open_profile(profile, self.sender())                      # chỉ 13 người
+self.open_profile(profile, self.sender())                      # chỉ 14 người
 ```
 
 Đó là khoảng trống chính của project, và cũng là việc đang chạy: **viết hồ sơ
-gốc cho những nhân vật chưa có**, đi tuần tự theo dòng thời gian. Mười ba người
-đã xong là mười ba cái tên đầu danh sách; người kế tiếp là **Scorpion**
-(ASM #20, 01/1965), rồi Molten Man, Crime Master...
+gốc cho những nhân vật chưa có**, đi tuần tự theo dòng thời gian. Mười bốn
+người đã xong là mười bốn cái tên đầu danh sách; người kế tiếp là **Smythe /
+Spider-Slayers** (ASM #25, 06/1965), rồi Crime Master, Molten Man...
 
 Hệ "dạng tiến hoá Absolute" bên dưới **đã xong và không cần làm thêm gì**.
 Đừng đề xuất gắn Absolute cho ai đó chưa có hồ sơ gốc: Absolute treo dưới
@@ -34,10 +35,10 @@ Hệ "dạng tiến hoá Absolute" bên dưới **đã xong và không cần là
 chỗ mà treo. Trình tự bắt buộc là **hồ sơ gốc trước, Absolute sau (nếu
 muốn)**.
 
-## Mười ba hồ sơ đã có
+## Mười bốn hồ sơ đã có
 
-Mười một trong mười ba người đã có dạng Absolute; còn Big Man và Beetle
-thì mới chỉ có hồ sơ gốc.
+Mười một trong mười bốn người đã có dạng Absolute; còn Big Man, Beetle và
+Scorpion thì mới chỉ có hồ sơ gốc.
 
 | # | Nhân vật | Số báo | Chân dung dựng quanh cái gì | Absolute |
 |---|---|---|---|---|
@@ -54,10 +55,11 @@ thì mới chỉ có hồ sơ gốc.
 | 11 | Green Goblin | ASM #14 | nhìn từ dưới lên: bom bí ngô đang rơi xuống ta | có |
 | 12 | Kraven the Hunter | ASM #15 | mặt nhìn qua khe rách giữa tán lá | có |
 | 13 | Beetle | Strange Tales #123 | bản vẽ chế tạo, bộ giáp tháo rời và rỗng | chưa |
+| 14 | Scorpion | ASM #20 | cái đuôi in chồng bốn lần, mũi kim chúc xuống đầu hắn | chưa |
 
 ## Nguyên tắc vẽ chân dung — quan trọng nhất
 
-**Mỗi chân dung phải khác hẳn mười hai cái kia.** Không chỉ khác nội dung mà khác
+**Mỗi chân dung phải khác hẳn mười ba cái kia.** Không chỉ khác nội dung mà khác
 cả cách dựng hình. Sáu hồ sơ đầu đều theo một lối: bóng đen đặc trên nền
 giấy, `misprint()` lo phần mực lệch trục. Ba hồ sơ sau cố tình bẻ lối đó:
 
@@ -70,7 +72,7 @@ giấy, `misprint()` lo phần mực lệch trục. Ba hồ sơ sau cố tình b
   kèm bóng in lệch trục (nó vốn không có thật), người thật tô đen đặc kèm đủ
   hai lớp mực lệch.
 
-Bốn hồ sơ mới nhất bẻ tiếp bốn trục khác:
+Năm hồ sơ mới nhất bẻ tiếp năm trục khác:
 
 - **Mysterio** cho một quả cầu thuỷ tinh mà bên trong không có gì ngoài
   sương — không giấu mặt như Chameleon, mà là không có mặt để giấu.
@@ -83,6 +85,11 @@ Bốn hồ sơ mới nhất bẻ tiếp bốn trục khác:
   dóng, số khoanh tròn trên giấy kẻ ô. Không phải chân dung mà là bản vẽ chế
   tạo, vì Jenkins là thợ máy; và bộ giáp tháo rời thì rỗng, vì cuối cùng hắn
   cởi ra thật.
+- **Scorpion** bẻ trục **thời gian**: mười ba bức kia đều là một khoảnh khắc
+  đứng yên, bức này in cùng một cái đuôi bốn lần trên một tờ giấy — ba lần mờ
+  ở phía sau, một lần đặc ở cuối — nên cái ta thấy là cả cú quật chứ không
+  phải một tư thế của nó. Vòng cung ấy khép trên đỉnh đầu hắn và mũi kim chúc
+  xuống, vì thứ cái đuôi giết trước tiên là chính Mac Gargan.
 
 Khi làm người kế tiếp, hãy hỏi trước: hình này có thể là hình của ai khác
 trong danh sách không? Nếu có thì nghĩ lại.
@@ -112,8 +119,9 @@ Ba phép thử hay dùng (viết trong scratchpad, không commit):
   không, hàng lý lịch có gãy làm hai không.
 - **Vòng đời**: mở từng nhân vật, bấm `EvolveButton`, kiểm `stage.index`,
   `stage.card.s.name`, `stage._fx_style`, `stage.tabs.count()`, rồi đóng.
-  Hiện là 92 mục cho mười ba nhân vật (2 mục mỗi hồ sơ, thêm 6 mục cho mỗi
-  dạng Absolute), phải xanh hết trước khi commit.
+  Hiện là mười bốn nhân vật và mười một dạng Absolute; phép thử chạy ở phiên
+  Scorpion đếm 72 mục (2 mục mỗi hồ sơ, thêm 4 mục cho mỗi tầng tiến hoá) và
+  phải xanh hết trước khi commit.
 
 Khi chưa nhìn ra hình bị gì, **render riêng cái bóng người** (chỉ `_figure()`,
 tô một màu, không nền không hiệu ứng). Nhiều lần tưởng thiếu cánh tay mà thật
@@ -212,6 +220,23 @@ ra tay vẫn đó, chỉ là bị lớp khác nuốt mất.
   thuộc font thì ra nét nguệch ngoạc chứ không ra con số. `setPixelSize` tính
   theo đơn vị khung 100×120 nên chữ đúng cỡ ở mọi độ phóng và mọi DPI —
   `setPointSizeF` thì không, nó đi theo DPI.
+- **Vẽ cả người trong khung 100×120 thì không đủ chỗ.** Bản đầu của Scorpion
+  cho hắn lao tới, đủ đầu, thân, hai chân, một tay và cái đuôi. Sáu thứ ấy
+  tranh nhau một khung dọc và cùng thua: thân thành khối tròn không đọc ra
+  tay chân. Cắt sát lấy đầu với vai thì cái mũ đủ to để có nét mặt, mà cái
+  đuôi cũng đủ chỗ để khép hẳn vòng cung. Nhân vật nào có một bộ phận to hơn
+  người thì cắt bán thân, đừng vẽ toàn thân.
+- **Chi tiết trên mặt: ít mảng đặc, đừng nhiều nét mảnh.** Mũ của Scorpion
+  từng có gờ trán, sống mũi, gò má, mép mõm, khe thở — sáu nét xám nhạt. Ở cỡ
+  thật chúng không đọc ra chi tiết nào, chỉ ra một mảng lấm tấm. Rút còn ba
+  mảng sáng đặc (hai kính mắt, một tấm khe thở) thì mới thành mặt nạ.
+- **Hai vòng trắng tròn trên nền đen luôn đọc ra mặt cười.** Kính mắt phải
+  nhọn hai đầu và xếch; hình bầu dục thì ra nhân vật hoạt hình cho trẻ con.
+  Cùng loại bẫy: đường hàm cong vắt ngang bên dưới hai con mắt cũng ra nụ
+  cười, và mấy khe cắt **ngang** tấm thở thì ra hàm răng — cho khe chạy dọc
+  theo tấm mới ra khe thở.
+- **Gai nhọn trên đỉnh mũ đọc ra tai mèo.** Muốn phá cái vòng tròn của một
+  cái đầu thì dùng gờ thấp và dài vuốt ngược ra sau, đừng dùng chóp tam giác.
 - **`misprint()` chỉ hợp với hình cỡ vừa.** Nó đẻ ra hai bản lệch 2–3 đơn vị;
   áp lên một bóng người thì ra chất pulp, áp lên mảng phủ gần kín tờ giấy
   (nền, tán lá, bầu trời) thì mọi đường biên hoá dải đỏ-lam dày cộp, cả khung
@@ -225,7 +250,9 @@ bằng cách đè `PortraitPlate.paintEvent`). Ngân sách khoảng 4–10 ms m�
 - Chân dung **động** (`art` có tham số `t`): lớp nào không đổi theo `t` thì
   dựng sẵn vào `QImage` rồi dán — xem `_still()` trong các file `*_absolute.py`.
 - Chân dung **tĩnh mà nặng** thì cũng đáng dựng sẵn cả tấm: `electro.py` cache
-  nguyên bức theo đúng cỡ điểm ảnh thật, **16,7 ms xuống còn 0,18 ms**. Nhớ
+  nguyên bức theo đúng cỡ điểm ảnh thật, **16,7 ms xuống còn 0,18 ms**;
+  `scorpion.py` dùng lại đúng khuôn ấy cho bốn cái đuôi hợp path, **8,0 ms
+  xuống còn 0,2 ms**. Nhớ
   lấy `scale` từ `p.transform().m11()` để ảnh không bị nhoè trên màn HiDPI, và
   giới hạn số bản trong cache kẻo kéo cửa sổ là phình bộ nhớ.
 - Hợp path (`united`, `subtracted`) là phép đắt. Hàm nào không có tham số đổi
